@@ -20,6 +20,14 @@ body {
 	text-align: center;
 }
 
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
 #map-container {
 	display: inline-block;
 	width: 700px;

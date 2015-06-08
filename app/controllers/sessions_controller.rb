@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 			session[:id] = @skater.id
 			redirect_to '/'
 		else
-			render 'login'
+			redirect_to '/login'
 		end
 	end
 
