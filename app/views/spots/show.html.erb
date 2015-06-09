@@ -6,3 +6,4 @@ Floor quality: <%= @spot.floor_quality %><br>
 Teachers: <%= @spot.teachers %><br>
 <img src="<%= @spot.photo %>">
 <iframe class="vine-embed" src="https://vine.co/v/M6uxiOYhXp2/embed/simple" width="600" height="600" frameborder="0"></iframe>
+<button class="add-trick-button"><%= link_to('Add trick', new_spot_trick_path(@spot)) %></button>

@@ -8,14 +8,14 @@
 	<body>
 		<div>
 			<% if current_skater %> 
-				<ul> 
+						<ul> 
 					<li><%= current_skater.email %></li> 
 					<li><%= link_to "Log out", logout_path, method: "delete" %></li> 
 				</ul> 
 			<% else %> 
 				<ul> 
 					<li><%= link_to "Login", login_path %></a></li> 
-					<li><%= link_to "Signup", signup_path %></a></li> 
+					<li><%= link_to "Signup", signup_path %></a></li>
 				</ul> 
 			<% end %>
 		</div>

@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   get '/' => 'spots#index'
-  resources :spots
+  resources :spots do
+  	resources :tricks
+  end
+
   get '/signup' => 'skaters#new'
-  resources :skaters
+  resources :skaters do
+  	resources :tricks
+  end
+
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'

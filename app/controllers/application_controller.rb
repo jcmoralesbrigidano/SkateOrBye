@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_skater
 
   def current_skater
-	@current_skater ||= Skater.find(session[:id]) if session[:id]
+	  @current_skater ||= Skater.find(session[:id]) if session[:id]
   end
 
   def require_skater
