@@ -1,5 +1,6 @@
 class SpotsController < ApplicationController
 	before_action :require_skater, only: [:new]
+	
 	def index
 		@spots = Spot.all
 
@@ -11,6 +12,7 @@ class SpotsController < ApplicationController
 
 	def show
 		@spot = Spot.find params[:id]
+		@spot_tricks = Trick.spot_tricks @spot.id
 	end
 
 	def new

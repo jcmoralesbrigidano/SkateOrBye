@@ -1,0 +1,9 @@
+<%= form_for [@skater, @trick] do |f| %>
+	<%= f.label :video %>
+	<%= f.text_field :video %><br><br>
+	<%= f.label :skater_id %>
+	<%= f.text_field :skater_id, :value => @skater_id %><br>
+	<%= f.label :spot_id %>
+	<%= f.text_field :spot_id, :value => @spot_id %><br>
+	<%= f.submit 'Add trick' %>
+<% end %>

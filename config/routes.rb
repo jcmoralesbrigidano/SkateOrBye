@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   get '/' => 'spots#index'
-  resources :spots do
-  	resources :tricks
-  end
+  resources :spots
 
   get '/signup' => 'skaters#new'
   resources :skaters do

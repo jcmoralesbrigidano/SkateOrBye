@@ -5,5 +5,7 @@ Level: <%= @spot.level %><br>
 Floor quality: <%= @spot.floor_quality %><br>
 Teachers: <%= @spot.teachers %><br>
 <img src="<%= @spot.photo %>">
-<iframe class="vine-embed" src="https://vine.co/v/M6uxiOYhXp2/embed/simple" width="600" height="600" frameborder="0"></iframe>
-<button class="add-trick-button"><%= link_to('Add trick', new_spot_trick_path(@spot)) %></button>
+<% @spot_tricks.each do |spot_trick| %>
+	<iframe src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
+<% end %>
+<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add trick</a>
