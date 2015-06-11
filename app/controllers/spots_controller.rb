@@ -32,6 +32,26 @@ class SpotsController < ApplicationController
 		end
 	end
 
+	def rate_trick
+		@trick_rating = params[:trickRating]
+		@spot_id = @trick_rating['spot_id']
+		@trick_id = @trick_rating['trick_id']
+		@hearts = @trick_rating['hearts']
+
+		@skater = Skater.find session[:id]
+		@trick = @skater.tricks.find @trick_id
+		@trick.rating = @hearts
+
+		if @trick.save
+			respond_to do |format|
+				format.html
+				format.json { render json: 1 }
+			end
+		else
+			render 'show'
+		end		
+	end
+
 	private
 	def spot_params
 		params.require(:spot).permit(:latitude, :longitude, :level, :floor_quality, :teachers, :photo)

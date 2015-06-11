@@ -6,7 +6,8 @@ $(document).ready(function() {
 		type: 'GET',
 		dataType: 'json',
 		url: '/spots',
-		success: function(response) { initialize(response); }
+		success: function(response) { initialize(response); },
+		error: function() { console.log('KO') }
 	});
 
 	function initialize(response) {
@@ -99,36 +100,51 @@ $(document).ready(function() {
 	    	var content = 'Error: Your browser does not support geolocation.';
 	    }
 	}
-/*
-	var skateHearts = 0;
 
-	$('.skate-hearts').mouseover(function() {
-		if(skateHearts < 5) {
-			$(this).attr('src', '<%= asset_url("skateHeart.png") %>');
-			skateHearts++;
-		} else {
-			skateHearts = 0;
+	$('.hearts').mouseover(function() {
+		var trickId = $(this).data('trick-id');
+		var hearts = $(this).data('hearts');
+
+		var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
+		
+		for(var i = 0; i < hearts; i++) {
+			allHearts[i].setAttribute('src', '<%= asset_url("skateHeart.png") %>');
 		}
 	});
-*/
-	$('.skate-hearts').on('click', function() {
+
+	$('.hearts').mouseout(function() {
+		var trickId = $(this).data('trick-id');
+		$('.hearts[data-trick-id=' + trickId + ']').attr('src', '<%= asset_url("skateHeartBW.png") %>');
+	});
+
+	$('.hearts').on('click', function() {
 		var spotId = $(this).data('spot-id');
 		var trickId = $(this).data('trick-id');
-		var skateHearts = $(this).data('skate-hearts');
+		var hearts = $(this).data('hearts');
+
+		$(this).data('selected', 'yes');						
+
+		var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
+		
+		for(var i = 0; i < hearts; i++) {
+			allHearts[i].setAttribute('src', '<%= asset_url("skateHeart.png") %>');
+		}
+
+		$('.hearts[data-trick-id=' + trickId + ']').unbind();
 
 		var trickRating = {
 			spot_id: spotId,
 			trick_id: trickId,
-			skate_hearts: skateHearts
+			hearts: hearts
 		};
 
 		$.ajax({
 			type: 'POST',
-			url: '/spots/' + spotId + '/rate',
-			data: { hola: 'hi' },
+			url: '/spots/' + spotId + '/rate-trick',
+			data: { trickRating },
 			dataType: 'json',
-			success: function() { alert('OK'); },
-			error: function() { alert('KO'); }
+			success: function() { console.log('OK'); },
+			error: function() { console.log('KO'); }
 		});
 	});
 });
