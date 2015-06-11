@@ -7,5 +7,13 @@ Teachers: <%= @spot.teachers %><br>
 <img src="<%= @spot.photo %>">
 <% @spot_tricks.each do |spot_trick| %>
 	<iframe src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
+	<% for i in 1..5 %>
+		<img class="skate-hearts" src="<%= asset_url('skateHeartBW.png') %>" data-spot-id="<%= spot_trick.spot_id %>" data-trick-id="<%= spot_trick.id %>" data-skate-hearts="<%= i %>">
+	<% end %>
 <% end %>
-<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add trick</a>
+
+<% if session[:id] %>
+	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add trick</a>
+<% else %>
+	You need to <a href="<%= login_path %>">login</a> in order to add or rate a trick
+<% end %>

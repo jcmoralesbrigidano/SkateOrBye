@@ -19,6 +19,10 @@ class TricksController < ApplicationController
 		end
 	end
 
+	def rate
+		@message = params[:hola]
+	end
+
 	private
 	def trick_params
 		params.require(:trick).permit(:video, :skater_id, :spot_id)

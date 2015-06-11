@@ -99,4 +99,36 @@ $(document).ready(function() {
 	    	var content = 'Error: Your browser does not support geolocation.';
 	    }
 	}
+/*
+	var skateHearts = 0;
+
+	$('.skate-hearts').mouseover(function() {
+		if(skateHearts < 5) {
+			$(this).attr('src', '<%= asset_url("skateHeart.png") %>');
+			skateHearts++;
+		} else {
+			skateHearts = 0;
+		}
+	});
+*/
+	$('.skate-hearts').on('click', function() {
+		var spotId = $(this).data('spot-id');
+		var trickId = $(this).data('trick-id');
+		var skateHearts = $(this).data('skate-hearts');
+
+		var trickRating = {
+			spot_id: spotId,
+			trick_id: trickId,
+			skate_hearts: skateHearts
+		};
+
+		$.ajax({
+			type: 'POST',
+			url: '/spots/' + spotId + '/rate',
+			data: { hola: 'hi' },
+			dataType: 'json',
+			success: function() { alert('OK'); },
+			error: function() { alert('KO'); }
+		});
+	});
 });
