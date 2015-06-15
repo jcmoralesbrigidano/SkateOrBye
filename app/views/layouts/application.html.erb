@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <title>SkateDojo</title>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	  <%= stylesheet_link_tag 'application', media: 'all' %>
+	  <%= csrf_meta_tags %>
+	  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<% if current_skater %> 
+				<ul> 
+					<li><%= current_skater.email %></li> 
+					<li><%= link_to "Log out", logout_path, method: "delete" %></li> 
+				</ul> 
+			<% else %> 
+				<ul> 
+					<li><%= link_to "Log in", login_path %></a></li> 
+					<li><%= link_to "Sign up", signup_path %></a></li>
+				</ul> 
+			<% end %>
+		</div>
+		<%= yield %>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>
+		<%= javascript_include_tag 'application' %>
+	</body>
+</html>

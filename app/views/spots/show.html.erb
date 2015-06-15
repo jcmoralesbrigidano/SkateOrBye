@@ -1,0 +1,28 @@
+<div class="spot-info">
+	Address: <%= @spot.address %><br>
+	Latituide: <%= @spot.latitude %><br>
+	Longitude: <%= @spot.longitude %><br>
+	Level: <%= @spot.level %><br>
+	Floor quality: <%= @spot.floor_quality %><br>
+	Teachers: <%= @spot.teachers %><br>
+</div>
+
+<img class="spot-photo" src="<%= @spot.photo %>">
+<br><br>
+<% @spot_tricks.each do |spot_trick| %>
+	<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe><br>
+	<% if session[:id] %>
+		<% for i in 1..5 %>
+		<img class="hearts" src="<%= asset_path('skateHeartBW.png') %>" data-spot-id="<%= spot_trick.spot_id %>" data-trick-id="<%= spot_trick.id %>" data-hearts="<%= i %>" data-selected="no">
+		<% end %>
+	<% else %>
+		<span>You need to <a href="<%= login_path %>">login</a> in order to rate a trick</span>
+	<% end %>
+	<br><br><br><br>
+<% end %>
+<br>
+<% if session[:id] %>
+	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add trick</a>
+<% else %>
+	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick</span>
+<% end %>

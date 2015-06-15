@@ -1,0 +1,15 @@
+<%= form_for @spot do |f| %>
+	<%= f.label :level %>
+	<%= f.text_field :level %><br>
+	<%= f.label :floor_quality %>
+	<%= f.text_field :floor_quality %><br>
+	<%= f.label :teachers %>
+	<%= f.text_field :teachers %><br>
+	<%= f.label :photo %>
+	<%= f.text_field :photo %><br>
+	<%= f.label :latitude %>
+	<%= f.text_field :latitude, :value => @latitude %><br>
+	<%= f.label :longitude %>
+	<%= f.text_field :longitude, :value => @longitude %><br><br>
+	<%= f.submit 'Add spot' %>
+<% end %>
