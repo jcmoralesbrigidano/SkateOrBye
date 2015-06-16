@@ -48,12 +48,12 @@ $(document).ready(function() {
 		    	}
 
 		    	yourPosition = new google.maps.LatLng(yourPositionResponse.coords.latitude, yourPositionResponse.coords.longitude);
-
-		    	var yourPositionMarker = new google.maps.Marker({
+				
+				var yourPositionMarker = new google.maps.Marker({
 		    			map: map,
 		    			position: yourPosition,
 		    			draggable: true,
-		    			icon: '/bartSkater.gif',
+						icon: '/bartSkater.gif',
 		    			title: 'You are here!'
 		    	});
 
@@ -94,7 +94,7 @@ $(document).ready(function() {
 	}
 
 	function handleNoGeolocation(errorFlag) {
-	    if(errorFlag) {
+		if(errorFlag) {
 	    	var content = 'The Geolocation service failed.';
 	    } else {
 	    	var content = 'Your browser does not support geolocation.';
