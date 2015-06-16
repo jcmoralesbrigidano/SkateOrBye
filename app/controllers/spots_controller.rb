@@ -34,18 +34,27 @@ class SpotsController < ApplicationController
 
 	def rate_trick
 		@trick_rating = params[:trickRating]
-		@spot_id = @trick_rating['spot_id']
 		@trick_id = @trick_rating['trick_id']
 		@hearts = @trick_rating['hearts']
 
-		@skater = Skater.find session[:id]
-		@trick = @skater.tricks.find @trick_id
-		@trick.rating = @hearts
+		@trick = Trick.find @trick_id
+		@rating = @trick.ratings.new
+		@rating.rating = @hearts
+		@rating.skater_id = session[:id]
 
-		if @trick.save
+		if @rating.save
+			@ratings = @trick.ratings
+			@total_rating = 0
+
+			@ratings.each do |rating|
+				@total_rating += rating.rating
+			end
+
+			@average_rating = @total_rating.to_f / @ratings.size.to_f
+
 			respond_to do |format|
 				format.html
-				format.json { render json: 1 }
+				format.json { render json: @average_rating }
 			end
 		else
 			render 'show'

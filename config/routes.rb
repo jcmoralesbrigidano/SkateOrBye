@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get '/' => 'spots#index'
   resources :spots
 
+  get '/spots/:id/rate-trick' => 'spots#rate_trick'
   post '/spots/:id/rate-trick' => 'spots#rate_trick'
   resources :skaters do
   	resources :tricks

@@ -14,20 +14,36 @@
  *= require_self
  */
 
+@font-face {
+    font-family: SkateFont;
+    src: url('/SkateFont.ttf');
+    font-weight: 400;
+}
+
 body {
 	margin: 0;
 	padding: 0;
 	text-align: center;
 }
 
-a {
+a, a:hover, a:focus {
 	text-decoration: none;
 }
 
-li {
+ul, li {
 	list-style: none;
+}
+
+.logo {
+	font-family: SkateFont;
+	font-size: 40px;
+}
+
+.account-actions {
+	display: inline-block;
 }
 
 #map-container {
 	height: 400px;
+	margin: 0 10px;
 }

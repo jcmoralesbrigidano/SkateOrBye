@@ -11,9 +11,23 @@
 <br><br>
 <% @spot_tricks.each do |spot_trick| %>
 	<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe><br>
+	
 	<% if session[:id] %>
-		<% for i in 1..5 %>
-		<img class="hearts" src="<%= asset_path('skateHeartBW.png') %>" data-spot-id="<%= spot_trick.spot_id %>" data-trick-id="<%= spot_trick.id %>" data-hearts="<%= i %>" data-selected="no">
+		<% @rated = false %>
+		<% @ratings = spot_trick.ratings %>
+
+		<% @ratings.each do |rating| %>
+			<% if rating.id === session[:id] %>
+				<% @rated = true %>
+			<% end %>
+		<% end %>
+
+		<% if @rated === false %>
+			<% for i in 1..5 %>
+			<img class="hearts" src="<%= asset_path('skateHeartBW.png') %>" data-spot-id="<%= spot_trick.spot_id %>" data-trick-id="<%= spot_trick.id %>" data-hearts="<%= i %>" data-selected="no">
+			<% end %>
+		<% else %>
+			<p>Ya has puntuado este truco</p>
 		<% end %>
 	<% else %>
 		<span>You need to <a href="<%= login_path %>">login</a> in order to rate a trick</span>
@@ -23,6 +37,7 @@
 <br>
 <% if session[:id] %>
 	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add trick</a>
+	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add challenge</a>
 <% else %>
-	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick</span>
+	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick or a challenge</span>
 <% end %>

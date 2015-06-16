@@ -6,7 +6,7 @@ $(document).ready(function() {
 		type: 'GET',
 		dataType: 'json',
 		url: '/spots',
-		success: function(response) { initialize(response); },
+		success: function(spotsResponse) { createMap(spotsResponse); },
 		error: function() { console.log('KO') }
 	});
 	
@@ -16,11 +16,11 @@ $(document).ready(function() {
 	var markers = [];
 	var yourPosition = {};
 
-	function initialize(response) {
+	function createMap(spotsResponse) {
 		var mapContainer = document.getElementById('map-container');
 		
-		for(var i = 0; i < response.length; i++) {
-			spots.push(response[i]);				
+		for(var i = 0; i < spotsResponse.length; i++) {
+			spots.push(spotsResponse[i]);				
 		}
 
 		var mapOptions = {
@@ -31,7 +31,7 @@ $(document).ready(function() {
 	  	map = new google.maps.Map(mapContainer, mapOptions);
 
 	  	if(navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(function(yourPosit) {
+		    navigator.geolocation.getCurrentPosition(function(yourPositionResponse) {
 		    	for(var i = 0; i < spots.length; i++) {
 		    		var position = new google.maps.LatLng(spots[i].latitude, spots[i].longitude);
 		    		positions.push(position);
@@ -43,12 +43,11 @@ $(document).ready(function() {
 		    			title: (i + 1).toString()
 		    		});
 
-		    		markers.push(marker);
-
+		    		markers.push(marker);		    		
 		    		addClickEventForEachMarker(marker);
 		    	}
 
-		    	yourPosition = new google.maps.LatLng(yourPosit.coords.latitude, yourPosit.coords.longitude);
+		    	yourPosition = new google.maps.LatLng(yourPositionResponse.coords.latitude, yourPositionResponse.coords.longitude);
 
 		    	var yourPositionMarker = new google.maps.Marker({
 		    			map: map,
@@ -95,10 +94,10 @@ $(document).ready(function() {
 	}
 
 	function handleNoGeolocation(errorFlag) {
-	    if (errorFlag) {
-	    	var content = 'Error: The Geolocation service failed.';
+	    if(errorFlag) {
+	    	var content = 'The Geolocation service failed.';
 	    } else {
-	    	var content = 'Error: Your browser does not support geolocation.';
+	    	var content = 'Your browser does not support geolocation.';
 	    }
 	}
 
@@ -109,9 +108,7 @@ $(document).ready(function() {
 		var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
 		
 		for(var i = 0; i < hearts; i++) {
-			//console.log($('.hearts[data-trick-id=' + trickId + ']')[i].src);
-			allHearts[i].src = '/skateHeart.png';
-			//allHearts[i].setAttribute('src', '<%= asset_url("skateHeartC.png") %>');
+			allHearts[i].setAttribute('src', '/skateHeart.png');
 		}
 	});
 
@@ -136,7 +133,6 @@ $(document).ready(function() {
 		$('.hearts[data-trick-id=' + trickId + ']').unbind();
 
 		var trickRating = {
-			spot_id: spotId,
 			trick_id: trickId,
 			hearts: hearts
 		};
@@ -146,31 +142,46 @@ $(document).ready(function() {
 			url: '/spots/' + spotId + '/rate-trick',
 			data: { trickRating },
 			dataType: 'json',
-			success: function() { console.log('OK'); },
+			success: function(averageRating) { 
+				$('body').append('<p>' + averageRating + '</p>');
+			},
 			error: function() { console.log('KO'); }
 		});
 	});
 
-	$('.find-nearest-spot').on('click', function() {
+	$('.nearest-spot').on('click', function() {
 		var distance = 0;
-		var nearestDistance = 1111111111111111111111111111111;
+		var nearestDistance = 99999999999999999999;
 		var nearestSpot = 0;
 
 		for(var i = 0; i < positions.length; i++) {
-			distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(yourPosition.lat(), yourPosition.lng()), positions[i]);
-
-			if(distance < nearestDistance ) {
+			distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(yourPosition.lat(), yourPosition.lng()), new google.maps.LatLng(positions[i].lat(), positions[i].lng()));
+			
+			if(distance < nearestDistance) {
 				nearestDistance = distance;
 				nearestSpot = i;
 			}
 		}
 
-		var infoWindowNearestSpotContent = '<a href=/spots/' + nearestSpot + '>Go to this spot</a>';
+		var infoWindowNearestSpotContent = '<a href=/spots/' + (nearestSpot + 1) + '>Go to this spot</a>';
 
-    	var infoWindowNearestSpot = new google.maps.InfoWindow({
-    		content: infoWindowNearestSpotContent
-    	});
+		var infoWindowNearestSpot = new google.maps.InfoWindow({
+			content: infoWindowNearestSpotContent
+		});
 
-    	infoWindowNearestSpot.open(map, markers[nearestSpot - 1]);
+		infoWindowNearestSpot.open(map, markers[nearestSpot]);
+	});
+
+	$('.random-spot').on('click', function() {
+
+		var randomSpot = Math.floor(Math.random() * (spots.length - 0)) + 0;
+
+		var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '>Go to this spot</a>';
+
+		var infoWindowRandomSpot = new google.maps.InfoWindow({
+			content: infoWindowRandomSpotContent
+		});
+
+		infoWindowRandomSpot.open(map, markers[randomSpot]);
 	});
 });
