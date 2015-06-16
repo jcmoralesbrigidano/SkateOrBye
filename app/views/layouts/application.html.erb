@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <title>SkateDojo</title>
+	  <title>SkateTemple</title>
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	  <%= stylesheet_link_tag 'application', media: 'all' %>
 	  <%= csrf_meta_tags %>
@@ -12,18 +12,19 @@
 			<div class="logo"><a href="/">(&nbsp;&nbsp;SKATE TEMPLE&nbsp;&nbsp;)</a></div>
 			<div class="account-nav">
 				<% if current_skater %> 
-					<ul> 
-						<li><%= current_skater.email %></li> 
-						<li class="account-actions"><%= link_to "Log out", logout_path, method: "delete" %></li> 
-					</ul> 
+					<div class="account-actions"><%= current_skater.email %></div> 
+					<div class="account-actions"><%= link_to "Log out", logout_path, method: "delete" %></div>
 				<% else %> 
-					<ul> 
-						<li class="account-actions"><%= link_to "Log in", login_path %></a></li> 
-						<li class="account-actions"><%= link_to "Sign up", signup_path %></a></li>
-					</ul> 
+					<div class="account-actions"><%= link_to "Log in", login_path %></div></li> 
+					<div class="account-actions"><%= link_to "Sign up", signup_path %></div>
 				<% end %>
 			</div>
 		</header>
+		<!--<nav>
+			<div class="navigation-elements">Free Skate</div>
+			<div class="navigation-elements">Challenges</div>
+			<div class="navigation-elements">Top Skaters</div>
+		</nav>-->
 		<%= yield %>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>
 		<%= javascript_include_tag 'application' %>

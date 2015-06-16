@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616085606) do
+ActiveRecord::Schema.define(version: 20150616194418) do
+
+  create_table "challenges", force: :cascade do |t|
+    t.string   "challenge"
+    t.integer  "spot_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "ratings", force: :cascade do |t|
     t.datetime "created_at", null: false
