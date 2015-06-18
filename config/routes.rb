@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   	resources :tricks
   end
 
-  get '/spots/:id/new-challenge' => 'challenges#new'
-  post '/spots/:id/new-challenge' => 'challenges#create'
+  get '/challenges/new-challenge' => 'challenges#new'
+  post '/challenges' => 'challenges#create'
 
   get '/signup' => 'skaters#new'
   get '/login' => 'sessions#new'

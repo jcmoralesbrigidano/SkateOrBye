@@ -74,7 +74,7 @@ $(document).ready(function() {
 		    		google.maps.event.addDomListener(marker, 'click', function() {
 		    			var spotId = marker.getTitle();
 
-						var infoWindowSpotsContent = '<a href=/spots/' + spotId + '>Go to this spot</a>';
+						var infoWindowSpotsContent = '<a href=/spots/' + spotId + '>Go to this spot</a><br><a href=/challenges/new-challenge?spot=' + spotId + '>Add challenge</a>';
 
 				    	var infoWindowSpots = new google.maps.InfoWindow({
 				    		content: infoWindowSpotsContent

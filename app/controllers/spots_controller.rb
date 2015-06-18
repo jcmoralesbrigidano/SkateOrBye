@@ -51,10 +51,12 @@ class SpotsController < ApplicationController
 			end
 
 			@average_rating = @total_rating.to_f / @ratings.size.to_f
+			@trick.average_rating = @average_rating
+			@trick.save
 
 			respond_to do |format|
 				format.html
-				format.json { render json: @average_rating }
+				format.json { render json: @trick.average_rating }
 			end
 		else
 			render 'show'

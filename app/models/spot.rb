@@ -1,3 +1,2 @@
 class Spot < ActiveRecord::Base
-	has_many :challenges
 end
