@@ -38,7 +38,7 @@
 <% if session[:id] %>
 	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add trick</a>
 	<br>
-	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add challenge</a>
+	<a href="/spots/<%= @spot.id %>/new-challenge">Add challenge</a>
 <% else %>
 	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick or a challenge</span>
 <% end %>

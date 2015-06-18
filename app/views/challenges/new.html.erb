@@ -1,0 +1,11 @@
+<%= form_for [@spot, :challenge] do |f| %>
+	<%= f.label :challenge %>
+	<%= f.text_field :challenge %><br>
+	<%= f.label :challenge_spot %>
+	<%= f.text_field :challenge_spot %><br>
+	<%= f.label :score %>
+	<%= f.text_field :score %> <br>
+	<%= f.label :skater_challenged %>
+	<%= f.text_field :skater_challenged %><br><br>
+	<%= f.submit 'Add challenge' %>
+<% end %>
