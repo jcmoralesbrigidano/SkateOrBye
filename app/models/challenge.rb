@@ -1,5 +1,5 @@
 class Challenge < ActiveRecord::Base
-	has_many :challenge_accepteds
-	has_many :skaters, through: :challenge_accepteds
+	has_many :skater_challenges
+	has_many :skaters, through: :skater_challenges
 	belongs_to :spot
 end

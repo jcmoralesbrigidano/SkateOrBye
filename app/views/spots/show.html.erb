@@ -9,9 +9,11 @@
 
 <img class="spot-photo" src="<%= @spot.photo %>">
 <br><br>
+<iframe class="tricks" src="<%= @best_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
 <% @spot_tricks.each do |spot_trick| %>
-	<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe><br>
-	
+	<% if !(spot_trick.id === @best_trick.id) %>
+		<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe><br>
+	<% end %>
 	<% if session[:id] %>
 		<% @rated = false %>
 		<% @ratings = spot_trick.ratings %>

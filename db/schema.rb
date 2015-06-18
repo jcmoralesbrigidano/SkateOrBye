@@ -13,14 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150617123807) do
 
-  create_table "challenge_accepteds", force: :cascade do |t|
-    t.integer  "skater_id"
-    t.integer  "challenge_id"
-    t.string   "state"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
   create_table "challenges", force: :cascade do |t|
     t.string   "challenge"
     t.integer  "challenge_spot"
@@ -36,6 +28,14 @@ ActiveRecord::Schema.define(version: 20150617123807) do
     t.integer  "rating"
     t.integer  "skater_id"
     t.integer  "trick_id"
+  end
+
+  create_table "skater_challenges", force: :cascade do |t|
+    t.integer  "skater_id"
+    t.integer  "challenge_id"
+    t.string   "state"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "skaters", force: :cascade do |t|

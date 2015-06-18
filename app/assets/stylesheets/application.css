@@ -46,6 +46,7 @@ a, a:hover, a:focus, a:visited {
 	padding: 5px 20px;
 	color: #337ab7;
 	font-weight: bold;
+	cursor:pointer;
 }
 
 .navigation-elements:hover {

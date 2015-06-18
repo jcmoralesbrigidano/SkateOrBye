@@ -13,6 +13,7 @@ class SpotsController < ApplicationController
 	def show
 		@spot = Spot.find params[:id]
 		@spot_tricks = Trick.spot_tricks @spot.id
+		@best_trick = Trick.best_trick @spot.id
 	end
 
 	def new

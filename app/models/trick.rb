@@ -5,4 +5,8 @@ class Trick < ActiveRecord::Base
 	def self.spot_tricks spot
 		where(spot_id: spot)
 	end
+
+	def self.best_trick spot
+		order(average_rating: :desc).first
+	end
 end

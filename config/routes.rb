@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get '/challenges/new-challenge' => 'challenges#new'
   post '/challenges' => 'challenges#create'
+  get '/challenges' => 'skater_challenges#index'
 
   get '/signup' => 'skaters#new'
   get '/login' => 'sessions#new'
