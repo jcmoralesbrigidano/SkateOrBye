@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
-  get '/' => 'spots#index'
+  get '/' => 'home#index'
+  
   resources :spots
-
   get '/spots/:id/rate-trick' => 'spots#rate_trick'
   post '/spots/:id/rate-trick' => 'spots#rate_trick'
+  
   resources :skaters do
   	resources :tricks
   end
 
-  get '/challenges/new-challenge' => 'challenges#new'
+  get '/challenges/new' => 'challenges#new'
   post '/challenges' => 'challenges#create'
   get '/challenges' => 'skater_challenges#index'
 

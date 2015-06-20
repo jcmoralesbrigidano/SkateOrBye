@@ -9,17 +9,17 @@
 
 <img class="spot-photo" src="<%= @spot.photo %>">
 <br><br>
-<iframe class="tricks" src="<%= @best_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
+<div style="border:1px solid red"><iframe class="tricks" src="<%= @best_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe></div>
 <% @spot_tricks.each do |spot_trick| %>
 	<% if !(spot_trick.id === @best_trick.id) %>
-		<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe><br>
+		<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
 	<% end %>
 	<% if session[:id] %>
 		<% @rated = false %>
 		<% @ratings = spot_trick.ratings %>
 
 		<% @ratings.each do |rating| %>
-			<% if rating.id === session[:id] %>
+			<% if rating.skater_id === session[:id] %>
 				<% @rated = true %>
 			<% end %>
 		<% end %>

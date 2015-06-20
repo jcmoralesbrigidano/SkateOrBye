@@ -7,6 +7,6 @@ class Trick < ActiveRecord::Base
 	end
 
 	def self.best_trick spot
-		order(average_rating: :desc).first
+		where(spot_id: spot).order(average_rating: :desc).first
 	end
 end

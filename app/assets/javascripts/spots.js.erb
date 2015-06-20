@@ -74,7 +74,7 @@ $(document).ready(function() {
 		    		google.maps.event.addDomListener(marker, 'click', function() {
 		    			var spotId = marker.getTitle();
 
-						var infoWindowSpotsContent = '<a href=/spots/' + spotId + '>Go to this spot</a><br><a href=/challenges/new-challenge?spot=' + spotId + '>Add challenge</a>';
+						var infoWindowSpotsContent = '<a href=/spots/' + spotId + '>Go to this spot</a><br><a href=/challenges/new?spot=' + spotId + '>Add challenge</a>';
 
 				    	var infoWindowSpots = new google.maps.InfoWindow({
 				    		content: infoWindowSpotsContent
@@ -163,7 +163,7 @@ $(document).ready(function() {
 			}
 		}
 
-		var infoWindowNearestSpotContent = '<a href=/spots/' + (nearestSpot + 1) + '>Go to this spot</a><br><a href=/challenges/new-challenge?spot=' + (nearestSpot + 1) + '>Add challenge</a>';
+		var infoWindowNearestSpotContent = '<a href=/spots/' + (nearestSpot + 1) + '>Go to this spot</a><br><a href=/challenges/new?spot=' + (nearestSpot + 1) + '>Add challenge</a>';
 
 		var infoWindowNearestSpot = new google.maps.InfoWindow({
 			content: infoWindowNearestSpotContent
@@ -176,7 +176,7 @@ $(document).ready(function() {
 
 		var randomSpot = Math.floor(Math.random() * (spots.length - 0)) + 0;
 
-		var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '>Go to this spot</a><br><a href=/challenges/new-challenge?spot=' + (randomSpot + 1) + '>Add challenge</a>';
+		var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '>Go to this spot</a><br><a href=/challenges/new?spot=' + (randomSpot + 1) + '>Add challenge</a>';
 
 		var infoWindowRandomSpot = new google.maps.InfoWindow({
 			content: infoWindowRandomSpotContent
