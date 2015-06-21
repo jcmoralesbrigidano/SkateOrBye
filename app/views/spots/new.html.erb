@@ -10,6 +10,10 @@
 	<%= f.label :latitude %>
 	<%= f.text_field :latitude, :value => @latitude %><br>
 	<%= f.label :longitude %>
-	<%= f.text_field :longitude, :value => @longitude %><br><br>
+	<%= f.text_field :longitude, :value => @longitude %><br>
+	<%= f.label :address %>
+	<%= f.text_field :address, :value => @address %><br>
+	<%= f.label :address2 %>
+	<%= f.text_field :address2, :value => @address2 %><br><br>
 	<%= f.submit 'Add spot' %>
 <% end %>

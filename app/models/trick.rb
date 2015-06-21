@@ -6,7 +6,8 @@ class Trick < ActiveRecord::Base
 		where(spot_id: spot)
 	end
 
-	def self.best_trick spot
-		where(spot_id: spot).order(average_rating: :desc).first
+	def self.best_trick_of_the_spot spot
+		spot_tricks = Trick.where(spot_id: spot)
+		best_trick_of_the_spot = spot_tricks.order(average_rating: :desc).first
 	end
 end

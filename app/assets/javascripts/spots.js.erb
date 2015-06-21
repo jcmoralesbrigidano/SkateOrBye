@@ -59,15 +59,27 @@ $(document).ready(function() {
 
 		    	google.maps.event.addDomListener(yourPositionMarker, 'dragend', function() {
 		    		var latitude = yourPositionMarker.getPosition().lat();
-		    		var longitude = yourPositionMarker.getPosition().lng();;
+		    		var longitude = yourPositionMarker.getPosition().lng();
+		    		var address;
 
-			    	var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&longitude=' + longitude + '>Add spot here</a>';
+		    		var latLng = new google.maps.LatLng(latitude, longitude);
+		    		var geocoder = new google.maps.Geocoder();
 
-			    	var infoWindowYourPosition = new google.maps.InfoWindow({
-			    		content: infoWindowYourPositionContent
-			    	});
+		    		geocoder.geocode({ 'latLng': latLng }, function(results, status) {
+		    			if(status == google.maps.GeocoderStatus.OK) {
+		    				if(results) {
+		    					address = results[0].formatted_address;
+alert(address);
+		    					var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&address=' + address + '&address2=aa>Add spot here</a>';
 
-		    		infoWindowYourPosition.open(map, yourPositionMarker);
+						    	var infoWindowYourPosition = new google.maps.InfoWindow({
+						    		content: infoWindowYourPositionContent
+						    	});
+
+					    		infoWindowYourPosition.open(map, yourPositionMarker);
+		    				}
+		    			}
+		    		});		    		
 		    	});
 
 		    	function addClickEventForEachMarker(marker) {
@@ -143,7 +155,7 @@ $(document).ready(function() {
 			data: { trickRating },
 			dataType: 'json',
 			success: function(averageRating) { 
-				$('body').append('<p>' + averageRating + '</p>');
+				$('.hearts-container').text('Average rating: ' + averageRating);
 			},
 			error: function() { console.log('KO'); }
 		});

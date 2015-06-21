@@ -9,9 +9,13 @@
 
 <img class="spot-photo" src="<%= @spot.photo %>">
 <br><br>
-<div style="border:1px solid red"><iframe class="tricks" src="<%= @best_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe></div>
+<% if @spot_tricks.empty? %>
+<% else %>
+	<iframe class="tricks" src="<%= @best_trick_of_the_spot.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
+<% end %>
+
 <% @spot_tricks.each do |spot_trick| %>
-	<% if !(spot_trick.id === @best_trick.id) %>
+	<% if !(spot_trick.id === @best_trick_of_the_spot.id) %>
 		<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
 	<% end %>
 	<% if session[:id] %>
@@ -25,9 +29,13 @@
 		<% end %>
 
 		<% if @rated === false %>
+			<div class="hearts-container">
 			<% for i in 1..5 %>
+			
 			<img class="hearts" src="<%= asset_path('skateHeartBW.png') %>" data-spot-id="<%= spot_trick.spot_id %>" data-trick-id="<%= spot_trick.id %>" data-hearts="<%= i %>" data-selected="no">
+			
 			<% end %>
+			</div>
 		<% else %>
 			<p>Ya has puntuado este truco</p>
 		<% end %>

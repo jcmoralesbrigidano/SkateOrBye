@@ -13,7 +13,8 @@ class SpotsController < ApplicationController
 	def show
 		@spot = Spot.find params[:id]
 		@spot_tricks = Trick.spot_tricks @spot.id
-		@best_trick = Trick.best_trick @spot.id
+		@best_trick_of_the_spot = Trick.best_trick_of_the_spot @spot.id
+		#binding.pry
 	end
 
 	def new
@@ -21,6 +22,8 @@ class SpotsController < ApplicationController
 
 		@latitude = params[:latitude]
 		@longitude = params[:longitude]
+		@address = params[:address]
+		@address2 = params[:address2]
 	end
 
 	def create

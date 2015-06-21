@@ -23,11 +23,11 @@ ActiveRecord::Schema.define(version: 20150617123807) do
   end
 
   create_table "ratings", force: :cascade do |t|
+    t.integer  "trick_id"
+    t.integer  "skater_id"
+    t.integer  "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "rating"
-    t.integer  "skater_id"
-    t.integer  "trick_id"
   end
 
   create_table "skater_challenges", force: :cascade do |t|
@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 20150617123807) do
     t.string   "name"
     t.string   "email"
     t.string   "password"
+    t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "password_digest"
   end
 
   create_table "spots", force: :cascade do |t|
@@ -60,12 +60,12 @@ ActiveRecord::Schema.define(version: 20150617123807) do
   end
 
   create_table "tricks", force: :cascade do |t|
+    t.integer  "skater_id"
+    t.integer  "spot_id"
     t.string   "video"
     t.float    "average_rating"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "spot_id"
-    t.integer  "skater_id"
   end
 
 end
