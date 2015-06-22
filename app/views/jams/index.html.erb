@@ -1,0 +1,7 @@
+<h2>Jams</h2>
+
+<% @jams.each do |jam| %>
+	<%= link_to(jam.info, jam_path(jam.id)) %><br>
+<% end %><br>
+
+<a href="/jams/new">Add jam</a>

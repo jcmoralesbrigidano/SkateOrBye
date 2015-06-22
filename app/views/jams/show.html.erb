@@ -1,0 +1,14 @@
+<h2>Jam</h2>
+
+Spot: <%= @jam.spot_id %><br>
+Date: <%= @jam.date %><br>
+Time: <%= @jam.time %><br>
+Info: <%= @jam.info %><br><br>
+
+<h2>Skaters</h2>
+
+<% @skaters.each do |skater| %>
+	<%= skater.name %>
+<% end %><br><br>
+
+<a href="/jams/<%= @jam.id %>/skaters">Join jam</a>

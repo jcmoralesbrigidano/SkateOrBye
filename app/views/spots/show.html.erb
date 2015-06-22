@@ -9,15 +9,10 @@
 
 <img class="spot-photo" src="<%= @spot.photo %>">
 <br><br>
-<% if @spot_tricks.empty? %>
-<% else %>
-	<iframe class="tricks" src="<%= @best_trick_of_the_spot.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
-<% end %>
 
 <% @spot_tricks.each do |spot_trick| %>
-	<% if !(spot_trick.id === @best_trick_of_the_spot.id) %>
-		<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
-	<% end %>
+	<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe><br>
+
 	<% if session[:id] %>
 		<% @rated = false %>
 		<% @ratings = spot_trick.ratings %>
@@ -37,7 +32,7 @@
 			<% end %>
 			</div>
 		<% else %>
-			<p>Ya has puntuado este truco</p>
+			<p>You have already rated this trick</p>
 		<% end %>
 	<% else %>
 		<span>You need to <a href="<%= login_path %>">login</a> in order to rate a trick</span>

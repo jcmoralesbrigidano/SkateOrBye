@@ -3,4 +3,5 @@ class Skater < ActiveRecord::Base
 	has_many :tricks
 	has_many :skater_challenges
 	has_many :challenges, through: :skater_challenges
+	has_and_belongs_to_many :jams
 end

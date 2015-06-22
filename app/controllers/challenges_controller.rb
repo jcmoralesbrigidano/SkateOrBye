@@ -10,7 +10,7 @@ class ChallengesController < ApplicationController
 		@challenge = Challenge.new challenge_params
 
 		if @challenge.save
-			@skater = Skater.find params[:challenge][:skater_challenged]
+			@skater = Skater.where(name: params[:challenge][:skater_challenged]).first
 			@skater_challenge = @skater.skater_challenges.new
 			@skater_challenge.skater_id = @skater.id
 			@skater_challenge.challenge_id = @challenge.id

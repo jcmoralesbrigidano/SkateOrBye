@@ -11,16 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617123807) do
+ActiveRecord::Schema.define(version: 20150622103445) do
 
   create_table "challenges", force: :cascade do |t|
     t.string   "challenge"
     t.integer  "challenge_spot"
     t.float    "score"
-    t.integer  "skater_challenged"
+    t.string   "skater_challenged"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
+
+  create_table "jams", force: :cascade do |t|
+    t.integer  "spot_id"
+    t.date     "date"
+    t.time     "time"
+    t.string   "info"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "jams_skaters", id: false, force: :cascade do |t|
+    t.integer "jam_id"
+    t.integer "skater_id"
+  end
+
+  add_index "jams_skaters", ["jam_id"], name: "index_jams_skaters_on_jam_id"
+  add_index "jams_skaters", ["skater_id"], name: "index_jams_skaters_on_skater_id"
 
   create_table "ratings", force: :cascade do |t|
     t.integer  "trick_id"

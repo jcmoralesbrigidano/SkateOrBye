@@ -9,9 +9,14 @@ Rails.application.routes.draw do
   	resources :tricks
   end
 
+  get '/challenges' => 'skater_challenges#index'
   get '/challenges/new' => 'challenges#new'
   post '/challenges' => 'challenges#create'
-  get '/challenges' => 'skater_challenges#index'
+
+  get '/jams/:jam_id/skaters' => 'jams#join_jam'
+  resources :jams do
+    resources :skaters
+  end
 
   get '/signup' => 'skaters#new'
   get '/login' => 'sessions#new'
