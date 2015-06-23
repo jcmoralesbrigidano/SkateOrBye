@@ -15,7 +15,7 @@ $(document).ready(function() {
 	var positions = [];
 	var markers = [];
 	var yourPosition = {};
-
+	
 	function createMap(spotsResponse) {
 		var mapContainer = document.getElementById('map-container');
 		
@@ -57,6 +57,9 @@ $(document).ready(function() {
 		    			title: 'You are here!'
 		    	});
 
+		    	var addSpotHref = '/spots/new?latitude=' + yourPosition.lat() + '&longitude=' + yourPosition.lng() + '&address=' + ;
+		    	$('.add-spot').attr('href', addSpotHref);
+
 		    	google.maps.event.addDomListener(yourPositionMarker, 'dragend', function() {
 		    		var latitude = yourPositionMarker.getPosition().lat();
 		    		var longitude = yourPositionMarker.getPosition().lng();
@@ -68,8 +71,19 @@ $(document).ready(function() {
 		    			if(status == google.maps.GeocoderStatus.OK) {
 		    				if(results[0]) {
 		    					var address = results[0].formatted_address;
-		    					alert(address);
-		    					var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&longitude=' + longitude + '&address=' + address + '>Add spot here</a>';
+		    					var addressOk =  [];
+
+		    					for(var i = 0; i < address.length; i++) {
+		    						if(address[i] == ' ') {
+		    							addressOk += '-';		
+		    						} else if(address[i] == ',') {
+		    							addressOk += '_';
+		    						} else {
+		    							addressOk += address[i];
+		    						}
+		    					}
+		    					alert(addressOk);
+		    					var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&longitude=' + longitude + '&address=' + addressOk + '>Add spot here</a>';
 
 						    	var infoWindowYourPosition = new google.maps.InfoWindow({
 						    		content: infoWindowYourPositionContent
@@ -184,7 +198,6 @@ $(document).ready(function() {
 	});
 
 	$('.random-spot').on('click', function() {
-
 		var randomSpot = Math.floor(Math.random() * (spots.length - 0)) + 0;
 
 		var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '>Go to this spot</a><br><a href=/challenges/new?spot=' + (randomSpot + 1) + '>Add challenge</a>';

@@ -20,8 +20,18 @@ class SpotsController < ApplicationController
 
 		@latitude = params[:latitude]
 		@longitude = params[:longitude]
-		@address = params[:address]
-		@address2 = params[:address2]
+		@address = params[:address].split(//)
+		@addressOk = ''
+
+		@address.each do |letter|
+			if letter == '-'
+				@addressOk += ' '
+			elsif letter == '_'
+				@addressOk += ','
+			else
+				@addressOk += letter
+			end
+		end
 	end
 
 	def create
