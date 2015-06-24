@@ -8,7 +8,7 @@ Info: <%= @jam.info %><br><br>
 <h2>Skaters</h2>
 
 <% @skaters.each do |skater| %>
-	<%= skater.name %>
+	<%= skater.name %><br>
 <% end %><br><br>
 
 <a href="/jams/<%= @jam.id %>/skaters">Join jam</a>

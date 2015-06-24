@@ -5,9 +5,27 @@
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	  <%= stylesheet_link_tag 'application', media: 'all' %>
 	  <%= csrf_meta_tags %>
-	  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	</head>
 	<body>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Challenge a friend</h4>
+		      </div>
+		      <div class="modal-body">
+		      	Choose the spot<br><br>
+		      	<div class="challenge-spots">
+  			  	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-action="add-challenge">Add challenge</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<header>
 			<div class="logo"><a href="/">(&nbsp;&nbsp;SKATE TEMPLE&nbsp;&nbsp;)</a></div>
 			<div class="account-nav">
@@ -24,8 +42,13 @@
 			<a href="/spots"><div class="navigation-elements">Free Skate</div></a>
 			<a href="/jams"><div class="navigation-elements">Skate Jams</div></a>
 			<a href="/challenges"><div class="navigation-elements">Challenges</div></a>
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  				Challenge a friend
+			</button>
 		</nav><br>
 		<%= yield %>
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>
 		<%= javascript_include_tag 'application' %>
 	</body>

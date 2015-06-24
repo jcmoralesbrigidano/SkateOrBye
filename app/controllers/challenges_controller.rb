@@ -7,8 +7,19 @@ class ChallengesController < ApplicationController
 	end
 
 	def create
-		@challenge = Challenge.new challenge_params
+		#@challenge = Challenge.new challenge_params
+		@challenge = Challenge.new
+		@challenge.challenge_spot = params[:spotId]
 
+		if @challenge.save
+			respond_to do |format|
+				format.html
+				format.json { render json: 1 }
+			end
+		else
+			redirect_to '/jams'
+		end
+=begin
 		if @challenge.save
 			@skater = Skater.where(name: params[:challenge][:skater_challenged]).first
 			@skater_challenge = @skater.skater_challenges.new
@@ -21,10 +32,11 @@ class ChallengesController < ApplicationController
 		else
 			render 'new'
 		end
+=end
 	end
 
 	private
 	def challenge_params
-		params.require(:challenge).permit(:challenge, :challenge_spot, :score, :skater_challenged)
+		params.require(:challenge).permit(:challenge, :score, :skater_challenged)
 	end
 end

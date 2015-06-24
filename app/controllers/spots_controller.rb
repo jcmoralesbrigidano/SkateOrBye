@@ -43,7 +43,7 @@ class SpotsController < ApplicationController
 			render 'new'
 		end
 	end
-
+	
 	def rate_trick
 		@trick_rating = params[:trickRating]
 		@trick_id = @trick_rating['trick_id']

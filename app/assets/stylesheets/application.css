@@ -60,3 +60,11 @@ a, a:hover, a:focus, a:visited {
 	height: 400px;
 	margin: 0 30px;
 }
+
+.marker-spot-photo {
+	width: 250px;
+	height: 150px;
+	border-radius: 3px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}

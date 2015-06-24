@@ -57,7 +57,7 @@ $(document).ready(function() {
 		    			title: 'You are here!'
 		    	});
 
-		    	var addSpotHref = '/spots/new?latitude=' + yourPosition.lat() + '&longitude=' + yourPosition.lng() + '&address=' + ;
+		    	var addSpotHref = '/spots/new?latitude=' + yourPosition.lat() + '&longitude=' + yourPosition.lng();
 		    	$('.add-spot').attr('href', addSpotHref);
 
 		    	google.maps.event.addDomListener(yourPositionMarker, 'dragend', function() {
@@ -82,7 +82,7 @@ $(document).ready(function() {
 		    							addressOk += address[i];
 		    						}
 		    					}
-		    					alert(addressOk);
+		    					
 		    					var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&longitude=' + longitude + '&address=' + addressOk + '>Add spot here</a>';
 
 						    	var infoWindowYourPosition = new google.maps.InfoWindow({
@@ -99,7 +99,7 @@ $(document).ready(function() {
 		    		google.maps.event.addDomListener(marker, 'click', function() {
 		    			var spotId = marker.getTitle();
 
-						var infoWindowSpotsContent = '<a href=/spots/' + spotId + '>Go to this spot</a><br><a href=/challenges/new?spot=' + spotId + '>Add challenge</a>';
+		    			var infoWindowSpotsContent = '<a href=/spots/' + spotId + '><img class="marker-spot-photo" src=' + spots[spotId - 1].photo + '></a>';
 
 				    	var infoWindowSpots = new google.maps.InfoWindow({
 				    		content: infoWindowSpotsContent
@@ -187,8 +187,7 @@ $(document).ready(function() {
 				nearestSpot = i;
 			}
 		}
-
-		var infoWindowNearestSpotContent = '<a href=/spots/' + (nearestSpot + 1) + '>Go to this spot</a><br><a href=/challenges/new?spot=' + (nearestSpot + 1) + '>Add challenge</a>';
+		var infoWindowNearestSpotContent = '<a href=/spots/' + (nearestSpot + 1) + '><img class="marker-spot-photo" src=' + spots[nearestSpot].photo + '></a>';
 
 		var infoWindowNearestSpot = new google.maps.InfoWindow({
 			content: infoWindowNearestSpotContent
@@ -199,13 +198,33 @@ $(document).ready(function() {
 
 	$('.random-spot').on('click', function() {
 		var randomSpot = Math.floor(Math.random() * (spots.length - 0)) + 0;
-
-		var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '>Go to this spot</a><br><a href=/challenges/new?spot=' + (randomSpot + 1) + '>Add challenge</a>';
+		var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '><img class="marker-spot-photo" src=' + spots[randomSpot].photo + '></a>';
 
 		var infoWindowRandomSpot = new google.maps.InfoWindow({
 			content: infoWindowRandomSpotContent
 		});
 
 		infoWindowRandomSpot.open(map, markers[randomSpot]);
+	});
+
+	$('button[data-target="#myModal"]').on('click', function() {
+		$('.challenge-spots').empty();
+
+		for(var i = 0; i < spots.length; i++) {
+			$('.challenge-spots').append('<img src=' + spots[i].photo + ' class="marker-spot-photo">');
+		}
+
+		$('button[data-action="add-challenge"]').on('click', function() {
+			var spotId = 33;
+
+			$.ajax({
+				type: 'POST',
+				url: '/challenges',				
+				data: { spotId },
+				dataType: 'json',
+				success: function() { console.log('OK'); },
+				error: function() { alert('KO'); }
+			});
+		});
 	});
 });
