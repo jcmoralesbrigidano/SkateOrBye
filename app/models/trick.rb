@@ -1,5 +1,6 @@
 class Trick < ActiveRecord::Base
 	belongs_to :skater
+	belongs_to :challenge
 	has_many :ratings
 
 	def self.spot_tricks spot

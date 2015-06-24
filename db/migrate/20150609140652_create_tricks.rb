@@ -5,6 +5,7 @@ class CreateTricks < ActiveRecord::Migration
       t.integer :spot_id
       t.string :video
       t.float :average_rating
+      t.integer :challenge_id
       t.timestamps null: false
     end
   end

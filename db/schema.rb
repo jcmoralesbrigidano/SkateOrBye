@@ -14,15 +14,17 @@
 ActiveRecord::Schema.define(version: 20150622103445) do
 
   create_table "challenges", force: :cascade do |t|
-    t.string   "challenge"
-    t.integer  "challenge_spot"
-    t.float    "score"
     t.string   "skater_challenged"
+    t.integer  "challenge_spot"
+    t.string   "challenge"
+    t.float    "score"
+    t.string   "state"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
   create_table "jams", force: :cascade do |t|
+    t.string   "name"
     t.integer  "spot_id"
     t.date     "date"
     t.time     "time"
@@ -45,14 +47,6 @@ ActiveRecord::Schema.define(version: 20150622103445) do
     t.integer  "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "skater_challenges", force: :cascade do |t|
-    t.integer  "skater_id"
-    t.integer  "challenge_id"
-    t.string   "state"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
   end
 
   create_table "skaters", force: :cascade do |t|
@@ -81,6 +75,7 @@ ActiveRecord::Schema.define(version: 20150622103445) do
     t.integer  "spot_id"
     t.string   "video"
     t.float    "average_rating"
+    t.integer  "challenge_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
