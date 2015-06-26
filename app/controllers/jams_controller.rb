@@ -7,6 +7,7 @@ class JamsController < ApplicationController
 
 	def show
 		@jam = Jam.find params[:id]
+		@spot = Spot.where(id: @jam.spot_id).first
 		@skaters = @jam.skaters
 	end
 

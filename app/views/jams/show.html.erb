@@ -1,14 +1,18 @@
-<h2>Jam</h2>
+<h2><%= @jam.info %></h2><br>
+<ul class="list-group" style="display:inline-block">
+  <li class="list-group-item"><a href="/spots/<%= @spot.id %>"><img src="<%= @spot.photo %>"></a></li>
+  <li class="list-group-item">Date: <%= @jam.date %></li>
+  <li class="list-group-item">Hour: <%= @jam.time %></li>
+</ul>
+<br>
 
-Spot: <%= @jam.spot_id %><br>
-Date: <%= @jam.date %><br>
-Time: <%= @jam.time %><br>
-Info: <%= @jam.info %><br><br>
-
-<h2>Skaters</h2>
-
+<h2>Skaters</h2><br>
+<ul class="list-group" style="display:inline-block">
 <% @skaters.each do |skater| %>
-	<%= skater.name %><br>
-<% end %><br><br>
+	<li class="list-group-item">
+		<%= skater.name %>
+	</li>
+<% end %>
+</ul><br><br>
 
-<a href="/jams/<%= @jam.id %>/skaters">Join jam</a>
+<a href="/jams/<%= @jam.id %>/skaters"><div class="navigation-elements">Join</div></a>

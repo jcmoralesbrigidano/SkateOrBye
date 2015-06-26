@@ -1,18 +1,21 @@
-<div class="spot-info">
-	Address: <%= @spot.address %><br>
-	Latituide: <%= @spot.latitude %><br>
-	Longitude: <%= @spot.longitude %><br>
-	Level: <%= @spot.level %><br>
-	Floor quality: <%= @spot.floor_quality %><br>
-	Teachers: <%= @spot.teachers %><br>
-</div>
-
-<img class="spot-photo" src="<%= @spot.photo %>">
-<br><br>
-
+<div class="panel panel-default panel-correction">
+	<div class="panel-body">
+		<img class="spot-photo" src="<%= @spot.photo %>"><br><br>
+	</div>
+</div><br>
+<ul class="list-group" style="display:inline-block">
+  <li class="list-group-item">Address: <%= @spot.address %></li>
+  <li class="list-group-item">Skaters level: <%= @spot.level %></li>
+  <li class="list-group-item">Floor quality: <%= @spot.floor_quality %></li>
+  <li class="list-group-item">Teachers: <%= @spot.teachers %></li>
+</ul>
+<br>
 <% @spot_tricks.each do |spot_trick| %>
+<div class="panel panel-default panel-correction">
+	<div class="panel-body">
 	<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe><br>
-
+	</div>
+	<div class="panel-footer">
 	<% if session[:id] %>
 		<% @rated = false %>
 		<% @ratings = spot_trick.ratings %>
@@ -37,11 +40,12 @@
 	<% else %>
 		<span>You need to <a href="<%= login_path %>">login</a> in order to rate a trick</span>
 	<% end %>
-	<br><br><br><br>
+	</div>
+</div>
 <% end %>
 <br>
 <% if session[:id] %>
-	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>">Add trick</a>
+	<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>"><div class="navigation-elements">New trick</div></a>
 <% else %>
 	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick</span>
-<% end %>
+<% end %><br><br>

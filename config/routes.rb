@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   	resources :tricks
   end
 
-  get '/challenges' => 'skater_challenges#index'
+  get '/challenges' => 'challenges#index'
   get '/challenges/new' => 'challenges#new'
   post '/challenges' => 'challenges#create'
 

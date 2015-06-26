@@ -208,23 +208,69 @@ $(document).ready(function() {
 	});
 
 	$('button[data-target="#myModal"]').on('click', function() {
-		$('.challenge-spots').empty();
+		var skaters = [];
+		var skater = '';
+		var spot = 0;
+		var trick = '';
+		var score = 0;
 
-		for(var i = 0; i < spots.length; i++) {
-			$('.challenge-spots').append('<img src=' + spots[i].photo + ' class="marker-spot-photo">');
-		}
+		$.ajax({
+			type: 'GET',
+			url: '/skaters',
+			dataType: 'json',
+			success: function(skatersResponse) {
+				for(var i = 0; i < skatersResponse.length; i++) {
+					skaters.push(skatersResponse[i]);
+				}
 
-		$('button[data-action="add-challenge"]').on('click', function() {
-			var spotId = 33;
+				$('.challenge-skaters').empty();
 
-			$.ajax({
-				type: 'POST',
-				url: '/challenges',				
-				data: { spotId },
-				dataType: 'json',
-				success: function() { console.log('OK'); },
-				error: function() { alert('KO'); }
-			});
+				for(var i = 0; i < skaters.length; i++) {
+					$('.challenge-skaters').append('<button type="button" class="btn btn-default" data-action="select-skater">' + skaters[i].name + '</button>');
+				}
+
+				$('button[data-action="select-skater"]').on('click', function() {
+					skater = $(this).text();
+				});
+
+				$('.challenge-spots').empty();
+
+				for(var i = 0; i < spots.length; i++) {
+					$('.challenge-spots').append('<img src=' + spots[i].photo + ' class="marker-spot-photo" data-action="select-spot" data-spot=' + spots[i].id + '>');
+				}
+
+				$('img[data-action="select-spot"]').on('click', function() {
+					spot = $(this).data('spot');
+				});
+
+				$('button[data-action="add-challenge"]').on('click', function() {
+					trick = $('#challenge-trick').val();
+					score = $('#challenge-score').val();
+
+					var challenge = {
+						skater_name: skater,
+						spot_id: spot,
+						challenge_trick: trick,
+						challenge_score: score
+					};
+
+					$.ajax({
+						type: 'POST',
+						url: '/challenges',				
+						data: { challenge },
+						dataType: 'json',
+						success: function() {
+							$('.challenge-skaters').empty();
+							$('.challenge-spots').empty();
+							$('#challenge-trick').val('');
+							$('#challenge-score').val('');
+							console.log(challenge);
+						},
+						error: function() { alert('KO2'); }
+					});
+				});
+			},
+			error: function() { console.log('KO1'); }
 		});
 	});
 });

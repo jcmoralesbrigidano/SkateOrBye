@@ -59,6 +59,7 @@ a, a:hover, a:focus, a:visited {
 #map-container {
 	height: 400px;
 	margin: 0 30px;
+	border-radius: 3px;
 }
 
 .marker-spot-photo {
@@ -67,4 +68,25 @@ a, a:hover, a:focus, a:visited {
 	border-radius: 3px;
 	margin-right: 5px;
 	margin-bottom: 5px;
+}
+
+.challenge-challenge {
+	text-align: center;
+}
+
+.input-correction {
+	display: inline-block;
+	max-width: 150px;
+}
+
+.footer-correction {
+	text-align: center;
+}
+
+.panel-correction {
+	display: inline-block;
+}
+
+.spot-photo {
+	max-width: 600px;
 }

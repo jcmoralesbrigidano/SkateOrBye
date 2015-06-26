@@ -1,4 +1,12 @@
 class SkatersController < ApplicationController
+	def index
+		@skaters = Skater.all
+		
+		respond_to do |format|
+			format.html
+			format.json { render json: @skaters }
+		end
+	end
 	def new
 		@skater = Skater.new
 	end

@@ -14,13 +14,13 @@
 ActiveRecord::Schema.define(version: 20150622103445) do
 
   create_table "challenges", force: :cascade do |t|
-    t.string   "skater_challenged"
+    t.integer  "skater_id"
     t.integer  "challenge_spot"
     t.string   "challenge"
     t.float    "score"
     t.string   "state"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "jams", force: :cascade do |t|
