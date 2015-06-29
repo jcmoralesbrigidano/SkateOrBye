@@ -208,8 +208,9 @@ $(document).ready(function() {
 	});
 
 	$('button[data-target="#myModal"]').on('click', function() {
+		var challenger = 0;
 		var skaters = [];
-		var skater = '';
+		var skater_challenged = '';
 		var spot = 0;
 		var trick = '';
 		var score = 0;
@@ -219,6 +220,8 @@ $(document).ready(function() {
 			url: '/skaters',
 			dataType: 'json',
 			success: function(skatersResponse) {
+				challenger = $('button[data-action="add-challenge"]').data('challenger-id');
+
 				for(var i = 0; i < skatersResponse.length; i++) {
 					skaters.push(skatersResponse[i]);
 				}
@@ -230,7 +233,7 @@ $(document).ready(function() {
 				}
 
 				$('button[data-action="select-skater"]').on('click', function() {
-					skater = $(this).text();
+					skater_challenged = $(this).text();
 				});
 
 				$('.challenge-spots').empty();
@@ -248,7 +251,8 @@ $(document).ready(function() {
 					score = $('#challenge-score').val();
 
 					var challenge = {
-						skater_name: skater,
+						challenger_id: challenger,
+						challenged_name: skater_challenged,
 						spot_id: spot,
 						challenge_trick: trick,
 						challenge_score: score
@@ -271,6 +275,25 @@ $(document).ready(function() {
 				});
 			},
 			error: function() { console.log('KO1'); }
+		});
+	});
+
+	$('button[data-action="check-attempt"]').on('click', function() {
+		var challengeId = $('.panel').data('challenge-id');
+		var attemptResult = $(this).text();
+
+		var attempt = {
+			challenge_id: challengeId,
+			attempt_result: attemptResult
+		};
+
+		$.ajax({
+			type: 'POST',
+			url: '/challenges/check_attempt',
+			data: { attempt },
+			dataType: 'json',			
+			success: function() { console.log('OK3'); },
+			error: function() { console.log('KO3'); }
 		});
 	});
 });

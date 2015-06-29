@@ -1,9 +1,11 @@
 class ChallengesController < ApplicationController
-	before_action :require_skater, only: [:new]
+	before_action :require_skater, only: [:index, :new]
 
 	def index
 		@skater = Skater.find session[:id]
-		@challenges = @skater.challenges		
+		@pending_challenges = @skater.challenges.where(state: 'pending')
+		@challenges_completed = Challenge.where(skater_id: @skater.id).where(state: 'completed')
+		@challenges_to_check = Challenge.where(challenger_id: @skater.id).where(state: 'pending')
 	end
 
 	def new
@@ -13,8 +15,9 @@ class ChallengesController < ApplicationController
 
 	def create
 		@challenge_params = params[:challenge]
-		@skater = Skater.where(name: @challenge_params['skater_name']).first
-		@challenge = @skater.challenges.new		
+		@skater = Skater.where(name: @challenge_params['challenged_name']).first
+		@challenge = @skater.challenges.new
+		@challenge.challenger_id = @challenge_params['challenger_id']		
 		@challenge.skater_id = @skater.id
 		@challenge.challenge_spot = @challenge_params['spot_id']
 		@challenge.challenge = @challenge_params['challenge_trick']
@@ -29,6 +32,21 @@ class ChallengesController < ApplicationController
 		else
 			redirect_to '/'
 		end
+	end
+
+	def check_attempt
+		@attempt_params = params[:attempt]
+		@challenge = Challenge.find @attempt_params['challenge_id']
+		@challenge.state = 'completed' unless @attempt_params['Bad']
+
+		if @challenge.save
+			respond_to do |format|
+				format.html 
+				format.json { render json: 1 }
+			end
+		else
+			redirect_to '/'
+		end		
 	end
 
 	private

@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20150622103445) do
 
   create_table "challenges", force: :cascade do |t|
+    t.integer  "challenger_id"
     t.integer  "skater_id"
     t.integer  "challenge_spot"
     t.string   "challenge"

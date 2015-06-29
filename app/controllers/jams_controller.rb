@@ -1,5 +1,5 @@
 class JamsController < ApplicationController
-	before_action :require_skater, only: [:new]
+	before_action :require_skater, only: [:new, :join_jam]
 	
 	def index
 		@jams = Jam.all
@@ -15,6 +15,16 @@ class JamsController < ApplicationController
 		@jam = Jam.new
 	end
 
+	def create
+		@jam = Jam.new jams_params
+
+		if @jam.save
+			redirect_to jams_path
+		else
+			render 'new'
+		end
+	end
+
 	def join_jam
 		@skater = Skater.find session[:id]
 		@jam = Jam.find params[:jam_id]
@@ -24,16 +34,6 @@ class JamsController < ApplicationController
 			redirect_to jam_path @jam
 		else
 			render 'join_jam'
-		end
-	end
-
-	def create
-		@jam = Jam.new jams_params
-
-		if @jam.save
-			redirect_to jams_path
-		else
-			render 'new'
 		end
 	end
 

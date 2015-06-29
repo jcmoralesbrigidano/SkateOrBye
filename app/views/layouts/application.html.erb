@@ -26,7 +26,7 @@
   			  	
 			  </div>
 		      <div class="modal-footer footer-correction">
-		        <button type="button" class="btn btn-primary" data-action="add-challenge" data-dismiss="modal">Add challenge</button>
+		        <button type="button" class="btn btn-primary" data-action="add-challenge" data-challenger-id="<%= session[:id] %>" data-dismiss="modal">CHALLENGE</button>
 		      </div>
 		    </div>
 		  </div>
@@ -44,14 +44,15 @@
 			</div>
 		</header><br>
 		<nav>
-			<a href="/spots"><div class="navigation-elements">Free Skate</div></a>
-			<a href="/jams"><div class="navigation-elements">Skate Jams</div></a>
-			<a href="/challenges"><div class="navigation-elements">My challenges</div></a>
+			<a href="/spots"><div class="navigation-elements">SPOTS</div></a>
+			<a href="/jams"><div class="navigation-elements">JAMS</div></a>
+			<a href="/challenges"><div class="navigation-elements">CHALLENGES</div></a>
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  				Challenge a friend
+  				CHALLENGE A FRIEND
 			</button>
 		</nav><br>
-		<%= yield %>
+		<%= yield %><br><br>
+		<footer>&copy; 2015 Skate or Bye | Crafted by a padawan skater</footer>
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>

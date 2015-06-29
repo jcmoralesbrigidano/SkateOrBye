@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/challenges/new' => 'challenges#new'
   post '/challenges' => 'challenges#create'
 
+  post '/challenges/check_attempt' => 'challenges#check_attempt'
+
   get '/jams/:jam_id/skaters' => 'jams#join_jam'
   resources :jams do
     resources :skaters

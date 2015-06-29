@@ -1,5 +1,5 @@
 class SpotsController < ApplicationController
-	before_action :require_skater, only: [:new]
+	before_action :require_skater, only: [:new, :rate_trick]
 	
 	def index
 		@spots = Spot.all
