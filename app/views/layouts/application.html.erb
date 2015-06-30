@@ -7,7 +7,7 @@
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>
-		<!-- Modal -->
+		<!-- Challenge a friend modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
@@ -22,8 +22,7 @@
   			  	</div><br>
   			  	<div class="challenge-challenge">
   			  		<input type="text" class="form-control input-correction" id="challenge-trick" placeholder="Trick"><br><br>					
-  			  	</div>
-  			  	
+  			  	</div>  			  	
 			  </div>
 		      <div class="modal-footer footer-correction">
 		        <button type="button" class="btn btn-primary" data-action="add-challenge" data-challenger-id="<%= session[:id] %>" data-dismiss="modal">CHALLENGE</button>
@@ -31,6 +30,59 @@
 		    </div>
 		  </div>
 		</div>
+		<!-- Upload your trick modal -->
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Upload your trick</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="text" class="form-control input-correction" id="trick-video" placeholder="Video"><br>					
+			  </div>
+		      <div class="modal-footer footer-correction">
+		        <button type="button" class="btn btn-primary" data-action="upload-trick" data-skater-id="<%= session[:id] %>" data-dismiss="modal">UPLOAD TRICK</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- Upload your attempt modal -->
+		<div class="modal fade" id="myModal3" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Upload your attempt</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="text" class="form-control input-correction" id="attempt-video" placeholder="Video"><br>					
+			  </div>
+		      <div class="modal-footer footer-correction">
+		        <button type="button" class="btn btn-primary" data-action="upload-attempt" data-dismiss="modal">UPLOAD ATTEMPT</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- Sign up modal
+		<div class="modal fade" id="myModal3" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Sign in</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="text" class="form-control input-correction" id="sign-up-nickname" placeholder="Nickname"><br><br>
+		      	<input type="text" class="form-control input-correction" id="sign-up-email" placeholder="Email"><br><br>
+		      	<input type="text" class="form-control input-correction" id="sign-up-password" placeholder="Password"><br><br>					
+			  </div>
+		      <div class="modal-footer footer-correction">
+		        <button type="button" class="btn btn-primary" data-action="sign-up" data-dismiss="modal">SIGN IN</button>
+		      </div>
+		    </div>
+		  </div>
+		</div> -->
 		<header>
 			<div class="logo"><a href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a></div>
 			<div class="account-nav">
@@ -38,8 +90,9 @@
 					<div class="account-actions"><span class="label label-info"><%= current_skater.email %></span></div> | 
 					<div class="account-actions"><%= link_to "Log out", logout_path, method: "delete" %></div>
 				<% else %> 
-					<div class="account-actions"><%= link_to "Log in", login_path %></div></li> | 
+					<div class="account-actions"><%= link_to "Log in", login_path %></div> | 
 					<div class="account-actions"><%= link_to "Sign up", signup_path %></div>
+					<!-- <div class="account-actions" data-toggle="modal" data-target="#myModal3">Sign up</div> -->
 				<% end %>
 			</div>
 		</header><br>
@@ -50,6 +103,8 @@
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   				CHALLENGE A FRIEND
 			</button>
+			<!--<div data-toggle="modal" data-target="#myModal2" class="navigation-elements">New trick</div></a>-->
+			<!--<a href="#" data-toggle="modal" data-target="#myModal2"><div class="navigation-elements">New trick</div></a>-->
 		</nav><br>
 		<%= yield %><br><br>
 		<footer>&copy; 2015 Skate or Bye | Crafted by a padawan skater</footer>

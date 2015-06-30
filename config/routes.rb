@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/challenges' => 'challenges#create'
 
   post '/challenges/check_attempt' => 'challenges#check_attempt'
+  post '/challenges/make_an_attempt' => 'challenges#make_an_attempt'
 
   get '/jams/:jam_id/skaters' => 'jams#join_jam'
   resources :jams do

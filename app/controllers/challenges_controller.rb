@@ -49,6 +49,25 @@ class ChallengesController < ApplicationController
 		end		
 	end
 
+	def make_an_attempt
+		@attempt_params = params[:attempt]
+		@skater = Skater.find @attempt_params["skater_id"]
+		@trick = @skater.tricks.new
+		@trick.skater_id = @attempt_params["skater_id"]
+		@trick.spot_id = @attempt_params["spot_id"]
+		@trick.video = @attempt_params["trick_video"]
+		@trick.challenge_id = @attempt_params["challenge_id"]
+
+		if @trick.save
+			respond_to do |format|
+				format.html
+				format.json { render json: 1 }
+			end
+		else
+			redirect_to '/'
+		end
+	end
+
 	private
 	def challenge_params
 		params.require(:challenge).permit(:challenge, :score, :skater_id)

@@ -25,7 +25,111 @@ $(document).ready(function() {
 
 		var mapOptions = {
 	    	zoom: 11,
-	    	mapTypeId: google.maps.MapTypeId.ROAD
+	    	mapTypeId: google.maps.MapTypeId.ROAD,
+	    	styles: [
+    {
+        "featureType": "landscape",
+        "stylers": [
+            {
+                "hue": "#F1FF00"
+            },
+            {
+                "saturation": -27.4
+            },
+            {
+                "lightness": 9.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "stylers": [
+            {
+                "hue": "#0099FF"
+            },
+            {
+                "saturation": -20
+            },
+            {
+                "lightness": 36.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "stylers": [
+            {
+                "hue": "#00FF4F"
+            },
+            {
+                "saturation": 0
+            },
+            {
+                "lightness": 0
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "hue": "#FFB300"
+            },
+            {
+                "saturation": -38
+            },
+            {
+                "lightness": 11.2
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "stylers": [
+            {
+                "hue": "#00B6FF"
+            },
+            {
+                "saturation": 4.2
+            },
+            {
+                "lightness": -63.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "hue": "#9FFF00"
+            },
+            {
+                "saturation": 0
+            },
+            {
+                "lightness": 0
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    }
+]
 	  	};
 
 	  	map = new google.maps.Map(mapContainer, mapOptions);
@@ -296,4 +400,69 @@ $(document).ready(function() {
 			error: function() { console.log('KO3'); }
 		});
 	});
+
+	$('[data-action="upload-trick"]').on('click', function() {
+		var skaterId = $(this).data('skater-id');
+		var spotId = $('.hearts').data('spot-id');
+		var trickVideo = $('#trick-video').val();		
+
+		var trick = {
+			skater_id: skaterId,
+			spot_id: spotId,
+			trick_video: trickVideo
+		};
+
+		$.ajax({
+			type: 'POST',
+		    url: '/skaters/' + skaterId + '/tricks',
+		    data: { trick },
+		    dataType: 'json',
+		    success: function() { console.log('OK4'); },
+		    error: function() { console.log('KO4'); }
+		});
+	});
+
+	$('[data-action="upload-attempt"]').on('click', function() {
+		var skaterId = $('[data-target="#myModal3"]').data('skater-id');
+		var spotId = $('[data-target="#myModal3"]').data('spot-id');
+		var trickVideo = $('#attempt-video').val();		
+		var challengeId = $('[data-target="#myModal3"]').data('challenge-id');
+
+		var attempt = {
+			skater_id: skaterId,
+			spot_id: spotId,
+			trick_video: trickVideo,
+			challenge_id: challengeId
+		};
+
+		$.ajax({
+			type: 'POST',
+		    url: '/challenges/make_an_attempt',
+		    data: { attempt },
+		    dataType: 'json',
+		    success: function() { console.log('OK5'); },
+		    error: function() { console.log('KO5'); }
+		});
+	});
+
+	/*$('[data-action="sign-up"]').on('click', function() {
+		var nickname = $('#sign-up-nickname').val();
+		var email = $('#sign-up-email').val();
+		var password = $('#sign-up-password').val();
+
+		var newSkater = {
+			nickname: nickname,
+			email: email,
+			password: password
+		};
+
+		$.ajax({
+			type: 'POST',
+		    url: '/skaters',
+		    data: { newSkater },
+		    dataType: 'json',
+		    success: function() { console.log('OK5'); },
+		    error: function() { console.log('KO5'); }
+		});
+	});*/
 });
