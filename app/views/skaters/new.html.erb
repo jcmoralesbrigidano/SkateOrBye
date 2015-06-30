@@ -1,9 +1,10 @@
-<%= form_for @skater do |f| %>
-	<%= f.label :name %>
-	<%= f.text_field :name %><br>
-	<%= f.label :email %>
-	<%= f.email_field :email %><br>
-	<%= f.label :password %>
-	<%= f.password_field :password %><br><br>
-	<%= f.submit 'Signup' %>
-<% end %>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<%= form_for @skater do |f| %>
+			<%= f.text_field :name, :placeholder => 'Nickname', class: 'form-control input-correction' %><br><br>
+			<%= f.email_field :email, :placeholder => 'Email', class: 'form-control input-correction' %><br><br>
+			<%= f.password_field :password, :placeholder => 'Password', class: 'form-control input-correction' %><br><br><br>
+			<%= f.submit 'Sign up', class: 'navigation-elements' %>
+		<% end %>
+	</div>
+</div>

@@ -49,6 +49,7 @@ a, a:hover, a:focus, a:visited {
 	color: #337ab7;
 	font-weight: bold;
 	cursor:pointer;
+	background: white;
 }
 
 .navigation-elements:hover {
@@ -62,6 +63,10 @@ a, a:hover, a:focus, a:visited {
 	height: 400px;
 	margin: 0 30px;
 	border-radius: 3px;
+}
+
+.hearts {
+	cursor: pointer;
 }
 
 .marker-spot-photo {
@@ -78,7 +83,7 @@ a, a:hover, a:focus, a:visited {
 
 .input-correction {
 	display: inline-block;
-	max-width: 150px;
+	max-width: 200px;
 }
 
 .footer-correction {
@@ -95,4 +100,8 @@ a, a:hover, a:focus, a:visited {
 
 .challenges-nav {
 	display: inline-block;
+}
+
+.hidden-elements {
+	visibility: hidden;
 }
