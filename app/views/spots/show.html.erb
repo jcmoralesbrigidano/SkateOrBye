@@ -45,7 +45,7 @@
 <% end %>
 <br>
 <% if session[:id] %>
-	<div data-toggle="modal" data-target="#myModal2" class="navigation-elements">New trick</div>
+	<div data-toggle="modal" data-target="#myModal2" class="navigation-elements new-trick-button" data-spot-id="<%= @spot.id %>">New trick</div>
 	<!--<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>"><div class="navigation-elements">New trick</div></a>-->
 <% else %>
 	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick</span>

@@ -7,12 +7,12 @@ class ChallengesController < ApplicationController
 		@challenges_completed = Challenge.where(skater_id: @skater.id).where(state: 'completed')
 		@challenges_to_check = Challenge.where(challenger_id: @skater.id).where(state: 'pending')
 	end
-
+=begin
 	def new
 		@challenge = Challenge.new		
 		@spot = params[:spot]
 	end
-
+=end
 	def create
 		@challenge_params = params[:challenge]
 		@skater = Skater.where(name: @challenge_params['challenged_name']).first
@@ -20,8 +20,7 @@ class ChallengesController < ApplicationController
 		@challenge.challenger_id = @challenge_params['challenger_id']		
 		@challenge.skater_id = @skater.id
 		@challenge.challenge_spot = @challenge_params['spot_id']
-		@challenge.challenge = @challenge_params['challenge_trick']
-		@challenge.score = @challenge_params['challenge_score']		
+		@challenge.challenge = @challenge_params['challenge_trick']		
 		@challenge.state = 'pending'
 
 		if @challenge.save			
@@ -67,9 +66,10 @@ class ChallengesController < ApplicationController
 			redirect_to '/'
 		end
 	end
-
+=begin
 	private
 	def challenge_params
 		params.require(:challenge).permit(:challenge, :score, :skater_id)
 	end
+=end
 end

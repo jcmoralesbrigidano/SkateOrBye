@@ -311,13 +311,16 @@ $(document).ready(function() {
 		infoWindowRandomSpot.open(map, markers[randomSpot]);
 	});
 
+	$('.add-spot-here').on('click', function() {
+		console.log(yourPosition);
+	});
+
 	$('button[data-target="#myModal"]').on('click', function() {
 		var challenger = 0;
 		var skaters = [];
 		var skater_challenged = '';
 		var spot = 0;
 		var trick = '';
-		var score = 0;
 
 		$.ajax({
 			type: 'GET',
@@ -350,18 +353,18 @@ $(document).ready(function() {
 					spot = $(this).data('spot');
 				});
 
-				$('button[data-action="add-challenge"]').on('click', function() {
+				$('button[data-action="add-challenge"]').unbind('click').on('click', function() {
 					trick = $('#challenge-trick').val();
-					score = $('#challenge-score').val();
 
 					var challenge = {
 						challenger_id: challenger,
 						challenged_name: skater_challenged,
 						spot_id: spot,
-						challenge_trick: trick,
-						challenge_score: score
+						challenge_trick: trick
 					};
 
+					console.log(challenge);
+					
 					$.ajax({
 						type: 'POST',
 						url: '/challenges',				
@@ -371,8 +374,7 @@ $(document).ready(function() {
 							$('.challenge-skaters').empty();
 							$('.challenge-spots').empty();
 							$('#challenge-trick').val('');
-							$('#challenge-score').val('');
-							console.log(challenge);
+							
 						},
 						error: function() { alert('KO2'); }
 					});
@@ -403,7 +405,7 @@ $(document).ready(function() {
 
 	$('[data-action="upload-trick"]').on('click', function() {
 		var skaterId = $(this).data('skater-id');
-		var spotId = $('.hearts').data('spot-id');
+		var spotId = $('.new-trick-button').data('spot-id');
 		var trickVideo = $('#trick-video').val();		
 
 		var trick = {
@@ -411,6 +413,8 @@ $(document).ready(function() {
 			spot_id: spotId,
 			trick_video: trickVideo
 		};
+
+		console.log(trick);
 
 		$.ajax({
 			type: 'POST',

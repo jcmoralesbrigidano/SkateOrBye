@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   get '/' => 'home#index'
+
+  get '/signup' => 'skaters#new'
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  delete '/logout' => 'sessions#destroy'
   
   resources :spots
   get '/spots/:id/rate-trick' => 'spots#rate_trick'
@@ -9,20 +14,14 @@ Rails.application.routes.draw do
   	resources :tricks
   end
 
-  get '/challenges' => 'challenges#index'
-  get '/challenges/new' => 'challenges#new'
-  post '/challenges' => 'challenges#create'
-
-  post '/challenges/check_attempt' => 'challenges#check_attempt'
-  post '/challenges/make_an_attempt' => 'challenges#make_an_attempt'
-
   get '/jams/:jam_id/skaters' => 'jams#join_jam'
   resources :jams do
     resources :skaters
   end
 
-  get '/signup' => 'skaters#new'
-  get '/login' => 'sessions#new'
-  post '/login' => 'sessions#create'
-  delete '/logout' => 'sessions#destroy'
+  get '/challenges' => 'challenges#index'
+  get '/challenges/new' => 'challenges#new'
+  post '/challenges' => 'challenges#create'
+  post '/challenges/check_attempt' => 'challenges#check_attempt'
+  post '/challenges/make_an_attempt' => 'challenges#make_an_attempt'
 end
