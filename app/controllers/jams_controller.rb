@@ -39,6 +39,6 @@ class JamsController < ApplicationController
 
 	private
 	def jams_params
-		params.require(:jam).permit(:spot_id, :date, :time, :info)
+		params.require(:jam).permit(:name, :spot_id, :date, :time, :info)
 	end
 end

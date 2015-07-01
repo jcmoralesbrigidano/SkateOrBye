@@ -2,7 +2,7 @@
 <ul class="list-group" style="display:inline-block">
 <% @jams.each do |jam| %>
 	<li class="list-group-item">
-		<%= link_to(jam.info, jam_path(jam.id)) %>
+		<%= link_to(jam.name, jam_path(jam.id)) %>
 	</li>
 <% end %>
 </ul><br>

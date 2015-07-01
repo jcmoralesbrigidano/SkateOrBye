@@ -11,7 +11,7 @@
 		<ul class="list-group" style="display:inline-block">
 			<% @pending_challenges.each do |pending_challenge| %>
 				<li class="list-group-item">
-					<%= pending_challenge.challenge %> (Challenged by <%= Skater.find(pending_challenge.challenger_id).name %>) 
+					<%= pending_challenge.challenge %> (Challenged by <%= Skater.find(pending_challenge.challenger_id).name %>)
 					<div data-toggle="modal" data-target="#myModal3" class="navigation-elements" data-skater-id="<%= session[:id] %>" data-spot-id="<%= pending_challenge.challenge_spot %>" data-challenge-id="<%= pending_challenge.id %>">Try!</div>
 					<!-- <a href="/skaters/<%= session[:id] %>/tricks/new?spot_id=<%= pending_challenge.challenge_spot %>&challenge_id=<%= pending_challenge.id %>">Try!</a> -->
 				</li>
