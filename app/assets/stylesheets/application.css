@@ -37,20 +37,11 @@ a, a:hover, a:focus, a:visited {
 	margin-top: 10px;
 }
 
-.account-actions {
+.account-actions,
+.panel-correction,
+.challenges-nav {
 	display: inline-block;
 }
-/*
-.menu-elements {
-	display: inline-block;
-	border-radius: 3px;
-	padding: 5px 20px;
-	border: 3px solid #337ab7;
-	background: #337ab7;
-	color: white;
-	font-weight: bold;
-	cursor:pointer;
-}*/
 
 .navigation-elements {
 	display: inline-block;
@@ -72,7 +63,7 @@ a, a:hover, a:focus, a:visited {
 
 #map-container {
 	height: 400px;
-	margin: 0 30px;
+	margin: 0 200px;
 	border-radius: 3px;
 }
 
@@ -88,7 +79,8 @@ a, a:hover, a:focus, a:visited {
 	margin-bottom: 5px;
 }
 
-.challenge-challenge {
+.challenge-challenge,
+.footer-correction {
 	text-align: center;
 }
 
@@ -101,20 +93,8 @@ a, a:hover, a:focus, a:visited {
 	font-size: 100%;
 }
 
-.footer-correction {
-	text-align: center;
-}
-
-.panel-correction {
-	display: inline-block;
-}
-
 .spot-photo {
 	max-width: 600px;
-}
-
-.challenges-nav {
-	display: inline-block;
 }
 
 .hidden-elements {

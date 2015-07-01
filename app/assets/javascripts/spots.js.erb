@@ -15,6 +15,7 @@ $(document).ready(function() {
 	var positions = [];
 	var markers = [];
 	var yourPosition = {};
+	var yourPositionMarker;
 	
 	function createMap(spotsResponse) {
 		var mapContainer = document.getElementById('map-container');
@@ -153,7 +154,7 @@ $(document).ready(function() {
 
 		    	yourPosition = new google.maps.LatLng(yourPositionResponse.coords.latitude, yourPositionResponse.coords.longitude);
 				
-				var yourPositionMarker = new google.maps.Marker({
+				yourPositionMarker = new google.maps.Marker({
 		    			map: map,
 		    			position: yourPosition,
 		    			draggable: true,
@@ -312,7 +313,38 @@ $(document).ready(function() {
 	});
 
 	$('.add-spot-here').on('click', function() {
-		console.log(yourPosition);
+		var latitude = yourPositionMarker.getPosition().lat();
+		var longitude = yourPositionMarker.getPosition().lng();
+		var latLng = new google.maps.LatLng(latitude, longitude);
+
+		var geocoder = new google.maps.Geocoder();
+
+		geocoder.geocode({ 'latLng': latLng }, function(results, status) {
+			if(status == google.maps.GeocoderStatus.OK) {
+				if(results[0]) {
+					var address = results[0].formatted_address;
+					var addressOk =  [];
+
+					for(var i = 0; i < address.length; i++) {
+						if(address[i] == ' ') {
+							addressOk += '-';		
+						} else if(address[i] == ',') {
+							addressOk += '_';
+						} else {
+							addressOk += address[i];
+						}
+					}
+					
+					var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&longitude=' + longitude + '&address=' + addressOk + '>Add spot here</a>';
+
+			    	var infoWindowYourPosition = new google.maps.InfoWindow({
+			    		content: infoWindowYourPositionContent
+			    	});
+
+		    		infoWindowYourPosition.open(map, yourPositionMarker);
+				}
+			}
+		});		    
 	});
 
 	$('button[data-target="#myModal"]').on('click', function() {
