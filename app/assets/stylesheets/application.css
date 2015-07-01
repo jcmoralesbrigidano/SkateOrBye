@@ -97,6 +97,10 @@ a, a:hover, a:focus, a:visited {
 	max-width: 200px;
 }
 
+.span-correction {
+	font-size: 100%;
+}
+
 .footer-correction {
 	text-align: center;
 }

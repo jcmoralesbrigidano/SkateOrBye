@@ -87,7 +87,7 @@
 			<div class="logo"><a href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a></div>
 			<div class="account-nav">
 				<% if current_skater %> 
-					<div class="account-actions"><span class="label label-info"><%= current_skater.email %></span></div> | 
+					<div class="account-actions"><span class="label label-info span-correction"><%= current_skater.email %></span></div> | 
 					<div class="account-actions"><%= link_to "Log out", logout_path, method: "delete" %></div>
 				<% else %> 
 					<div class="account-actions"><%= link_to "Log in", login_path %></div> | 
