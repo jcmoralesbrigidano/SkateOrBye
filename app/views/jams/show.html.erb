@@ -11,9 +11,9 @@
 <ul class="list-group" style="display:inline-block">
 <% @attendances.each do |attendance| %>
 	<li class="list-group-item">
-		<%= Skater.where(id: attendance.skater_id).first.name %> - <%= attendance.role %>
+		<%= Skater.where(id: attendance.skater_id).first.name %> (<%= attendance.role %>)
 	</li>
 <% end %>
 </ul><br><br>
 
-<div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="navigation-elements">Join</div><br>
+<div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="navigation-elements">JOIN</div><br>
