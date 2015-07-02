@@ -7,13 +7,13 @@
 </ul>
 <br>
 
-<h2>Skaters</h2><br>
+<h2>Assistants</h2><br>
 <ul class="list-group" style="display:inline-block">
-<% @skaters.each do |skater| %>
+<% @attendances.each do |attendance| %>
 	<li class="list-group-item">
-		<%= skater.name %>
+		<%= Skater.where(id: attendance.skater_id).first.name %> - <%= attendance.role %>
 	</li>
 <% end %>
 </ul><br><br>
 
-<a href="/jams/<%= @jam.id %>/skaters"><div class="navigation-elements">Join</div></a>
+<div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="navigation-elements">Join</div><br>

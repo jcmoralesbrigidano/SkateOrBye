@@ -39,7 +39,8 @@
 		        <h4 class="modal-title" id="myModalLabel">Upload your trick</h4>
 		      </div>
 		      <div class="modal-body">
-		      	<input type="text" class="form-control input-correction" id="trick-video" placeholder="Awesome video"><br>					
+		      	<div class="btn-group jam-roles">
+  			  	</div><br>					
 			  </div>
 		      <div class="modal-footer footer-correction">
 		        <button type="button" class="btn btn-primary" data-action="upload-trick" data-skater-id="<%= session[:id] %>" data-dismiss="modal">UPLOAD</button>
@@ -60,6 +61,28 @@
 			  </div>
 		      <div class="modal-footer footer-correction">
 		        <button type="button" class="btn btn-primary" data-action="upload-attempt" data-dismiss="modal">UPLOAD</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- Join jam modal -->
+		<div class="modal fade" id="myModal4" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Join jam</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="btn-group challenge-skaters">
+		      		<button type="button" class="btn btn-default" data-role="Skater">Skater</button>
+		      		<button type="button" class="btn btn-default" data-role="Learner">Learner</button>
+		      		<button type="button" class="btn btn-default" data-role="Teacher">Teacher</button>
+		      		<button type="button" class="btn btn-default" data-role="Spectator">Spectator</button>
+  			  	</div><br><br>		      	
+			  </div>
+		      <div class="modal-footer footer-correction">
+		        <button type="button" class="btn btn-primary" data-action="join-jam" data-dismiss="modal">JOIN</button>
 		      </div>
 		    </div>
 		  </div>

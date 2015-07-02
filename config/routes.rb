@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
 
   get '/jams/:jam_id/skaters' => 'jams#join_jam'
+  post '/jams/:jam_id/skaters' => 'jams#join_jam'
   resources :jams do
     resources :skaters
   end

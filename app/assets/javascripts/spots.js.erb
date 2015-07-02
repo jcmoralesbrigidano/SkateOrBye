@@ -481,6 +481,30 @@ $(document).ready(function() {
 		});
 	});
 
+	$('button[data-target="#myModal4"]').on('click', function() {
+		var role;
+	});
+
+	$('[data-role]').on('click', function() {
+		role = $(this).data('role');
+	});
+
+	$('[data-action="join-jam"]').on('click', function() {
+		var jamId = $('[data-target="#myModal4"]').data('jam-id');
+		var attendance = {
+			role: role
+		};
+
+		$.ajax({
+			type: 'POST',
+		    url: '/jams/' + jamId + '/skaters',
+		    data: { attendance },
+		    dataType: 'json',
+		    success: function() { console.log('OK5'); },
+		    error: function() { console.log('KO5'); }
+		});
+	});
+
 	/*$('[data-action="sign-up"]').on('click', function() {
 		var nickname = $('#sign-up-nickname').val();
 		var email = $('#sign-up-email').val();

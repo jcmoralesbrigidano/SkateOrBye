@@ -8,7 +8,7 @@ class JamsController < ApplicationController
 	def show
 		@jam = Jam.find params[:id]
 		@spot = Spot.where(id: @jam.spot_id).first
-		@skaters = @jam.skaters
+		@attendances = @jam.attendances
 	end
 
 	def new
@@ -26,11 +26,15 @@ class JamsController < ApplicationController
 	end
 
 	def join_jam
+		@attendance_params = params[:attendance]
 		@skater = Skater.find session[:id]
 		@jam = Jam.find params[:jam_id]
-		@jam.skaters.push @skater
+		@attendance = @jam.attendances.new
+		@attendance.jam_id = @jam.id
+		@attendance.skater_id = @skater.id
+		@attendance.role = @attendance_params['role']
 
-		if @jam.save
+		if @attendance.save
 			redirect_to jam_path @jam
 		else
 			render 'join_jam'
