@@ -31,7 +31,7 @@ class ChallengesController < ApplicationController
 	def check_attempt
 		@attempt_params = params[:attempt]
 		@challenge = Challenge.find @attempt_params['challenge_id']
-		@challenge.state = 'completed' unless @attempt_params['Bad']
+		@challenge.state = 'completed' unless @attempt_params['attempt_result'] == 'Bad'
 
 		if @challenge.save
 			respond_to do |format|

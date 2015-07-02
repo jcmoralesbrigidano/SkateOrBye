@@ -425,6 +425,8 @@ $(document).ready(function() {
 			attempt_result: attemptResult
 		};
 
+		console.log(attemptResult);
+
 		$.ajax({
 			type: 'POST',
 			url: '/challenges/check_attempt',

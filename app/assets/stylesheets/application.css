@@ -67,8 +67,36 @@ a, a:hover, a:focus, a:visited {
 	border-radius: 3px;
 }
 
+.spot-tricks {
+	display: inline-block;
+}
+
+.trick,
+.trick-info {
+	float: left;
+	margin-left:5px;
+}
+
 .hearts {
 	cursor: pointer;
+}
+
+.label-danger {
+
+}
+
+.clear-floats {
+	clear: both;
+}
+
+.skater-trick {
+	margin-bottom: 5px;
+}
+
+.skater-trick,
+.trick-rating {
+	display: inline-block;
+	float:left;
 }
 
 .marker-spot-photo {

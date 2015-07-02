@@ -10,8 +10,8 @@
     <div role="tabpanel" class="tab-pane fade in active" id="pending"><br>
 		
 			<% @pending_challenges.each do |pending_challenge| %>
-					<span class="label label-info span-correction"><%= pending_challenge.challenge %></span>&nbsp;&nbsp;Challenged by <%= Skater.find(pending_challenge.challenger_id).name %>&nbsp;&nbsp;
-					<div data-toggle="modal" data-target="#myModal3" class="navigation-elements" data-skater-id="<%= session[:id] %>" data-spot-id="<%= pending_challenge.challenge_spot %>" data-challenge-id="<%= pending_challenge.id %>">Try</div><br><br>
+					<span class="label label-success span-correction"><%= pending_challenge.challenge %></span>&nbsp;&nbsp;Challenged by <%= Skater.find(pending_challenge.challenger_id).name %>&nbsp;&nbsp;
+					<div data-toggle="modal" data-target="#myModal3" class="navigation-elements" data-skater-id="<%= session[:id] %>" data-spot-id="<%= pending_challenge.challenge_spot %>" data-challenge-id="<%= pending_challenge.id %>">TRY</div><br><br>
 					<!-- <a href="/skaters/<%= session[:id] %>/tricks/new?spot_id=<%= pending_challenge.challenge_spot %>&challenge_id=<%= pending_challenge.id %>">Try!</a> -->
 				
 			<% end %>
@@ -21,7 +21,7 @@
     	
     	<% @challenges_completed.each do |challenge_completed| %>
     		
-    			<span class="label label-info span-correction"><%= challenge_completed.challenge %></span><br><br>
+    			<span class="label label-success span-correction"><%= challenge_completed.challenge %></span><br><br>
     		
     	<% end %>
     	
@@ -31,7 +31,7 @@
     	<% if Trick.where(challenge_id: challenge_to_check.id).first %>
 			<div class="panel panel-default panel-correction" data-challenge-id="<%= challenge_to_check.id %>">
 				<div class="panel-title"><br>
-					<span class="label label-info span-correction"><%= challenge_to_check.challenge %> of <%= Skater.find(challenge_to_check.skater_id).name %></span>
+					<span class="label label-success span-correction"><%= challenge_to_check.challenge %> of <%= Skater.find(challenge_to_check.skater_id).name %></span>
 				</div>
 				<div class="panel-body">
 					<iframe class="tricks" src="<%= Trick.where(challenge_id: challenge_to_check.id).first.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>					
