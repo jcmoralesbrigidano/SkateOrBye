@@ -25,7 +25,7 @@ $(document).ready(function() {
 		}
 
 		var mapOptions = {
-	    	zoom: 11,
+	    	zoom: 10,
 	    	mapTypeId: google.maps.MapTypeId.ROAD,
 	    	styles: [
 					    {
@@ -272,9 +272,7 @@ $(document).ready(function() {
 			url: '/spots/' + spotId + '/rate-trick',
 			data: { trickRating },
 			dataType: 'json',
-			success: function(averageRating) { 
-				$('.hearts-container').text('Average rating: ' + averageRating);
-			},
+			success: function() { console.log('KO'); },
 			error: function() { console.log('KO'); }
 		});
 	});
