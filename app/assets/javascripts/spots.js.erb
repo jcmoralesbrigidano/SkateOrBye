@@ -1,425 +1,394 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-$(document).ready(function() {
+var spots = [];
+var map;
+var positions = [];
+var markers = [];
+var yourPosition = {};
+var yourPositionMarker;
+
+getSpots();
+
+function getSpots() {
 	$.ajax({
 		type: 'GET',
 		dataType: 'json',
 		url: '/spots',
-		success: function(spotsResponse) { createMap(spotsResponse); },
+		success: function(spotsResponse) { populateSpots(spotsResponse); },
 		error: function() { console.log('KO') }
-	});
-	
-	var map;
-	var spots = [];
-	var positions = [];
-	var markers = [];
-	var yourPosition = {};
-	var yourPositionMarker;
-	
-	function createMap(spotsResponse) {
-		var mapContainer = document.getElementById('map-container');
-		
-		for(var i = 0; i < spotsResponse.length; i++) {
-			spots.push(spotsResponse[i]);				
-		}
+	});	
+}
 
-		var mapOptions = {
-	    	zoom: 10,
-	    	mapTypeId: google.maps.MapTypeId.ROAD,
-	    	styles: [{"featureType": "landscape","stylers": [{"hue": "#F1FF00"},{"saturation": -27.4},{"lightness": 9.4},{"gamma": 1}]},{"featureType": "road.highway","stylers": [{"hue": "#0099FF"},{"saturation": -20},{"lightness": 36.4},{"gamma": 1}]},{"featureType": "road.arterial","stylers": [{"hue": "#00FF4F"},{"saturation": 0},{"lightness": 0},{"gamma": 1}]},{"featureType": "road.local","stylers": [{"hue": "#FFB300"},{"saturation": -38},{"lightness": 11.2},{"gamma": 1}]},{"featureType": "water","stylers": [{"hue": "#00B6FF"},{"saturation": 4.2},{"lightness": -63.4},{"gamma": 1}]},{"featureType": "poi","stylers": [{"hue": "#9FFF00"},{"saturation": 0},{"lightness": 0},{"gamma": 1}]}]
-	  	};
-
-	  	map = new google.maps.Map(mapContainer, mapOptions);
-
-	  	if(navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(function(yourPositionResponse) {
-		    	for(var i = 0; i < spots.length; i++) {
-		    		var position = new google.maps.LatLng(spots[i].latitude, spots[i].longitude);
-		    		positions.push(position);
-
-		    		var marker = new google.maps.Marker({
-		    			map: map,		    			
-		    			position:position,
-		    			icon: '/skateboard.png',
-		    			title: (i + 1).toString()
-		    		});
-
-		    		markers.push(marker);		    		
-		    		addClickEventForEachMarker(marker);
-		    	}
-
-		    	yourPosition = new google.maps.LatLng(yourPositionResponse.coords.latitude, yourPositionResponse.coords.longitude);
-				
-				yourPositionMarker = new google.maps.Marker({
-		    			map: map,
-		    			position: yourPosition,
-		    			draggable: true,
-						icon: '/bartSkater.gif',
-		    			title: 'You are here!'
-		    	});
-
-		    	var addSpotHref = '/spots/new?latitude=' + yourPosition.lat() + '&longitude=' + yourPosition.lng();
-		    	$('.add-spot').attr('href', addSpotHref);
-
-		    	google.maps.event.addDomListener(yourPositionMarker, 'dragend', function() {
-		    		var latitude = yourPositionMarker.getPosition().lat();
-		    		var longitude = yourPositionMarker.getPosition().lng();
-					var latLng = new google.maps.LatLng(latitude, longitude);
-
-		    		var geocoder = new google.maps.Geocoder();
-
-		    		geocoder.geocode({ 'latLng': latLng }, function(results, status) {
-		    			if(status == google.maps.GeocoderStatus.OK) {
-		    				if(results[0]) {
-		    					var address = results[0].formatted_address;
-		    					var addressOk =  [];
-
-		    					for(var i = 0; i < address.length; i++) {
-		    						if(address[i] == ' ') {
-		    							addressOk += '-';		
-		    						} else if(address[i] == ',') {
-		    							addressOk += '_';
-		    						} else {
-		    							addressOk += address[i];
-		    						}
-		    					}
-		    					
-		    					var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&longitude=' + longitude + '&address=' + addressOk + '>Add spot here</a>';
-
-						    	var infoWindowYourPosition = new google.maps.InfoWindow({
-						    		content: infoWindowYourPositionContent
-						    	});
-
-					    		infoWindowYourPosition.open(map, yourPositionMarker);
-		    				}
-		    			}
-		    		});		    		
-		    	});
-
-		    	function addClickEventForEachMarker(marker) {
-		    		google.maps.event.addDomListener(marker, 'click', function() {
-		    			var spotId = marker.getTitle();
-
-		    			var infoWindowSpotsContent = '<a href=/spots/' + spotId + '><img class="marker-spot-photo" src=' + spots[spotId - 1].photo + '></a>';
-
-				    	var infoWindowSpots = new google.maps.InfoWindow({
-				    		content: infoWindowSpotsContent
-				    	});
-
-				    	infoWindowSpots.open(map, marker);
-					});
-		    	}		    	
-				
-				map.setCenter(yourPosition);
-		    }, function() {
-		    	handleNoGeolocation(true);
-		    });
-	    } else {
-	    	handleNoGeolocation(false);
-	  	}
+function populateSpots(spotsResponse) {
+	for(var i = 0; i < spotsResponse.length; i++) {
+		spots.push(spotsResponse[i]);				
 	}
 
-	function handleNoGeolocation(errorFlag) {
-		if(errorFlag) {
-	    	var content = 'The Geolocation service failed.';
-	    } else {
-	    	var content = 'Your browser does not support geolocation.';
-	    }
+	createMap();
+}
+
+function createMap() {
+	var mapContainer = document.getElementById('map-container');
+
+	var mapOptions = {
+    	zoom: 10,
+    	mapTypeId: google.maps.MapTypeId.ROAD,
+    	styles: [{"featureType": "landscape","stylers": [{"hue": "#F1FF00"},{"saturation": -27.4},{"lightness": 9.4},{"gamma": 1}]},{"featureType": "road.highway","stylers": [{"hue": "#0099FF"},{"saturation": -20},{"lightness": 36.4},{"gamma": 1}]},{"featureType": "road.arterial","stylers": [{"hue": "#00FF4F"},{"saturation": 0},{"lightness": 0},{"gamma": 1}]},{"featureType": "road.local","stylers": [{"hue": "#FFB300"},{"saturation": -38},{"lightness": 11.2},{"gamma": 1}]},{"featureType": "water","stylers": [{"hue": "#00B6FF"},{"saturation": 4.2},{"lightness": -63.4},{"gamma": 1}]},{"featureType": "poi","stylers": [{"hue": "#9FFF00"},{"saturation": 0},{"lightness": 0},{"gamma": 1}]}]
+  	};
+
+  	map = new google.maps.Map(mapContainer, mapOptions);
+
+  	createPositionsAndMarkers();
+  	getYourPosition();  	
+}
+
+function createPositionsAndMarkers() {
+	for(var i = 0; i < spots.length; i++) {
+		var position = new google.maps.LatLng(spots[i].latitude, spots[i].longitude);
+		positions.push(position);
+
+		var marker = new google.maps.Marker({
+			map: map,		    			
+			position: position,
+			icon: '/skateboard.png',
+			title: (i + 1).toString()
+		});
+
+		markers.push(marker);		    		
+		addClickEventForEachMarker(marker);
 	}
+}
 
-	$('.hearts').on('mouseover', function() {
-		var trickId = $(this).data('trick-id');
-		var hearts = $(this).data('hearts');
+function addClickEventForEachMarker(marker) {
+	google.maps.event.addDomListener(marker, 'click', function() {
+		var spotId = marker.getTitle();
 
-		var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
-		
-		for(var i = 0; i < hearts; i++) {
-			allHearts[i].setAttribute('src', '/skateHeart.png');
-		}
+		var infoWindowSpotContent = '<a href=/spots/' + spotId + '><img class="marker-spot-photo" src=' + spots[spotId - 1].photo + '></a>';
+
+    	var infoWindowSpot = new google.maps.InfoWindow({
+    		content: infoWindowSpotContent
+    	});
+
+    	infoWindowSpot.open(map, marker);
 	});
+}
 
-	$('.hearts').mouseout(function() {
-		var trickId = $(this).data('trick-id');
-		$('.hearts[data-trick-id=' + trickId + ']').attr('src', '/skateHeartBW.png');
-	});
+function coordinatesToAddress(yourLatitude, yourLongitude) {
+	var geocoder = new google.maps.Geocoder();
+	var latLng = new google.maps.LatLng(yourLatitude, yourLongitude);
 
-	$('.hearts').on('click', function() {
-		var spotId = $(this).data('spot-id');
-		var trickId = $(this).data('trick-id');
-		var hearts = $(this).data('hearts');
+	geocoder.geocode({ 'latLng': latLng }, function(results, status) {		
+		if(status == google.maps.GeocoderStatus.OK) {
+			if(results[0]) {
+				var address = results[0].formatted_address;				
+				var addressCorrection = [];
 
-		$(this).data('selected', 'yes');						
-
-		var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
-		
-		for(var i = 0; i < hearts; i++) {
-			allHearts[i].setAttribute('src', '/skateHeart.png');
-		}
-
-		$('.hearts[data-trick-id=' + trickId + ']').unbind();
-
-		var trickRating = {
-			trick_id: trickId,
-			hearts: hearts
-		};
-
-		$.ajax({
-			type: 'POST',
-			url: '/spots/' + spotId + '/rate-trick',
-			data: { trickRating },
-			dataType: 'json',
-			success: function() { console.log('KO'); },
-			error: function() { console.log('KO'); }
-		});
-	});
-
-	$('.nearest-spot').on('click', function() {
-		var distance = 0;
-		var nearestDistance = 99999999999999999999;
-		var nearestSpot = 0;
-
-		for(var i = 0; i < positions.length; i++) {
-			distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(yourPosition.lat(), yourPosition.lng()), new google.maps.LatLng(positions[i].lat(), positions[i].lng()));
-			
-			if(distance < nearestDistance) {
-				nearestDistance = distance;
-				nearestSpot = i;
-			}
-		}
-		var infoWindowNearestSpotContent = '<a href=/spots/' + (nearestSpot + 1) + '><img class="marker-spot-photo" src=' + spots[nearestSpot].photo + '></a>';
-
-		var infoWindowNearestSpot = new google.maps.InfoWindow({
-			content: infoWindowNearestSpotContent
-		});
-
-		infoWindowNearestSpot.open(map, markers[nearestSpot]);
-	});
-
-	$('.random-spot').on('click', function() {
-		var randomSpot = Math.floor(Math.random() * (spots.length - 0)) + 0;
-		var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '><img class="marker-spot-photo" src=' + spots[randomSpot].photo + '></a>';
-
-		var infoWindowRandomSpot = new google.maps.InfoWindow({
-			content: infoWindowRandomSpotContent
-		});
-
-		infoWindowRandomSpot.open(map, markers[randomSpot]);
-	});
-
-	$('.add-spot-here').on('click', function() {
-		var latitude = yourPositionMarker.getPosition().lat();
-		var longitude = yourPositionMarker.getPosition().lng();
-		var latLng = new google.maps.LatLng(latitude, longitude);
-
-		var geocoder = new google.maps.Geocoder();
-
-		geocoder.geocode({ 'latLng': latLng }, function(results, status) {
-			if(status == google.maps.GeocoderStatus.OK) {
-				if(results[0]) {
-					var address = results[0].formatted_address;
-					var addressOk =  [];
-
-					for(var i = 0; i < address.length; i++) {
-						if(address[i] == ' ') {
-							addressOk += '-';		
-						} else if(address[i] == ',') {
-							addressOk += '_';
-						} else {
-							addressOk += address[i];
-						}
+				for(var i = 0; i < address.length; i++) {
+					if(address[i] == ' ') {
+						addressCorrection += '-';		
+					} else if(address[i] == ',') {
+						addressCorrection += '_';
+					} else {
+						addressCorrection += address[i];
 					}
-					
-					var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + latitude + '&longitude=' + longitude + '&address=' + addressOk + '>Add spot here</a>';
-
-			    	var infoWindowYourPosition = new google.maps.InfoWindow({
-			    		content: infoWindowYourPositionContent
-			    	});
-
-		    		infoWindowYourPosition.open(map, yourPositionMarker);
 				}
+				
+				var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + yourLatitude + '&longitude=' + yourLongitude + '&address=' + addressCorrection + '>Add spot here</a>';
+
+		    	var infoWindowYourPosition = new google.maps.InfoWindow({
+		    		content: infoWindowYourPositionContent
+		    	});
+
+	    		infoWindowYourPosition.open(map, yourPositionMarker);
+			}			
+		}	
+	});
+}
+
+function getYourPosition() {
+	if(navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(function(yourPositionResponse) {
+	    	yourPosition = new google.maps.LatLng(yourPositionResponse.coords.latitude, yourPositionResponse.coords.longitude);
+
+			yourPositionMarker = new google.maps.Marker({
+	    			map: map,
+	    			position: yourPosition,
+	    			draggable: true,
+					icon: '/bartSkater.gif',
+	    			title: 'You are here!'
+	    	});
+
+	    	var addSpotHref = '/spots/new?latitude=' + yourPositionMarker.getPosition().lat() + '&longitude=' + yourPositionMarker.getPosition().lng();
+	    	$('.add-spot').attr('href', addSpotHref);
+
+	    	google.maps.event.addDomListener(yourPositionMarker, 'dragend', function() {
+	    		var yourLatitude = yourPositionMarker.getPosition().lat();
+	    		var yourLongitude = yourPositionMarker.getPosition().lng();
+	    		
+	    		coordinatesToAddress(yourLatitude, yourLongitude);
+	    	});
+
+			map.setCenter(yourPosition);
+	    }, function() {
+	    	handleNoGeolocation(true);
+	    });
+    } else {
+    	handleNoGeolocation(false);
+  	}
+}
+
+function handleNoGeolocation(errorFlag) {
+	if(errorFlag) {
+    	var content = 'The Geolocation service failed.';
+    } else {
+    	var content = 'Your browser does not support geolocation.';
+    }
+}
+
+$('.hearts').on('mouseover', function() {
+	var trickId = $(this).data('trick-id');
+	var hearts = $(this).data('hearts');
+
+	var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
+	
+	for(var i = 0; i < hearts; i++) {
+		allHearts[i].setAttribute('src', '/skateHeart.png');
+	}
+});
+
+$('.hearts').mouseout(function() {
+	var trickId = $(this).data('trick-id');
+	$('.hearts[data-trick-id=' + trickId + ']').attr('src', '/skateHeartBW.png');
+});
+
+$('.hearts').on('click', function() {
+	var spotId = $(this).data('spot-id');
+	var trickId = $(this).data('trick-id');
+	var hearts = $(this).data('hearts');
+
+	$(this).data('selected', 'yes');						
+
+	var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
+	
+	for(var i = 0; i < hearts; i++) {
+		allHearts[i].setAttribute('src', '/skateHeart.png');
+	}
+
+	$('.hearts[data-trick-id=' + trickId + ']').unbind();
+
+	var trickRating = {
+		trick_id: trickId,
+		hearts: hearts
+	};
+
+	$.ajax({
+		type: 'POST',
+		url: '/spots/' + spotId + '/rate-trick',
+		data: { trickRating },
+		dataType: 'json',
+		success: function() { console.log('KO'); },
+		error: function() { console.log('KO'); }
+	});
+});
+
+$('.nearest-spot').on('click', function() {
+	var distance = 0;
+	var nearestDistance = 99999999999999999999;
+	var nearestSpot = 0;
+
+	for(var i = 0; i < positions.length; i++) {
+		distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(yourPosition.lat(), yourPosition.lng()), new google.maps.LatLng(positions[i].lat(), positions[i].lng()));
+		
+		if(distance < nearestDistance) {
+			nearestDistance = distance;
+			nearestSpot = i;
+		}
+	}
+
+	var infoWindowNearestSpotContent = '<a href=/spots/' + (nearestSpot + 1) + '><img class="marker-spot-photo" src=' + spots[nearestSpot].photo + '></a>';
+	
+	var infoWindowNearestSpot = new google.maps.InfoWindow({
+		content: infoWindowNearestSpotContent
+	});
+
+	infoWindowNearestSpot.open(map, markers[nearestSpot]);
+});
+
+$('.random-spot').on('click', function() {
+	var randomSpot = Math.floor(Math.random() * (spots.length - 0)) + 0;
+	var infoWindowRandomSpotContent = '<a href=/spots/' + (randomSpot + 1) + '><img class="marker-spot-photo" src=' + spots[randomSpot].photo + '></a>';
+
+	var infoWindowRandomSpot = new google.maps.InfoWindow({
+		content: infoWindowRandomSpotContent
+	});
+
+	infoWindowRandomSpot.open(map, markers[randomSpot]);
+});
+
+$('.add-spot-here').on('click', function() {
+	var latitude = yourPositionMarker.getPosition().lat();
+	var longitude = yourPositionMarker.getPosition().lng();
+	
+	coordinatesToAddress(latitude, longitude);
+});
+
+$('button[data-target="#myModal"]').on('click', function() {
+	var challenger = 0;
+	var skaters = [];
+	var skater_challenged = '';
+	var spot = 0;
+	var trick = '';
+
+	$.ajax({
+		type: 'GET',
+		url: '/skaters',
+		dataType: 'json',
+		success: function(skatersResponse) {
+			challenger = $('button[data-action="add-challenge"]').data('challenger-id');
+
+			for(var i = 0; i < skatersResponse.length; i++) {
+				skaters.push(skatersResponse[i]);
 			}
-		});		    
-	});
 
-	$('button[data-target="#myModal"]').on('click', function() {
-		var challenger = 0;
-		var skaters = [];
-		var skater_challenged = '';
-		var spot = 0;
-		var trick = '';
+			$('.challenge-skaters').empty();
 
-		$.ajax({
-			type: 'GET',
-			url: '/skaters',
-			dataType: 'json',
-			success: function(skatersResponse) {
-				challenger = $('button[data-action="add-challenge"]').data('challenger-id');
+			for(var i = 0; i < skaters.length; i++) {
+				$('.challenge-skaters').append('<button type="button" class="btn btn-default" data-action="select-skater">' + skaters[i].name + '</button>');
+			}
 
-				for(var i = 0; i < skatersResponse.length; i++) {
-					skaters.push(skatersResponse[i]);
-				}
+			$('button[data-action="select-skater"]').on('click', function() {
+				skater_challenged = $(this).text();
+			});
 
-				$('.challenge-skaters').empty();
+			$('.challenge-spots').empty();
 
-				for(var i = 0; i < skaters.length; i++) {
-					$('.challenge-skaters').append('<button type="button" class="btn btn-default" data-action="select-skater">' + skaters[i].name + '</button>');
-				}
+			for(var i = 0; i < spots.length; i++) {
+				$('.challenge-spots').append('<img src=' + spots[i].photo + ' class="marker-spot-photo" data-action="select-spot" data-spot=' + spots[i].id + '>');
+			}
 
-				$('button[data-action="select-skater"]').on('click', function() {
-					skater_challenged = $(this).text();
+			$('img[data-action="select-spot"]').on('click', function() {
+				spot = $(this).data('spot');
+			});
+
+			$('button[data-action="add-challenge"]').unbind('click').on('click', function() {
+				trick = $('#challenge-trick').val();
+
+				var challenge = {
+					challenger_id: challenger,
+					challenged_name: skater_challenged,
+					spot_id: spot,
+					challenge_trick: trick
+				};
+
+				console.log(challenge);
+				
+				$.ajax({
+					type: 'POST',
+					url: '/challenges',				
+					data: { challenge },
+					dataType: 'json',
+					success: function() {
+						$('.challenge-skaters').empty();
+						$('.challenge-spots').empty();
+						$('#challenge-trick').val('');
+						
+					},
+					error: function() { alert('KO2'); }
 				});
-
-				$('.challenge-spots').empty();
-
-				for(var i = 0; i < spots.length; i++) {
-					$('.challenge-spots').append('<img src=' + spots[i].photo + ' class="marker-spot-photo" data-action="select-spot" data-spot=' + spots[i].id + '>');
-				}
-
-				$('img[data-action="select-spot"]').on('click', function() {
-					spot = $(this).data('spot');
-				});
-
-				$('button[data-action="add-challenge"]').unbind('click').on('click', function() {
-					trick = $('#challenge-trick').val();
-
-					var challenge = {
-						challenger_id: challenger,
-						challenged_name: skater_challenged,
-						spot_id: spot,
-						challenge_trick: trick
-					};
-
-					console.log(challenge);
-					
-					$.ajax({
-						type: 'POST',
-						url: '/challenges',				
-						data: { challenge },
-						dataType: 'json',
-						success: function() {
-							$('.challenge-skaters').empty();
-							$('.challenge-spots').empty();
-							$('#challenge-trick').val('');
-							
-						},
-						error: function() { alert('KO2'); }
-					});
-				});
-			},
-			error: function() { console.log('KO1'); }
-		});
+			});
+		},
+		error: function() { console.log('KO1'); }
 	});
+});
 
-	$('button[data-action="check-attempt"]').on('click', function() {
-		var challengeId = $('.panel').data('challenge-id');
-		var attemptResult = $(this).text();
+$('button[data-action="check-attempt"]').on('click', function() {
+	var challengeId = $('.panel').data('challenge-id');
+	var attemptResult = $(this).text();
 
-		var attempt = {
-			challenge_id: challengeId,
-			attempt_result: attemptResult
-		};
+	var attempt = {
+		challenge_id: challengeId,
+		attempt_result: attemptResult
+	};
 
-		console.log(attemptResult);
+	console.log(attemptResult);
 
-		$.ajax({
-			type: 'POST',
-			url: '/challenges/check_attempt',
-			data: { attempt },
-			dataType: 'json',			
-			success: function() { console.log('OK3'); },
-			error: function() { console.log('KO3'); }
-		});
+	$.ajax({
+		type: 'POST',
+		url: '/challenges/check_attempt',
+		data: { attempt },
+		dataType: 'json',			
+		success: function() { console.log('OK3'); },
+		error: function() { console.log('KO3'); }
 	});
+});
 
-	$('[data-action="upload-trick"]').on('click', function() {
-		var skaterId = $(this).data('skater-id');
-		var spotId = $('.new-trick-button').data('spot-id');
-		var trickVideo = $('#trick-video').val();		
+$('[data-action="upload-trick"]').on('click', function() {
+	var skaterId = $(this).data('skater-id');
+	var spotId = $('.new-trick-button').data('spot-id');
+	var trickVideo = $('#trick-video').val();		
 
-		var trick = {
-			skater_id: skaterId,
-			spot_id: spotId,
-			trick_video: trickVideo
-		};
+	var trick = {
+		skater_id: skaterId,
+		spot_id: spotId,
+		trick_video: trickVideo
+	};
 
-		console.log(trick);
+	console.log(trick);
 
-		$.ajax({
-			type: 'POST',
-		    url: '/skaters/' + skaterId + '/tricks',
-		    data: { trick },
-		    dataType: 'json',
-		    success: function() { console.log('OK4'); },
-		    error: function() { console.log('KO4'); }
-		});
+	$.ajax({
+		type: 'POST',
+	    url: '/skaters/' + skaterId + '/tricks',
+	    data: { trick },
+	    dataType: 'json',
+	    success: function() { console.log('OK4'); },
+	    error: function() { console.log('KO4'); }
 	});
+});
 
-	$('[data-action="upload-attempt"]').on('click', function() {
-		var skaterId = $('[data-target="#myModal3"]').data('skater-id');
-		var spotId = $('[data-target="#myModal3"]').data('spot-id');
-		var trickVideo = $('#attempt-video').val();		
-		var challengeId = $('[data-target="#myModal3"]').data('challenge-id');
+$('[data-action="upload-attempt"]').on('click', function() {
+	var skaterId = $('[data-target="#myModal3"]').data('skater-id');
+	var spotId = $('[data-target="#myModal3"]').data('spot-id');
+	var trickVideo = $('#attempt-video').val();		
+	var challengeId = $('[data-target="#myModal3"]').data('challenge-id');
 
-		var attempt = {
-			skater_id: skaterId,
-			spot_id: spotId,
-			trick_video: trickVideo,
-			challenge_id: challengeId
-		};
+	var attempt = {
+		skater_id: skaterId,
+		spot_id: spotId,
+		trick_video: trickVideo,
+		challenge_id: challengeId
+	};
 
-		$.ajax({
-			type: 'POST',
-		    url: '/challenges/make_an_attempt',
-		    data: { attempt },
-		    dataType: 'json',
-		    success: function() { console.log('OK5'); },
-		    error: function() { console.log('KO5'); }
-		});
+	$.ajax({
+		type: 'POST',
+	    url: '/challenges/make_an_attempt',
+	    data: { attempt },
+	    dataType: 'json',
+	    success: function() { console.log('OK5'); },
+	    error: function() { console.log('KO5'); }
 	});
+});
 
-	$('button[data-target="#myModal4"]').on('click', function() {
-		var role;
+$('button[data-target="#myModal4"]').on('click', function() {
+	var role;
+});
+
+$('[data-role]').on('click', function() {
+	role = $(this).data('role');
+});
+
+$('[data-action="join-jam"]').on('click', function() {
+	var jamId = $('[data-target="#myModal4"]').data('jam-id');
+	var attendance = {
+		role: role
+	};
+
+	$.ajax({
+		type: 'POST',
+	    url: '/jams/' + jamId + '/skaters',
+	    data: { attendance },
+	    dataType: 'json',
+	    success: function() { console.log('OK5'); },
+	    error: function() { console.log('KO5'); }
 	});
-
-	$('[data-role]').on('click', function() {
-		role = $(this).data('role');
-	});
-
-	$('[data-action="join-jam"]').on('click', function() {
-		var jamId = $('[data-target="#myModal4"]').data('jam-id');
-		var attendance = {
-			role: role
-		};
-
-		$.ajax({
-			type: 'POST',
-		    url: '/jams/' + jamId + '/skaters',
-		    data: { attendance },
-		    dataType: 'json',
-		    success: function() { console.log('OK5'); },
-		    error: function() { console.log('KO5'); }
-		});
-	});
-
-	/*$('[data-action="sign-up"]').on('click', function() {
-		var nickname = $('#sign-up-nickname').val();
-		var email = $('#sign-up-email').val();
-		var password = $('#sign-up-password').val();
-
-		var newSkater = {
-			nickname: nickname,
-			email: email,
-			password: password
-		};
-
-		$.ajax({
-			type: 'POST',
-		    url: '/skaters',
-		    data: { newSkater },
-		    dataType: 'json',
-		    success: function() { console.log('OK5'); },
-		    error: function() { console.log('KO5'); }
-		});
-	});*/
 });
