@@ -1,57 +1,41 @@
-<div class="panel panel-default panel-correction">
-	<div class="panel-body">
-		<img class="spot-photo" src="<%= @spot.photo %>"><br><br>
-	</div>
+<img class="spot-photo display-inline-block" src="<%= @spot.photo %>"><br><br>
+<span class="label label-default default-font-size"><%= @spot.address %></span><br><br>
+<span class="label label-default default-font-size">Level: <%= @spot.level %></span><br><br>
+
+<div id="tricks-container">
+	<% @spot_tricks.each do |spot_trick| %>
+		<div class="trick panel panel-default display-inline-block">
+			<div class="panel-body">
+				<iframe src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
+			</div>
+			<div class="panel-footer">
+				<% if current_skater %>
+					<% if trick_rated? spot_trick %>
+						<p>You have already rated this trick</p>
+					<% else %>
+						<div class="hearts-container">
+							<% for i in 1..5 %>			
+								<img class="hearts" src="/skateHeartBW.png" data-spot-id="<%= spot_trick.spot_id %>" data-trick-id="<%= spot_trick.id %>" data-hearts="<%= i %>">
+							<% end %>
+						</div>						
+					<% end %>
+				<% else %>
+					<span>You need to <a href="<%= login_path %>">login</a> in order to rate a trick</span>
+				<% end %>
+			</div>
+		</div>
+		<div class="trick-info">
+			<span class="label label-info default-font-size skater-trick glyphicon glyphicon-user"> <%= skater_name spot_trick.skater_id %></span><br>
+			<% if spot_trick.average_rating != nil %>
+				<span class="label label-danger default-font-size trick-rating glyphicon glyphicon-heart"> <%= spot_trick.average_rating %></span>
+			<% end %>	
+		</div>
+		<div class="clear-floats"></div>
+	<% end %>
 </div><br>
 
-<span class="label label-default span-correction"><%= @spot.address %></span><br><br>
-<span class="label label-default span-correction">Level: <%= @spot.level %></span><br><br>
-<span class="label label-default span-correction">Floor quality: <%= @spot.floor_quality %></span><br><br>
-
-<div class="spot-tricks">
-<% @spot_tricks.each do |spot_trick| %>
-<div class="panel panel-default panel-correction trick">
-	<div class="panel-body">
-		<iframe class="tricks" src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>	
-	</div>
-	<div class="panel-footer">
-	<% if session[:id] %>
-		<% @rated = false %>
-		<% @ratings = spot_trick.ratings %>
-
-		<% @ratings.each do |rating| %>
-			<% if rating.skater_id === session[:id] %>
-				<% @rated = true %>
-			<% end %>
-		<% end %>
-
-		<% if @rated === false %>
-			<div class="hearts-container">
-			<% for i in 1..5 %>			
-				<img class="hearts" src="<%= asset_path('skateHeartBW.png') %>" data-spot-id="<%= spot_trick.spot_id %>" data-trick-id="<%= spot_trick.id %>" data-hearts="<%= i %>" data-selected="no">			
-			<% end %>
-			</div>
-		<% else %>
-			<p>You have already rated this trick</p>
-		<% end %>
-	<% else %>
-		<span>You need to <a href="<%= login_path %>">login</a> in order to rate a trick</span>
-	<% end %>
-	</div>
-</div>
-<div class="trick-info">
-	<span class="label label-info span-correction skater-trick glyphicon glyphicon-user"> <%= Skater.where(id: spot_trick.skater_id).first.name %></span><br>
-	<% if spot_trick.average_rating != nil %>
-		<span class="label label-danger span-correction trick-rating glyphicon glyphicon-heart"> <%= spot_trick.average_rating %></span>
-	<% end %>	
-</div>
-<div class="clear-floats"></div>
-<% end %>
-</div>
-<br>
-<% if session[:id] %>
+<% if current_skater %>
 	<div data-toggle="modal" data-target="#myModal2" class="navigation-elements new-trick-button" data-spot-id="<%= @spot.id %>">NEW TRICK</div>
-	<!--<a href="<%= new_skater_trick_path(session[:id]) %>?spot_id=<%= @spot.id %>"><div class="navigation-elements">New trick</div></a>-->
 <% else %>
 	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick</span>
 <% end %><br><br>

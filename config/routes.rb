@@ -6,9 +6,8 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
   
-  resources :spots
-  get '/spots/:id/rate-trick' => 'spots#rate_trick'
   post '/spots/:id/rate-trick' => 'spots#rate_trick'
+  resources :spots  
   
   resources :skaters do
   	resources :tricks

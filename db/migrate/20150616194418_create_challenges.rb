@@ -4,8 +4,7 @@ class CreateChallenges < ActiveRecord::Migration
       t.integer :challenger_id
       t.integer :skater_id
       t.integer :challenge_spot
-      t.string :challenge      
-      t.float :score      
+      t.string :challenge
       t.string :state
       t.timestamps null: false
     end

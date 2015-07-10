@@ -27,6 +27,15 @@ body {
 	border-top: 4px solid #337ab7;
 }
 
+#tricks-container,
+.display-inline-block {
+	display: inline-block;
+}
+
+.clear-floats {
+	clear: both;
+}
+
 a, a:hover, a:focus, a:visited {
 	text-decoration: none;
 }
@@ -35,12 +44,6 @@ a, a:hover, a:focus, a:visited {
 	font-family: SkateFont;
 	font-size: 40px;
 	margin-top: 10px;
-}
-
-.account-actions,
-.panel-correction,
-.challenges-nav {
-	display: inline-block;
 }
 
 .navigation-elements {
@@ -62,18 +65,17 @@ a, a:hover, a:focus, a:visited {
 }
 
 #map-container {
-	height: 400px;
+	height: 600px;
 	margin: 0 50px;
 	border-radius: 3px;
 }
 
-.spot-tricks {
-	display: inline-block;
-}
-
 .trick,
 .trick-info {
-	float: left;
+	float: left;	
+}
+
+.trick-info {
 	margin-left:5px;
 }
 
@@ -81,22 +83,14 @@ a, a:hover, a:focus, a:visited {
 	cursor: pointer;
 }
 
-.label-danger {
-
-}
-
-.clear-floats {
-	clear: both;
-}
-
-.skater-trick {
-	margin-bottom: 5px;
-}
-
 .skater-trick,
 .trick-rating {
 	display: inline-block;
 	float:left;
+}
+
+.skater-trick {
+	margin-bottom: 5px;
 }
 
 .marker-spot-photo {
@@ -117,7 +111,7 @@ a, a:hover, a:focus, a:visited {
 	max-width: 200px;
 }
 
-.span-correction {
+.default-font-size {
 	font-size: 100%;
 }
 

@@ -1,12 +1,13 @@
 class SpotsController < ApplicationController
-	before_action :require_skater, only: [:new, :rate_trick]
-	
+	before_action :require_skater, only: [:new, :rate_trick]	
+	helper_method :skater_name, :trick_rated?
+
 	def index
-		@spots = Spot.all
+		spots = Spot.all
 
 		respond_to do |format|
 			format.html 
-			format.json { render json: @spots }
+			format.json { render json: spots }
 		end
 	end
 
@@ -15,21 +16,38 @@ class SpotsController < ApplicationController
 		@spot_tricks = Trick.spot_tricks @spot.id
 	end
 
+	def skater_name skater_id
+		Skater.find_by(id: skater_id).name
+	end
+
+	def trick_rated? trick
+		ratings = trick.ratings
+		rated = false		
+
+		ratings.each do |rating|
+			if rating.skater_id == session[:id]
+				rated = true
+			end
+		end
+
+		rated
+	end
+
 	def new
 		@spot = Spot.new
 
 		@latitude = params[:latitude]
 		@longitude = params[:longitude]
-		@address = params[:address].split(//)
-		@addressOk = ''
+		address = params[:address].split(//)
+		@addressCorrection = ''
 
-		@address.each do |letter|
+		address.each do |letter|
 			if letter == '-'
-				@addressOk += ' '
+				@addressCorrection += ' '
 			elsif letter == '_'
-				@addressOk += ','
+				@addressCorrection += ','
 			else
-				@addressOk += letter
+				@addressCorrection += letter
 			end
 		end
 	end
@@ -47,11 +65,11 @@ class SpotsController < ApplicationController
 	def rate_trick
 		@trick_rating = params[:trickRating]
 		@trick_id = @trick_rating['trick_id']
-		@hearts = @trick_rating['hearts']
+		@hearts_selected = @trick_rating['hearts_selected']
 
 		@trick = Trick.find @trick_id
 		@rating = @trick.ratings.new
-		@rating.rating = @hearts
+		@rating.rating = @hearts_selected
 		@rating.skater_id = session[:id]
 
 		if @rating.save
@@ -64,11 +82,11 @@ class SpotsController < ApplicationController
 
 			@average_rating = @total_rating.to_f / @ratings.size.to_f
 			@trick.average_rating = @average_rating
-			@trick.save
 
-			respond_to do |format|
-				format.html
-				format.json { render json: @trick.average_rating }
+			if @trick.save
+				redirect_to spot_path params[:id]
+			else
+				render 'show'
 			end
 		else
 			render 'show'
@@ -77,6 +95,6 @@ class SpotsController < ApplicationController
 
 	private
 	def spot_params
-		params.require(:spot).permit(:address, :latitude, :longitude, :level, :floor_quality, :photo)
+		params.require(:spot).permit(:address, :latitude, :longitude, :level, :photo)
 	end
 end

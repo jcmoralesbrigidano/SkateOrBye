@@ -15,8 +15,8 @@ function getSpots() {
 		type: 'GET',
 		dataType: 'json',
 		url: '/spots',
-		success: function(spotsResponse) { populateSpots(spotsResponse); },
-		error: function() { console.log('KO') }
+		success: function(spotsResponse) { populateSpots(spotsResponse); console.log('OK1'); },
+		error: function() { console.log('KO1'); }
 	});	
 }
 
@@ -32,7 +32,7 @@ function createMap() {
 	var mapContainer = document.getElementById('map-container');
 
 	var mapOptions = {
-    	zoom: 10,
+    	zoom: 11,
     	mapTypeId: google.maps.MapTypeId.ROAD,
     	styles: [{"featureType": "landscape","stylers": [{"hue": "#F1FF00"},{"saturation": -27.4},{"lightness": 9.4},{"gamma": 1}]},{"featureType": "road.highway","stylers": [{"hue": "#0099FF"},{"saturation": -20},{"lightness": 36.4},{"gamma": 1}]},{"featureType": "road.arterial","stylers": [{"hue": "#00FF4F"},{"saturation": 0},{"lightness": 0},{"gamma": 1}]},{"featureType": "road.local","stylers": [{"hue": "#FFB300"},{"saturation": -38},{"lightness": 11.2},{"gamma": 1}]},{"featureType": "water","stylers": [{"hue": "#00B6FF"},{"saturation": 4.2},{"lightness": -63.4},{"gamma": 1}]},{"featureType": "poi","stylers": [{"hue": "#9FFF00"},{"saturation": 0},{"lightness": 0},{"gamma": 1}]}]
   	};
@@ -148,49 +148,49 @@ function handleNoGeolocation(errorFlag) {
 
 $('.hearts').on('mouseover', function() {
 	var trickId = $(this).data('trick-id');
-	var hearts = $(this).data('hearts');
-
-	var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
+	var heartsHovered = $(this).data('hearts');
 	
-	for(var i = 0; i < hearts; i++) {
-		allHearts[i].setAttribute('src', '/skateHeart.png');
-	}
+	changeHeartsImage(trickId, heartsHovered);
 });
 
 $('.hearts').mouseout(function() {
 	var trickId = $(this).data('trick-id');
+
 	$('.hearts[data-trick-id=' + trickId + ']').attr('src', '/skateHeartBW.png');
 });
 
-$('.hearts').on('click', function() {
-	var spotId = $(this).data('spot-id');
+$('.hearts').on('click', function() {		
 	var trickId = $(this).data('trick-id');
-	var hearts = $(this).data('hearts');
-
-	$(this).data('selected', 'yes');						
-
-	var allHearts = $('.hearts[data-trick-id=' + trickId + ']');
+	var heartsSelected = $(this).data('hearts');
 	
-	for(var i = 0; i < hearts; i++) {
-		allHearts[i].setAttribute('src', '/skateHeart.png');
-	}
+	changeHeartsImage(trickId, heartsSelected);
 
 	$('.hearts[data-trick-id=' + trickId + ']').unbind();
 
 	var trickRating = {
 		trick_id: trickId,
-		hearts: hearts
+		hearts_selected: heartsSelected
 	};
+
+	var spotId = $(this).data('spot-id');
 
 	$.ajax({
 		type: 'POST',
 		url: '/spots/' + spotId + '/rate-trick',
 		data: { trickRating },
 		dataType: 'json',
-		success: function() { console.log('KO'); },
-		error: function() { console.log('KO'); }
+		success: function() { console.log('OK2'); },
+		error: function() { console.log('KO2'); }
 	});
 });
+
+function changeHeartsImage(trickId, heartsHovered) {
+	var sameTrickHearts = $('.hearts[data-trick-id=' + trickId + ']');
+
+	for(var i = 0; i < heartsHovered; i++) {
+		sameTrickHearts[i].setAttribute('src', '/skateHeart.png');
+	}
+}
 
 $('.nearest-spot').on('click', function() {
 	var distance = 0;
@@ -236,7 +236,7 @@ $('.add-spot-here').on('click', function() {
 $('button[data-target="#myModal"]').on('click', function() {
 	var challenger = 0;
 	var skaters = [];
-	var skater_challenged = '';
+	var challenged = '';
 	var spot = 0;
 	var trick = '';
 
@@ -258,7 +258,7 @@ $('button[data-target="#myModal"]').on('click', function() {
 			}
 
 			$('button[data-action="select-skater"]').on('click', function() {
-				skater_challenged = $(this).text();
+				challenged = $(this).text();
 			});
 
 			$('.challenge-spots').empty();
@@ -276,7 +276,7 @@ $('button[data-target="#myModal"]').on('click', function() {
 
 				var challenge = {
 					challenger_id: challenger,
-					challenged_name: skater_challenged,
+					challenged_name: challenged,
 					spot_id: spot,
 					challenge_trick: trick
 				};
@@ -292,13 +292,14 @@ $('button[data-target="#myModal"]').on('click', function() {
 						$('.challenge-skaters').empty();
 						$('.challenge-spots').empty();
 						$('#challenge-trick').val('');
+						console.log('OK4');
 						
 					},
-					error: function() { alert('KO2'); }
+					error: function() { alert('KO4'); }
 				});
-			});
+			}); console.log('OK3');
 		},
-		error: function() { console.log('KO1'); }
+		error: function() { console.log('KO3'); }
 	});
 });
 
@@ -318,8 +319,8 @@ $('button[data-action="check-attempt"]').on('click', function() {
 		url: '/challenges/check_attempt',
 		data: { attempt },
 		dataType: 'json',			
-		success: function() { console.log('OK3'); },
-		error: function() { console.log('KO3'); }
+		success: function() { console.log('OK5'); },
+		error: function() { console.log('KO5'); }
 	});
 });
 
@@ -341,8 +342,8 @@ $('[data-action="upload-trick"]').on('click', function() {
 	    url: '/skaters/' + skaterId + '/tricks',
 	    data: { trick },
 	    dataType: 'json',
-	    success: function() { console.log('OK4'); },
-	    error: function() { console.log('KO4'); }
+	    success: function() { console.log('OK6'); },
+	    error: function() { console.log('KO6'); }
 	});
 });
 
@@ -364,8 +365,8 @@ $('[data-action="upload-attempt"]').on('click', function() {
 	    url: '/challenges/make_an_attempt',
 	    data: { attempt },
 	    dataType: 'json',
-	    success: function() { console.log('OK5'); },
-	    error: function() { console.log('KO5'); }
+	    success: function() { console.log('OK7'); },
+	    error: function() { console.log('KO7'); }
 	});
 });
 
@@ -388,7 +389,7 @@ $('[data-action="join-jam"]').on('click', function() {
 	    url: '/jams/' + jamId + '/skaters',
 	    data: { attendance },
 	    dataType: 'json',
-	    success: function() { console.log('OK5'); },
-	    error: function() { console.log('KO5'); }
+	    success: function() { console.log('OK8'); },
+	    error: function() { console.log('KO8'); }
 	});
 });

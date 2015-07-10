@@ -3,9 +3,9 @@ class CreateJams < ActiveRecord::Migration
     create_table :jams do |t|
       t.string :name
       t.integer :spot_id
-	  t.date :date
-	  t.time :time
-	  t.string :info
+	    t.date :date
+	    t.time :time
+	    t.string :info
       t.timestamps null: false
     end
   end

@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20150701232440) do
     t.integer  "skater_id"
     t.integer  "challenge_spot"
     t.string   "challenge"
-    t.float    "score"
     t.string   "state"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
@@ -41,14 +40,6 @@ ActiveRecord::Schema.define(version: 20150701232440) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "jams_skaters", id: false, force: :cascade do |t|
-    t.integer "jam_id"
-    t.integer "skater_id"
-  end
-
-  add_index "jams_skaters", ["jam_id"], name: "index_jams_skaters_on_jam_id"
-  add_index "jams_skaters", ["skater_id"], name: "index_jams_skaters_on_skater_id"
 
   create_table "ratings", force: :cascade do |t|
     t.integer  "trick_id"
@@ -72,11 +63,9 @@ ActiveRecord::Schema.define(version: 20150701232440) do
     t.decimal  "latitude"
     t.decimal  "longitude"
     t.string   "level"
-    t.string   "floor_quality"
-    t.string   "teachers"
     t.string   "photo"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tricks", force: :cascade do |t|

@@ -5,8 +5,6 @@ class CreateSpots < ActiveRecord::Migration
       t.decimal :latitude
       t.decimal :longitude
       t.string :level
-      t.string :floor_quality
-      t.string :teachers
       t.string :photo
       t.timestamps null: false
     end
