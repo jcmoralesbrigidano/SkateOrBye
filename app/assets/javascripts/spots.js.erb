@@ -7,6 +7,8 @@ var positions = [];
 var markers = [];
 var yourPosition = {};
 var yourPositionMarker;
+var yourPositionMarkerLatitude;
+var yourPositionMarkerLongitude;
 
 getSpots();
 
@@ -52,7 +54,7 @@ function createPositionsAndMarkers() {
 			map: map,		    			
 			position: position,
 			icon: '/skateboard.png',
-			title: (i + 1).toString()
+			title: (i + 1).toString(),
 		});
 
 		markers.push(marker);		    		
@@ -112,21 +114,21 @@ function getYourPosition() {
 	    	yourPosition = new google.maps.LatLng(yourPositionResponse.coords.latitude, yourPositionResponse.coords.longitude);
 
 			yourPositionMarker = new google.maps.Marker({
-	    			map: map,
-	    			position: yourPosition,
-	    			draggable: true,
-					icon: '/bartSkater.gif',
-	    			title: 'You are here!'
+    			map: map,
+    			position: yourPosition,
+    			draggable: true,
+				icon: '/bartSkater.gif',
+    			title: 'You are here!'
 	    	});
 
-	    	var addSpotHref = '/spots/new?latitude=' + yourPositionMarker.getPosition().lat() + '&longitude=' + yourPositionMarker.getPosition().lng();
+	    	updateYourPosition(yourPositionMarker);
+
+	    	var addSpotHref = '/spots/new?latitude=' + yourPositionMarkerLatitude + '&longitude=' + yourPositionMarkerLongitude;
 	    	$('.add-spot').attr('href', addSpotHref);
 
 	    	google.maps.event.addDomListener(yourPositionMarker, 'dragend', function() {
-	    		var yourLatitude = yourPositionMarker.getPosition().lat();
-	    		var yourLongitude = yourPositionMarker.getPosition().lng();
-	    		
-	    		coordinatesToAddress(yourLatitude, yourLongitude);
+	    		updateYourPosition(yourPositionMarker);
+	    		coordinatesToAddress(yourPositionMarkerLatitude, yourPositionMarkerLongitude);
 	    	});
 
 			map.setCenter(yourPosition);
@@ -138,18 +140,23 @@ function getYourPosition() {
   	}
 }
 
+function updateYourPosition(yourPositionMarker) {
+	yourPositionMarkerLatitude = yourPositionMarker.getPosition().lat();
+	yourPositionMarkerLongitude = yourPositionMarker.getPosition().lng();
+}
+
 function handleNoGeolocation(errorFlag) {
 	if(errorFlag) {
-    	var content = 'The Geolocation service failed.';
+    	console.log('The Geolocation service failed.');
     } else {
-    	var content = 'Your browser does not support geolocation.';
+    	console.log('Your browser does not support geolocation.');
     }
 }
 
 $('.hearts').on('mouseover', function() {
 	var trickId = $(this).data('trick-id');
 	var heartsHovered = $(this).data('hearts');
-	
+
 	changeHeartsImage(trickId, heartsHovered);
 });
 
@@ -162,17 +169,15 @@ $('.hearts').mouseout(function() {
 $('.hearts').on('click', function() {		
 	var trickId = $(this).data('trick-id');
 	var heartsSelected = $(this).data('hearts');
-	
-	changeHeartsImage(trickId, heartsSelected);
+	var spotId = $(this).data('spot-id');
 
 	$('.hearts[data-trick-id=' + trickId + ']').unbind();
+	changeHeartsImage(trickId, heartsSelected);	
 
 	var trickRating = {
 		trick_id: trickId,
 		hearts_selected: heartsSelected
 	};
-
-	var spotId = $(this).data('spot-id');
 
 	$.ajax({
 		type: 'POST',
@@ -198,7 +203,7 @@ $('.nearest-spot').on('click', function() {
 	var nearestSpot = 0;
 
 	for(var i = 0; i < positions.length; i++) {
-		distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(yourPosition.lat(), yourPosition.lng()), new google.maps.LatLng(positions[i].lat(), positions[i].lng()));
+		distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(yourPositionMarkerLatitude, yourPositionMarkerLongitude), new google.maps.LatLng(positions[i].lat(), positions[i].lng()));
 		
 		if(distance < nearestDistance) {
 			nearestDistance = distance;
@@ -227,13 +232,10 @@ $('.random-spot').on('click', function() {
 });
 
 $('.add-spot-here').on('click', function() {
-	var latitude = yourPositionMarker.getPosition().lat();
-	var longitude = yourPositionMarker.getPosition().lng();
-	
-	coordinatesToAddress(latitude, longitude);
+	coordinatesToAddress(yourPositionMarkerLatitude, yourPositionMarkerLongitude);
 });
 
-$('button[data-target="#myModal"]').on('click', function() {
+$('[data-target="#myModal"]').on('click', function() {
 	var challenger = 0;
 	var skaters = [];
 	var challenged = '';
@@ -245,7 +247,7 @@ $('button[data-target="#myModal"]').on('click', function() {
 		url: '/skaters',
 		dataType: 'json',
 		success: function(skatersResponse) {
-			challenger = $('button[data-action="add-challenge"]').data('challenger-id');
+			challenger = $('[data-action="add-challenge"]').data('challenger-id');
 
 			for(var i = 0; i < skatersResponse.length; i++) {
 				skaters.push(skatersResponse[i]);
@@ -257,7 +259,7 @@ $('button[data-target="#myModal"]').on('click', function() {
 				$('.challenge-skaters').append('<button type="button" class="btn btn-default" data-action="select-skater">' + skaters[i].name + '</button>');
 			}
 
-			$('button[data-action="select-skater"]').on('click', function() {
+			$('[data-action="select-skater"]').on('click', function() {
 				challenged = $(this).text();
 			});
 
@@ -267,11 +269,11 @@ $('button[data-target="#myModal"]').on('click', function() {
 				$('.challenge-spots').append('<img src=' + spots[i].photo + ' class="marker-spot-photo" data-action="select-spot" data-spot=' + spots[i].id + '>');
 			}
 
-			$('img[data-action="select-spot"]').on('click', function() {
+			$('[data-action="select-spot"]').on('click', function() {
 				spot = $(this).data('spot');
 			});
 
-			$('button[data-action="add-challenge"]').unbind('click').on('click', function() {
+			$('[data-action="add-challenge"]').unbind('click').on('click', function() {
 				trick = $('#challenge-trick').val();
 
 				var challenge = {
@@ -281,8 +283,6 @@ $('button[data-target="#myModal"]').on('click', function() {
 					challenge_trick: trick
 				};
 
-				console.log(challenge);
-				
 				$.ajax({
 					type: 'POST',
 					url: '/challenges',				
@@ -292,8 +292,7 @@ $('button[data-target="#myModal"]').on('click', function() {
 						$('.challenge-skaters').empty();
 						$('.challenge-spots').empty();
 						$('#challenge-trick').val('');
-						console.log('OK4');
-						
+						console.log('OK4');						
 					},
 					error: function() { alert('KO4'); }
 				});
@@ -303,7 +302,7 @@ $('button[data-target="#myModal"]').on('click', function() {
 	});
 });
 
-$('button[data-action="check-attempt"]').on('click', function() {
+$('[data-action="check-attempt"]').on('click', function() {
 	var challengeId = $('.panel').data('challenge-id');
 	var attemptResult = $(this).text();
 
@@ -311,8 +310,6 @@ $('button[data-action="check-attempt"]').on('click', function() {
 		challenge_id: challengeId,
 		attempt_result: attemptResult
 	};
-
-	console.log(attemptResult);
 
 	$.ajax({
 		type: 'POST',
@@ -334,8 +331,6 @@ $('[data-action="upload-trick"]').on('click', function() {
 		spot_id: spotId,
 		trick_video: trickVideo
 	};
-
-	console.log(trick);
 
 	$.ajax({
 		type: 'POST',
@@ -370,7 +365,7 @@ $('[data-action="upload-attempt"]').on('click', function() {
 	});
 });
 
-$('button[data-target="#myModal4"]').on('click', function() {
+$('[data-target="#myModal4"]').on('click', function() {
 	var role;
 });
 
