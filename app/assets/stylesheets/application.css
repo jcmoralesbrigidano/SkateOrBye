@@ -59,6 +59,7 @@ a, a:hover, a:focus, a:visited {
 
 .navigation-elements:hover {
 	border: 3px solid #337ab7;
+	transition: background-color 0.5s ease;
 	background: #337ab7;
 	color: white;
 	font-weight: bold;

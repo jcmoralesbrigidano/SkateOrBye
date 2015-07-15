@@ -86,6 +86,42 @@
 		    </div>
 		  </div>
 		</div>
+		<!-- Add spot here modal -->
+		<div class="modal fade" id="myModal5" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add spot here</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="text" class="form-control input-correction" id="spot-level" placeholder="Level"><br><br>
+		      	<input type="text" class="form-control input-correction" id="spot-photo" placeholder="Photo"><br>
+			  </div>
+		      <div class="modal-footer footer-correction">
+		        <button type="button" class="btn btn-primary" data-action="add-spot-here" data-skater-id="<%= session[:id] %>" data-dismiss="modal">ADD</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- New jam modal -->
+		<div class="modal fade" id="myModal6" tabindex="-1" role="dialog">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">New jam</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="text" class="form-control input-correction" id="spot-level" placeholder="Level"><br><br>
+		      	<input type="text" class="form-control input-correction" id="spot-photo" placeholder="Photo"><br>
+			  </div>
+		      <div class="modal-footer footer-correction">
+		        <button type="button" class="btn btn-primary" data-action="add-spot-here" data-skater-id="<%= session[:id] %>" data-dismiss="modal">ADD</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<header>
 			<div class="logo"><a href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a></div>
 			<div class="account-nav">
@@ -101,9 +137,9 @@
 		<nav>
 			<a href="/spots"><div class="navigation-elements">SPOTS</div></a>
 			<a href="/jams"><div class="navigation-elements">JAMS</div></a>
-			<a href="/challenges"><div class="navigation-elements">CHALLENGES <span class="badge">4</span></div></a>
+			<a href="/challenges"><div class="navigation-elements">CHALLENGES <span class="badge"><%= pending_challenges %></span></div></a>
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  				CHALLENGE A FRIEND
+  				CHALLENGE A FRIEND!
 			</button>
 		</nav><br>
 		<%= yield %><br><br>

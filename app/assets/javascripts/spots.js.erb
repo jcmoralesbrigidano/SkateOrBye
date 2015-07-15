@@ -73,6 +73,7 @@ function addClickEventForEachMarker(marker) {
     	});
 
     	infoWindowSpot.open(map, marker);
+    	setTimeout(function() { infoWindowSpot.close(); }, 5000);
 	});
 }
 
@@ -95,14 +96,26 @@ function coordinatesToAddress(yourLatitude, yourLongitude) {
 						addressCorrection += address[i];
 					}
 				}
+
+				var level = $('[id="spot-level"]').val();
+				var photo = $('[id="spot-photo"]').val();
 				
-				var infoWindowYourPositionContent = '<a class="add-spot-button" href=/spots/new?latitude=' + yourLatitude + '&longitude=' + yourLongitude + '&address=' + addressCorrection + '>Add spot here</a>';
+				var spot = {
+					level: level,
+					photo: photo,
+					latitude: yourPositionMarkerLatitude,
+					longitude: yourPositionMarkerLongitude,
+					address: addressCorrection
+				};
 
-		    	var infoWindowYourPosition = new google.maps.InfoWindow({
-		    		content: infoWindowYourPositionContent
-		    	});
-
-	    		infoWindowYourPosition.open(map, yourPositionMarker);
+				$.ajax({
+					type: 'POST',
+					url: '/spots',
+					data: { spot },
+					dataType: 'json',
+					success: function() { console.log('OK10'); },
+					error: function() { console.log('KO10'); }
+				});
 			}			
 		}	
 	});
@@ -117,7 +130,7 @@ function getYourPosition() {
     			map: map,
     			position: yourPosition,
     			draggable: true,
-				icon: '/bartSkater.gif',
+				icon: '/skater.png',
     			title: 'You are here!'
 	    	});
 
@@ -128,7 +141,6 @@ function getYourPosition() {
 
 	    	google.maps.event.addDomListener(yourPositionMarker, 'dragend', function() {
 	    		updateYourPosition(yourPositionMarker);
-	    		coordinatesToAddress(yourPositionMarkerLatitude, yourPositionMarkerLongitude);
 	    	});
 
 			map.setCenter(yourPosition);
@@ -184,8 +196,8 @@ $('.hearts').on('click', function() {
 		url: '/spots/' + spotId + '/rate-trick',
 		data: { trickRating },
 		dataType: 'json',
-		success: function() { console.log('OK2'); },
-		error: function() { console.log('KO2'); }
+		success: function() { console.log('OK9'); },
+		error: function() { console.log('KO9'); }
 	});
 });
 
@@ -218,6 +230,7 @@ $('.nearest-spot').on('click', function() {
 	});
 
 	infoWindowNearestSpot.open(map, markers[nearestSpot]);
+	setTimeout(function() { infoWindowNearestSpot.close(); }, 5000);
 });
 
 $('.random-spot').on('click', function() {
@@ -229,10 +242,11 @@ $('.random-spot').on('click', function() {
 	});
 
 	infoWindowRandomSpot.open(map, markers[randomSpot]);
+	setTimeout(function() { infoWindowRandomSpot.close(); }, 5000);
 });
 
-$('.add-spot-here').on('click', function() {
-	coordinatesToAddress(yourPositionMarkerLatitude, yourPositionMarkerLongitude);
+$('[data-action="add-spot-here"]').on('click', function() {
+	coordinatesToAddress(yourPositionMarkerLatitude, yourPositionMarkerLongitude);	
 });
 
 $('[data-target="#myModal"]').on('click', function() {

@@ -33,32 +33,35 @@ class SpotsController < ApplicationController
 		rated
 	end
 
-	def new
-		@spot = Spot.new
+	def create
+		@spot_params = params[:spot]
+		raw_address = @spot_params["address"].split(//)
+		@address = ''
 
-		@latitude = params[:latitude]
-		@longitude = params[:longitude]
-		address = params[:address].split(//)
-		@addressCorrection = ''
-
-		address.each do |letter|
+		raw_address.each do |letter|
 			if letter == '-'
-				@addressCorrection += ' '
+				@address += ' '
 			elsif letter == '_'
-				@addressCorrection += ','
+				@address += ','
 			else
-				@addressCorrection += letter
+				@address += letter
 			end
 		end
-	end
 
-	def create
-		@spot = Spot.new spot_params
+		@spot = Spot.new
+		@spot.address = @address
+		@spot.latitude = @spot_params["latitude"]
+		@spot.longitude = @spot_params["longitude"]
+		@spot.level = @spot_params["level"]
+		@spot.photo = @spot_params["photo"]
 
 		if @spot.save
-			redirect_to spots_path
+			respond_to do |format|
+				format.html 
+				format.json { render json: 1 }
+			end
 		else
-			render 'new'
+			redirect_to '/'
 		end
 	end
 	
@@ -91,10 +94,5 @@ class SpotsController < ApplicationController
 		else
 			render 'show'
 		end		
-	end
-
-	private
-	def spot_params
-		params.require(:spot).permit(:address, :latitude, :longitude, :level, :photo)
 	end
 end
