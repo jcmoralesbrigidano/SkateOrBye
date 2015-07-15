@@ -1,12 +1,9 @@
-<div class="panel panel-default">
-	<div class="panel-body">
-		<%= form_for @jam do |f| %>
-			<%= f.text_field :name, class: 'form-control input-correction', :placeholder => 'Title' %><br><br>
-			<%= f.text_field :spot_id, class: 'form-control input-correction', :placeholder => 'Spot' %><br><br>
-			<%= f.date_field :date, class: 'form-control input-correction', :placeholder => 'Date' %><br><br>
-			<%= f.time_select :time, class: 'form-control input-correction', :placeholder => 'Time' %><br><br>
-			<%= f.text_field :info, class: 'form-control input-correction', :placeholder => 'Info' %><br><br><br>
-			<%= f.submit 'ADD JAM', class: 'navigation-elements' %>
-		<% end %>
-	</div>
-</div>
+<br>
+<%= form_for @jam do |f| %>
+	<%= f.text_field :name, class: 'form-control input-correction', :placeholder => 'Title' %><br><br>
+	<%= f.text_field :spot_id, class: 'form-control input-correction', :placeholder => 'Spot' %><br><br>
+	<%= f.date_field :date, class: 'form-control input-correction', :placeholder => 'Date' %><br><br>
+	<%= f.time_select :time, class: 'form-control input-correction', :placeholder => 'Time' %><br><br>
+	<%= f.text_field :info, class: 'form-control input-correction', :placeholder => 'Info' %><br><br><br>
+	<%= f.submit 'ADD JAM', class: 'navigation-elements' %>
+<% end %>

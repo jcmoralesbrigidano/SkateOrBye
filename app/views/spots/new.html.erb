@@ -2,8 +2,8 @@
 <%= form_for @spot do |f| %>
 	<%= f.text_field :level, :placeholder => 'Level', class: 'form-control input-correction' %><br><br>
 	<%= f.text_field :photo, :placeholder => 'Photo', class: 'form-control input-correction' %><br><br>
-	<%= f.text_field :latitude, :value => @latitude , :placeholder => 'Latitude', disabled: true, class: 'form-control input-correction' %><br><br>
-	<%= f.text_field :longitude, :value => @longitude , :placeholder => 'Longitude', disabled: true, class: 'form-control input-correction' %><br><br>
-	<%= f.text_field :address, :value => @addressCorrection , :placeholder => 'Address', disabled: true, class: 'form-control input-correction' %><br><br><br>
+	<%= f.text_field :latitude, :value => @latitude , :placeholder => 'Latitude', :readonly => true, class: 'form-control input-correction' %><br><br>
+	<%= f.text_field :longitude, :value => @longitude , :placeholder => 'Longitude', :readonly => true, class: 'form-control input-correction' %><br><br>
+	<%= f.text_field :address, :value => @addressCorrection , :placeholder => 'Address', :readonly => true, class: 'form-control input-correction' %><br><br><br>
 	<%= f.submit 'ADD SPOT', class: 'navigation-elements' %>
 <% end %>
