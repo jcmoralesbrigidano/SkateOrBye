@@ -1,0 +1,126 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+
+@font-face {
+    font-family: SkateFont;
+    src: url('/SkateFont.ttf');
+    font-weight: 400;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	border-top: 4px solid #337ab7;
+}
+
+#tricks-container,
+.display-inline-block {
+	display: inline-block;
+}
+
+.clear-floats {
+	clear: both;
+}
+
+a, a:hover, a:focus, a:visited {
+	text-decoration: none;
+}
+
+.logo {
+	font-family: SkateFont;
+	font-size: 40px;
+	margin-top: 10px;
+}
+
+.navigation-elements {
+	display: inline-block;
+	border: 3px solid #337ab7;
+	border-radius: 3px;
+	padding: 5px 20px;
+	color: #337ab7;
+	font-weight: bold;
+	cursor:pointer;
+	background: white;
+}
+
+.navigation-elements:hover {
+	border: 3px solid #337ab7;
+	transition: background-color 0.5s ease;
+	background: #337ab7;
+	color: white;
+	font-weight: bold;
+}
+
+#map-container {
+	height: 600px;
+	margin: 0 50px;
+	border-radius: 3px;
+}
+
+.trick,
+.trick-info {
+	float: left;	
+}
+
+.trick-info {
+	margin-left:5px;
+}
+
+.hearts {
+	cursor: pointer;
+}
+
+.skater-trick,
+.trick-rating {
+	display: inline-block;
+	float:left;
+}
+
+.skater-trick {
+	margin-bottom: 5px;
+}
+
+.marker-spot-photo {
+	width: 250px;
+	height: 150px;
+	border-radius: 3px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.challenge-challenge,
+.footer-correction {
+	text-align: center;
+}
+
+.input-correction {
+	display: inline-block;
+	max-width: 200px;
+}
+
+.default-font-size {
+	font-size: 100%;
+}
+
+.spot-photo {
+	max-width: 600px;
+}
+
+.hidden-elements {
+	visibility: hidden;
+}
