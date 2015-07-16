@@ -1,16 +1,16 @@
 <br><div class="display-inline-block">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">Pending</a></li>
-    <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab">Completed</a></li>
-    <li role="presentation"><a href="#to-check" aria-controls="to-check" role="tab" data-toggle="tab">To check</a></li>
+    <li role="presentation" class="active"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">Pending <span class="badge"><%= pending_challenges %></span></a></li>
+    <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab">Completed <span class="badge"><%= completed_challenges %></span></a></li>
+    <li role="presentation"><a href="#to-check" aria-controls="to-check" role="tab" data-toggle="tab">Sent</a></li>
   </ul>
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane fade in active" id="pending"><br>		
 		<% @pending_challenges.each do |pending_challenge| %>
 				<span class="label label-success default-font-size"><%= pending_challenge.challenge %></span>&nbsp;&nbsp;Challenged by <%= Skater.find(pending_challenge.challenger_id).name %>&nbsp;&nbsp;
-				<div data-toggle="modal" data-target="#myModal3" class="navigation-elements" data-skater-id="<%= session[:id] %>" data-spot-id="<%= pending_challenge.challenge_spot %>" data-challenge-id="<%= pending_challenge.id %>">TRY</div><br><br>
+				<div data-toggle="modal" data-target="#myModal3" class="action-elements" data-skater-id="<%= session[:id] %>" data-spot-id="<%= pending_challenge.challenge_spot %>" data-challenge-id="<%= pending_challenge.id %>">TRY</div><br><br>
 			
 		<% end %>		
     </div>

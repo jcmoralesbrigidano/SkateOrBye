@@ -1,19 +1,16 @@
 <h2><%= @jam.name %></h2><br>
-<ul class="list-group" style="display:inline-block">
-  <li class="list-group-item"><a href="/spots/<%= @spot.id %>"><img class="spot-photo" src="<%= @spot.photo %>"></a></li>
-  <li class="list-group-item"><span class="label label-default default-font-size">Date: <%= @jam.date %></span></li>
-  <li class="list-group-item"><span class="label label-default default-font-size">Hour: <%= @jam.time %></span></li>
-  <li class="list-group-item"><span class="label label-default default-font-size"><%= @jam.info %></span></li>
-</ul>
-<br>
+<a href="/spots/<%= @spot.id %>"><img class="spot-photo" src="<%= @spot.photo %>"></a><br><br>
+<span class="label label-default default-font-size">Date: <%= @jam.date %></span><br><br>
+<span class="label label-default default-font-size">Hour: <%= @jam.time %></span><br><br>
+<span class="label label-default default-font-size">About: <%= @jam.info %></span>
+<br><br><br><br>
 
 <h2>Assistants</h2><br>
-<ul class="list-group" style="display:inline-block">
-<% @attendances.each do |attendance| %>
-	<li class="list-group-item">
-		<%= Skater.where(id: attendance.skater_id).first.name %> (<%= attendance.role %>)
-	</li>
-<% end %>
-</ul><br><br>
 
-<div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="navigation-elements">JOIN</div><br>
+<% @attendances.each do |attendance| %>
+	<span class="label label-info default-font-size">
+		<%= Skater.where(id: attendance.skater_id).first.name %> (<%= attendance.role %>)
+	</span>
+<% end %><br><br><br><br>
+
+<div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="action-elements">JOIN</div><br><br><br>

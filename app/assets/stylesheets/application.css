@@ -27,6 +27,10 @@ body {
 	border-top: 4px solid #337ab7;
 }
 
+.glyphicon-correction {
+	position: inherit;
+}
+
 #tricks-container,
 .display-inline-block {
 	display: inline-block;
@@ -44,36 +48,85 @@ a, a:hover, a:focus, a:visited {
 	font-family: SkateFont;
 	font-size: 40px;
 	margin-top: 10px;
+	margin-left: 240px;
+	display: inline-block;
+}
+
+.account-nav {
+	display: inline-block;
+	float: right;
+	margin-right: 50px;
+  	margin-top: 20px;
 }
 
 .navigation-elements {
 	display: inline-block;
 	border: 3px solid #337ab7;
 	border-radius: 3px;
-	padding: 5px 20px;
-	color: #337ab7;
+	padding: 10px 50px;	
 	font-weight: bold;
 	cursor:pointer;
-	background: white;
+	background: #337ab7;
+	color: white;
+	margin-right: 25px;
 }
 
 .navigation-elements:hover {
 	border: 3px solid #337ab7;
-	transition: background-color 0.5s ease;
-	background: #337ab7;
-	color: white;
+	transition: background-color 0.25s ease;	
 	font-weight: bold;
+	color: #337ab7;
+	background: white;
+}
+
+.action-elements {
+	display: inline-block;
+	border: 3px solid #337ab7;
+	border-radius: 3px;
+	padding: 5px 20px;	
+	font-weight: bold;
+	cursor:pointer;
+	color: #337ab7;
+	background: white;
+}
+
+.action-elements:hover {
+	border: 3px solid #337ab7;
+	transition: background-color 0.25s ease;	
+	font-weight: bold;
+	background: #337ab7;
+	color: white;	
+}
+
+.challenge-a-friend {
+	display: inline-block;
+	border: 3px solid #5cb85c;
+	border-radius: 3px;
+	padding: 10px 50px;	
+	font-weight: bold;
+	cursor:pointer;
+	color: #5cb85c;
+	background: white;	
+}
+
+.challenge-a-friend:hover {
+	border: 3px solid #5cb85c;
+	transition: background-color 0.25s ease;	
+	font-weight: bold;
+	background: #5cb85c;
+	color: white;	
 }
 
 #map-container {
-	height: 600px;
-	margin: 0 50px;
+	height: 550px;
+	margin: 0 100px;
 	border-radius: 3px;
 }
 
 .trick,
 .trick-info {
-	float: left;	
+	float: left;
+	margin-left: 73px;	
 }
 
 .trick-info {
@@ -122,4 +175,8 @@ a, a:hover, a:focus, a:visited {
 
 .hidden-elements {
 	visibility: hidden;
+}
+
+.tab-pane {
+	padding: 30px;
 }

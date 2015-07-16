@@ -1,6 +1,6 @@
 <img class="spot-photo display-inline-block" src="<%= @spot.photo %>"><br><br>
-<span class="label label-default default-font-size"><%= @spot.address %></span><br><br>
-<span class="label label-default default-font-size">Level: <%= @spot.level %></span><br><br>
+<span class="label label-default default-font-size">Address: <%= @spot.address %></span><br><br>
+<span class="label label-default default-font-size">Level: <%= @spot.level %></span><br><br><br><br>
 
 <div id="tricks-container">
 	<% @spot_tricks.each do |spot_trick| %>
@@ -20,7 +20,7 @@
 						</div>						
 					<% end %>
 				<% else %>
-					<span>You need to <a href="<%= login_path %>">login</a> in order to rate a trick</span>
+					<span>You need to <a href="<%= login_path %>">login</a> in order to rate a video</span>
 				<% end %>
 			</div>
 		</div>
@@ -30,12 +30,12 @@
 				<span class="label label-danger default-font-size trick-rating glyphicon glyphicon-heart"> <%= spot_trick.average_rating %></span>
 			<% end %>	
 		</div>
-		<div class="clear-floats"></div>
+		<div class="clear-floats"></div><br><br><br>
 	<% end %>
 </div><br>
 
 <% if current_skater %>
-	<div data-toggle="modal" data-target="#myModal2" class="navigation-elements new-trick-button" data-spot-id="<%= @spot.id %>">NEW TRICK</div>
+	<div data-toggle="modal" data-target="#myModal2" class="action-elements new-trick-button" data-spot-id="<%= @spot.id %>">ADD VIDEO</div>
 <% else %>
-	<span>You need to <a href="<%= login_path %>">login</a> in order to add a trick</span>
-<% end %><br><br>
+	<span>You need to <a href="<%= login_path %>">login</a> in order to add a video</span>
+<% end %><br><br><br>

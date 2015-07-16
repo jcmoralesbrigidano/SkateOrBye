@@ -13,7 +13,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Challenge a friend</h4>
+		        <h4 class="modal-title" id="myModalLabel">Challenge a friend!</h4>
 		      </div>
 		      <div class="modal-body">
 		      	<div class="btn-group challenge-skaters">
@@ -36,10 +36,10 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Share your trick</h4>
+		        <h4 class="modal-title" id="myModalLabel">Share an awesome video!</h4>
 		      </div>
 		      <div class="modal-body">
-		      	<input type="text" class="form-control input-correction" id="trick-video" placeholder="Awesome video"><br>
+		      	<input type="text" class="form-control input-correction" id="trick-video" placeholder="URL of your Vine video"><br>
 			  </div>
 		      <div class="modal-footer footer-correction">
 		        <button type="button" class="btn btn-primary" data-action="upload-trick" data-skater-id="<%= session[:id] %>" data-dismiss="modal">SHARE</button>
@@ -53,13 +53,13 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Share your attempt</h4>
+		        <h4 class="modal-title" id="myModalLabel">Try the challenge!</h4>
 		      </div>
 		      <div class="modal-body">
-		      	<input type="text" class="form-control input-correction" id="attempt-video" placeholder="Awesome video"><br>					
+		      	<input type="text" class="form-control input-correction" id="attempt-video" placeholder="URL of your Vine video"><br>					
 			  </div>
 		      <div class="modal-footer footer-correction">
-		        <button type="button" class="btn btn-primary" data-action="upload-attempt" data-dismiss="modal">SHARE</button>
+		        <button type="button" class="btn btn-primary" data-action="upload-attempt" data-dismiss="modal">TRY</button>
 		      </div>
 		    </div>
 		  </div>
@@ -70,7 +70,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Join jam</h4>
+		        <h4 class="modal-title" id="myModalLabel">Join meeting as a...</h4>
 		      </div>
 		      <div class="modal-body">
 		      	<div class="btn-group challenge-skaters">
@@ -122,7 +122,7 @@
 		    </div>
 		  </div>
 		</div>
-		<header>
+		<header><br>
 			<div class="logo"><a href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a></div>
 			<div class="account-nav">
 				<% if current_skater %> 
@@ -133,17 +133,15 @@
 					<div class="display-inline-block"><%= link_to "Sign up", signup_path %></div>
 				<% end %>
 			</div>
-		</header><br>
+		</header><br><br>
 		<nav>
-			<a href="/spots"><div class="navigation-elements">SPOTS</div></a>
-			<a href="/jams"><div class="navigation-elements">JAMS</div></a>
-			<a href="/challenges"><div class="navigation-elements">CHALLENGES <span class="badge"><%= pending_challenges %></span></div></a>
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  				CHALLENGE A FRIEND!
-			</button>
-		</nav><br>
+			<a href="/spots"><div class="navigation-elements">SPOTS<br><span class="glyphicon-correction glyphicon glyphicon-globe"></span></div></a>
+			<a href="/jams"><div class="navigation-elements">MEETINGS<br><span class="glyphicon-correction glyphicon glyphicon-user"></span></div></a>
+			<a href="/challenges"><div class="navigation-elements">CHALLENGES<br><span class="glyphicon-correction glyphicon glyphicon-menu-hamburger"></span></div></a>
+			<a href="#"><div class="challenge-a-friend" data-toggle="modal" data-target="#myModal">CHALLENGE A FRIEND!<br><span class="glyphicon-correction glyphicon glyphicon-send"></span></div></a>
+		</nav><br><br><br>
 		<%= yield %><br><br>
-		<footer>&copy; 2015 Skate or Bye | Crafted by a padawan skater</footer>
+		<footer>&copy; 2015 Skate or Bye | Crafted by a padawan skater</footer><br>
 		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>

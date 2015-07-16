@@ -1,10 +1,5 @@
-<h2>Jams</h2><br>
-<ul class="list-group" style="display:inline-block">
 <% @jams.each do |jam| %>
-	<li class="list-group-item">
-		<%= link_to(jam.name, jam_path(jam.id)) %>
-	</li>
-<% end %>
-</ul><br>
+	<a href="/jams/<%= jam.id %>"><span class="label label-info default-font-size"><%= jam.name %></span></a>	
+<% end %><br><br><br>
 
-<a href="/jams/new"><div class="navigation-elements">NEW JAM</div></a>
+<a href="/jams/new"><div class="action-elements">NEW MEETING</div></a><br><br>

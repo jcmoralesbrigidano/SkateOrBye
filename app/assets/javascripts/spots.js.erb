@@ -275,6 +275,7 @@ $('[data-target="#myModal"]').on('click', function() {
 
 			$('[data-action="select-skater"]').on('click', function() {
 				challenged = $(this).text();
+				$('[data-action="select-skater"]').not(this).attr('disabled', 'true');
 			});
 
 			$('.challenge-spots').empty();
@@ -285,6 +286,8 @@ $('[data-target="#myModal"]').on('click', function() {
 
 			$('[data-action="select-spot"]').on('click', function() {
 				spot = $(this).data('spot');
+				$(this).css('border', '5px solid #337ab7');
+				$('[data-action="select-spot"]').unbind();
 			});
 
 			$('[data-action="add-challenge"]').unbind('click').on('click', function() {
