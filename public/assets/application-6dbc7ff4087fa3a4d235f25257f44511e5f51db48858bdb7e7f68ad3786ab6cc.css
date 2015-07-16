@@ -1,0 +1,183 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+
+@font-face {
+    font-family: SkateFont;
+    src: url('/SkateFont.ttf');
+    font-weight: 400;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	border-top: 4px solid #337ab7;
+}
+
+.glyphicon-correction {
+	position: inherit;
+}
+
+#tricks-container,
+.display-inline-block {
+	display: inline-block;
+}
+
+.clear-floats {
+	clear: both;
+}
+
+a, a:hover, a:focus, a:visited {
+	text-decoration: none;
+}
+
+.logo {
+	font-family: SkateFont;
+	font-size: 40px;
+	margin-top: 10px;
+	margin-left: 240px;
+	display: inline-block;
+}
+
+.account-nav {
+	display: inline-block;
+	float: right;
+	margin-right: 50px;
+  	margin-top: 20px;
+}
+
+.navigation-elements {
+	display: inline-block;
+	border: 3px solid #337ab7;
+	border-radius: 3px;
+	padding: 10px 50px;	
+	font-weight: bold;
+	cursor:pointer;
+	background: #337ab7;
+	color: white;
+	margin-right: 25px;
+}
+
+.navigation-elements:hover {
+	border: 3px solid #337ab7;
+	transition: background-color 0.25s ease;	
+	font-weight: bold;
+	color: #337ab7;
+	background: white;
+}
+
+.action-elements {
+	display: inline-block;
+	border: 3px solid #337ab7;
+	border-radius: 3px;
+	padding: 5px 20px;	
+	font-weight: bold;
+	cursor:pointer;
+	color: #337ab7;
+	background: white;
+}
+
+.action-elements:hover {
+	border: 3px solid #337ab7;
+	transition: background-color 0.25s ease;	
+	font-weight: bold;
+	background: #337ab7;
+	color: white;	
+}
+
+.challenge-a-friend {
+	display: inline-block;
+	border: 3px solid #5cb85c;
+	border-radius: 3px;
+	padding: 10px 50px;	
+	font-weight: bold;
+	cursor:pointer;
+	color: #5cb85c;
+	background: white;	
+}
+
+.challenge-a-friend:hover {
+	border: 3px solid #5cb85c;
+	transition: background-color 0.25s ease;	
+	font-weight: bold;
+	background: #5cb85c;
+	color: white;	
+}
+
+#map-container {
+	height: 550px;
+	margin: 0 100px;
+	border-radius: 3px;
+}
+
+.trick,
+.trick-info {
+	float: left;
+	margin-left: 73px;	
+}
+
+.trick-info {
+	margin-left:5px;
+}
+
+.hearts {
+	cursor: pointer;
+}
+
+.skater-trick,
+.trick-rating {
+	display: inline-block;
+	float:left;
+}
+
+.skater-trick {
+	margin-bottom: 5px;
+}
+
+.marker-spot-photo {
+	width: 250px;
+	height: 150px;
+	border-radius: 3px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.challenge-challenge,
+.footer-correction {
+	text-align: center;
+}
+
+.input-correction {
+	display: inline-block;
+	max-width: 200px;
+}
+
+.default-font-size {
+	font-size: 100%;
+}
+
+.spot-photo {
+	max-width: 600px;
+}
+
+.hidden-elements {
+	visibility: hidden;
+}
+
+.tab-pane {
+	padding: 30px;
+}
