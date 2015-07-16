@@ -16,9 +16,15 @@ Trick.create skater_id: 3, spot_id: 2, video: 'https://vine.co/v/ObKD3Fjea2m', a
 Trick.create skater_id: 3, spot_id: 3, video: 'https://vine.co/v/OqJTEEwUQDM', average_rating: 1
 
 Jam.create name: 'Ironhack Meeting', spot_id: 2, date: 'Sat, 11 Jul 2015', time: '16:00:00 UTC', info: 'Ironhack best developers'
+Jam.create name: 'Sk8 Punx', spot_id: 3, date: 'Sat, 11 Jul 2015', time: '16:00:00 UTC', info: 'You will need to carry a skateboard with you'
+
+Attendance.create jam_id: 1, skater_id: 2, role: 'Teacher'
+Attendance.create jam_id: 1, skater_id: 3, role: 'Spectator'
 
 Challenge.create challenger_id: 2, skater_id: 1, challenge_spot: 1, challenge: 'Ollie', state: 'pending'
+Challenge.create challenger_id: 2, skater_id: 1, challenge_spot: 1, challenge: 'Manual', state: 'completed'
 Challenge.create challenger_id: 2, skater_id: 1, challenge_spot: 2, challenge: 'Heelflip', state: 'pending'
+Challenge.create challenger_id: 1, skater_id: 2, challenge_spot: 2, challenge: 'No Comply 180', state: 'completed'
 Challenge.create challenger_id: 2, skater_id: 1, challenge_spot: 3, challenge: 'Hard Flip', state: 'pending'
 Challenge.create challenger_id: 1, skater_id: 2, challenge_spot: 1, challenge: 'Kickflip', state: 'pending'
 Challenge.create challenger_id: 1, skater_id: 2, challenge_spot: 2, challenge: 'Pop Shove-It', state: 'pending'

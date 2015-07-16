@@ -10,7 +10,7 @@
 <% @attendances.each do |attendance| %>
 	<span class="label label-info default-font-size">
 		<%= Skater.where(id: attendance.skater_id).first.name %> (<%= attendance.role %>)
-	</span>
+	</span><br><br>
 <% end %><br><br><br><br>
 
 <div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="action-elements">JOIN</div><br><br><br>
