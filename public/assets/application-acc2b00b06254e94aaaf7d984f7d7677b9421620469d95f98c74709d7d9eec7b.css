@@ -118,6 +118,15 @@ a, a:hover, a:focus, a:visited {
 	color: white;	
 }
 
+.challenges-completed {
+	min-width: 100px;
+	float: left;
+}
+
+.challenger {
+	min-width: 150px;
+}
+
 #map-container {
 	height: 550px;
 	margin: 0 100px;

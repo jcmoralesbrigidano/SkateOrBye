@@ -10837,6 +10837,7 @@ var yourPosition = {};
 var yourPositionMarker;
 var yourPositionMarkerLatitude;
 var yourPositionMarkerLongitude;
+var level;
 
 getSpots();
 
@@ -10905,6 +10906,11 @@ function addClickEventForEachMarker(marker) {
 	});
 }
 
+$('[data-action="select-level"').on('click', function() {
+	level = $(this).text();
+	$('[data-action="select-level"]').not(this).attr('disabled', 'true');
+});
+
 function coordinatesToAddress(yourLatitude, yourLongitude) {
 	var geocoder = new google.maps.Geocoder();
 	var latLng = new google.maps.LatLng(yourLatitude, yourLongitude);
@@ -10925,7 +10931,6 @@ function coordinatesToAddress(yourLatitude, yourLongitude) {
 					}
 				}
 
-				var level = $('[id="spot-level"]').val();
 				var photo = $('[id="spot-photo"]').val();
 				
 				var spot = {
@@ -10935,6 +10940,8 @@ function coordinatesToAddress(yourLatitude, yourLongitude) {
 					longitude: yourPositionMarkerLongitude,
 					address: addressCorrection
 				};
+
+				console.log(spot);
 
 				$.ajax({
 					type: 'POST',
@@ -11097,8 +11104,12 @@ $('[data-target="#myModal"]').on('click', function() {
 
 			$('.challenge-skaters').empty();
 
+			var loguedSkater = $('[data-action="add-challenge"]').data('challenger-id');
+			
 			for(var i = 0; i < skaters.length; i++) {
-				$('.challenge-skaters').append('<button type="button" class="btn btn-default" data-action="select-skater">' + skaters[i].name + '</button>');
+				if(skaters[i].id != loguedSkater) {
+					$('.challenge-skaters').append('<button type="button" class="btn btn-default" data-action="select-skater">' + skaters[i].name + '</button>');
+				}				
 			}
 
 			$('[data-action="select-skater"]').on('click', function() {
