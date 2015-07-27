@@ -1,7 +1,7 @@
 <br>
 <%= form_for @spot do |f| %>
-	<%= f.text_field :level, :placeholder => 'Level', class: 'form-control input-correction' %><br><br>
-	<%= f.text_field :photo, :placeholder => 'Photo', class: 'form-control input-correction' %><br><br>
+	<%= f.text_field :level, :placeholder => 'Level (Beginner, intermediate or advanced)', class: 'form-control input-correction' %><br><br>
+	<%= f.text_field :photo, :placeholder => 'URL of ', class: 'form-control input-correction' %><br><br>
 	<%= f.text_field :latitude, :value => @latitude , :placeholder => 'Latitude', :readonly => true, class: 'form-control input-correction' %><br><br>
 	<%= f.text_field :longitude, :value => @longitude , :placeholder => 'Longitude', :readonly => true, class: 'form-control input-correction' %><br><br>
 	<%= f.text_field :address, :value => @addressCorrection , :placeholder => 'Address', :readonly => true, class: 'form-control input-correction' %><br><br><br>

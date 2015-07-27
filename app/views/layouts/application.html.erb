@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <title>Skate or Bye</title>
+	  <title>Skate or Bye!</title>
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	  <%= stylesheet_link_tag 'application', media: 'all' %>
 	  <%= csrf_meta_tags %>
@@ -21,7 +21,7 @@
 		      	<div class="challenge-spots">
   			  	</div><br>
   			  	<div class="challenge-challenge">
-  			  		<input type="text" class="form-control input-correction" id="challenge-trick" placeholder="Trick"><br><br>					
+  			  		<input type="text" class="form-control input-correction" id="challenge-trick" placeholder="Trick he has to do"><br><br>					
   			  	</div>  			  	
 			  </div>
 		      <div class="modal-footer footer-correction">
@@ -92,11 +92,16 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Add spot here</h4>
+		        <h4 class="modal-title" id="myModalLabel">Add a new spot!</h4>
 		      </div>
 		      <div class="modal-body">
-		      	<input type="text" class="form-control input-correction" id="spot-level" placeholder="Level"><br><br>
-		      	<input type="text" class="form-control input-correction" id="spot-photo" placeholder="Photo"><br>
+		      	<div class="btn-group">
+		      		<button type="button" class="btn btn-default" data-action="select-level">Beginner</button>
+		      		<button type="button" class="btn btn-default" data-action="select-level">Intermediate</button>
+		      		<button type="button" class="btn btn-default" data-action="select-level">Advanced</button>
+  			  	</div>
+		      	<br><br>
+		      	<input type="text" class="form-control input-correction" id="spot-photo" placeholder="Spot's photo (URL)"><br>
 			  </div>
 		      <div class="modal-footer footer-correction">
 		        <button type="button" class="btn btn-primary" data-action="add-spot-here" data-skater-id="<%= session[:id] %>" data-dismiss="modal">ADD</button>
