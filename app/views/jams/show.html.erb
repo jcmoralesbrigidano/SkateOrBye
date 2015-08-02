@@ -1,9 +1,9 @@
 <h2><%= @jam.name %></h2><br>
-<a href="/spots/<%= @spot.id %>"><img class="spot-photo" src="<%= @spot.photo %>"></a><br><br>
-<span class="label label-default default-font-size">Date: <%= @jam.date %></span><br><br>
-<span class="label label-default default-font-size">Hour: <%= @jam.time %></span><br><br>
-<span class="label label-default default-font-size">About: <%= @jam.info %></span>
-<br><br><br><br>
+
+<span class="spot-info default-font-size glyphicon glyphicon-calendar"><span class="default-font-family">&nbsp;<%= @jam.date %></span></span><br><br>
+<span class="spot-info default-font-size glyphicon glyphicon-hourglass"><span class="default-font-family">&nbsp;<%= @jam.time %></span></span><br><br>
+<span class="spot-info default-font-size glyphicon glyphicon-comment"><span class="default-font-family">&nbsp;<%= @jam.info %></span></span><br><br><br>
+<a href="/spots/<%= @spot.id %>"><img class="spot-photo" src="<%= @spot.photo %>"></a><br><br><br><br>
 
 <h2>Assistants</h2><br>
 
@@ -11,6 +11,14 @@
 	<span class="label label-info default-font-size">
 		<%= Skater.where(id: attendance.skater_id).first.name %> (<%= attendance.role %>)
 	</span><br><br>
-<% end %><br><br><br><br>
+<% end %><br><br>
 
-<div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="action-elements">JOIN</div><br><br><br>
+<% if current_skater %>
+	<% if meeting_joined? %>
+		<span>You have already joined this meeting</span>
+	<% else %>
+		<div data-toggle="modal" data-target="#myModal4" data-jam-id="<%= @jam.id %>" class="action-elements">JOIN</div><br><br><br>
+	<% end %>
+<% else %>
+	<span>You need to <a href="<%= login_path %>">login</a> in order to join a meeting</span>
+<% end %><br><br><br>

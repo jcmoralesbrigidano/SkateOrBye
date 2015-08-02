@@ -47,16 +47,11 @@ a, a:hover, a:focus, a:visited {
 .logo {
 	font-family: SkateFont;
 	font-size: 40px;
-	margin-top: 10px;
-	margin-left: 240px;
-	display: inline-block;
 }
 
-.account-nav {
-	display: inline-block;
+.account-nav {	
 	float: right;
-	margin-right: 50px;
-  	margin-top: 20px;
+	margin-right: 150px;
 }
 
 .navigation-elements {
@@ -128,7 +123,7 @@ a, a:hover, a:focus, a:visited {
 
 #map-container {
 	height: 550px;
-	margin: 0 100px;
+	margin: 0 150px;
 	border-radius: 3px;
 }
 
@@ -178,8 +173,21 @@ a, a:hover, a:focus, a:visited {
 	font-size: 100%;
 }
 
+.default-font-family {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.spot-info {
+	/*border: 2px solid #337ab7;
+	border-radius: 3px;*/
+	font-weight: bold;
+	color: #337ab7;
+	padding: .2em .6em .3em;
+}
+
 .spot-photo {
 	max-width: 600px;
+	border-radius: 3px;
 }
 
 .hidden-elements {

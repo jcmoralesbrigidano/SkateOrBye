@@ -1,6 +1,7 @@
 class JamsController < ApplicationController
 	before_action :require_skater, only: [:new, :join_jam]
-	
+	helper_method :meeting_joined?
+
 	def index
 		@jams = Jam.all
 	end
@@ -23,6 +24,21 @@ class JamsController < ApplicationController
 		else
 			render 'new'
 		end
+	end
+
+	def meeting_joined?
+		jam = Jam.find params[:id]
+		attendances = @jam.attendances
+
+		joined = false
+
+		attendances.each do |attendance|
+			if attendance.skater_id == session[:id]
+				joined = true
+			end
+		end
+
+		joined
 	end
 
 	def join_jam

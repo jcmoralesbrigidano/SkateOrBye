@@ -4,6 +4,8 @@
 	</div>
 </div>
 <br><br>
-<button class="add-spot-here action-elements" data-toggle="modal" data-target="#myModal5">ADD SPOT HERE<br><span class="glyphicon-correction glyphicon glyphicon-map-marker"></span></button>
+<% if current_skater %>
+	<button class="add-spot-here action-elements" data-toggle="modal" data-target="#myModal5">ADD SPOT HERE<br><span class="glyphicon-correction glyphicon glyphicon-map-marker"></span></button>
+<% end %>
 <button class="nearest-spot action-elements">NEAREST SPOT<br><span class="glyphicon-correction glyphicon glyphicon-resize-small"></span></button>
 <button class="random-spot action-elements">RANDOM SPOT<br><span class="glyphicon-correction glyphicon glyphicon-random"></span></button><br>

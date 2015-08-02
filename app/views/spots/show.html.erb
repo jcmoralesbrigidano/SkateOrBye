@@ -1,6 +1,6 @@
-<img class="spot-photo display-inline-block" src="<%= @spot.photo %>"><br><br>
-<span class="label label-default default-font-size">Address: <%= @spot.address %></span><br><br>
-<span class="label label-default default-font-size">Level: <%= @spot.level %></span><br><br><br><br>
+<span class="spot-info glyphicon glyphicon-map-marker"><span class="default-font-family">&nbsp;<%= @spot.address %></span></span><br><br>
+<span class="spot-info glyphicon glyphicon-star "><span class="default-font-family">&nbsp;<%= @spot.level %></span></span><br><br><br>
+<img class="spot-photo display-inline-block" src="<%= @spot.photo %>"><br><br><br><br>
 
 <div id="tricks-container">
 	<% @spot_tricks.each do |spot_trick| %>

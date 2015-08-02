@@ -10931,7 +10931,8 @@ function coordinatesToAddress(yourLatitude, yourLongitude) {
 					}
 				}
 
-				var photo = $('[id="spot-photo"]').val();
+				var photo = 'https://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + yourPositionMarkerLatitude + ',' + yourPositionMarkerLongitude + '&fov=90&heading=235&pitch=10';
+				//var photo = $('[id="spot-photo"]').val();
 				
 				var spot = {
 					level: level,

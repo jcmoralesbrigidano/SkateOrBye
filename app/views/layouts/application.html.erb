@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <title>Skate or Bye!</title>
+	  <title>SKATE OR BYE!</title>
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	  <%= stylesheet_link_tag 'application', media: 'all' %>
 	  <%= csrf_meta_tags %>
@@ -94,14 +94,14 @@
 		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Add a new spot!</h4>
 		      </div>
-		      <div class="modal-body">
+		      <div class="modal-body"><br>
 		      	<div class="btn-group">
 		      		<button type="button" class="btn btn-default" data-action="select-level">Beginner</button>
 		      		<button type="button" class="btn btn-default" data-action="select-level">Intermediate</button>
 		      		<button type="button" class="btn btn-default" data-action="select-level">Advanced</button>
   			  	</div>
-		      	<br><br>
-		      	<input type="text" class="form-control input-correction" id="spot-photo" placeholder="Spot's photo (URL)"><br>
+		      	<br>
+		      	<!--<input type="text" class="form-control input-correction" id="spot-photo" placeholder="Spot's photo (URL)">--><br>
 			  </div>
 		      <div class="modal-footer footer-correction">
 		        <button type="button" class="btn btn-primary" data-action="add-spot-here" data-skater-id="<%= session[:id] %>" data-dismiss="modal">ADD</button>
@@ -127,8 +127,7 @@
 		    </div>
 		  </div>
 		</div>
-		<header><br>
-			<div class="logo"><a href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a></div>
+		<header><br>			
 			<div class="account-nav">
 				<% if current_skater %> 
 					<div class="display-inline-block"><span class="label label-info default-font-size"><%= current_skater.email %></span></div> | 
@@ -137,13 +136,16 @@
 					<div class="display-inline-block"><%= link_to "Log in", login_path %></div> | 
 					<div class="display-inline-block"><%= link_to "Sign up", signup_path %></div>
 				<% end %>
-			</div>
+			</div><br>
+			<div class="logo"><a href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a></div>
 		</header><br><br>
 		<nav>
 			<a href="/spots"><div class="navigation-elements">SPOTS<br><span class="glyphicon-correction glyphicon glyphicon-globe"></span></div></a>
 			<a href="/jams"><div class="navigation-elements">MEETINGS<br><span class="glyphicon-correction glyphicon glyphicon-user"></span></div></a>
 			<a href="/challenges"><div class="navigation-elements">CHALLENGES<br><span class="glyphicon-correction glyphicon glyphicon-menu-hamburger"></span></div></a>
-			<a href="#"><div class="challenge-a-friend" data-toggle="modal" data-target="#myModal">CHALLENGE A FRIEND!<br><span class="glyphicon-correction glyphicon glyphicon-send"></span></div></a>
+			<% if current_skater %>
+				<a href="#"><div class="challenge-a-friend" data-toggle="modal" data-target="#myModal">CHALLENGE A FRIEND!<br><span class="glyphicon-correction glyphicon glyphicon-send"></span></div></a>
+			<% end %>
 		</nav><br><br><br>
 		<%= yield %><br><br>
 		<footer>&copy; 2015 Skate or Bye | Crafted by a padawan skater</footer><br>
