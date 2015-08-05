@@ -1,4 +1,4 @@
-== SKATE OR BYE! (http://skateorbye.herokuapp.com/)
+== SKATE OR BYE! (http://skateorbye.herokuapp.com)
 
 Skate or Bye! es una aplicación web para patinadores/futuros patinadores:
 
