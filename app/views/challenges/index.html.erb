@@ -1,9 +1,9 @@
 <br><div class="display-inline-block">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">Pending <span class="badge"><%= pending_challenges %></span></a></li>
-    <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab">Completed <span class="badge"><%= completed_challenges %></span></a></li>
-    <li role="presentation"><a href="#to-check" aria-controls="to-check" role="tab" data-toggle="tab">Friends tricks</a></li>
+    <li role="presentation" class="active"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">To do <span class="badge"><%= pending_challenges %></span></a></li>
+    <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab">Done <span class="badge"><%= completed_challenges %></span></a></li>
+    <li role="presentation"><a href="#to-check" aria-controls="to-check" role="tab" data-toggle="tab">To check</a></li>
   </ul>
   <!-- Tab panes -->
   <div class="tab-content">
@@ -13,12 +13,11 @@
 				<span class="label label-success default-font-size"><%= pending_challenge.challenge %></span>
 			</div>
 			<div class="challenges-completed challenger">
-				Challenged by <i><%= Skater.find(pending_challenge.challenger_id).name %></i>
+				<i><%= Skater.find(pending_challenge.challenger_id).name %></i>
 			</div>
 			<div class="challenges-completed">
 				<div data-toggle="modal" data-target="#myModal3" class="action-elements" data-skater-id="<%= session[:id] %>" data-spot-id="<%= pending_challenge.challenge_spot %>" data-challenge-id="<%= pending_challenge.id %>" style="display:inline;">TRY</div>
 			</div>
-			<div class="clear-floats"></div>
 			<br><br>
 		<% end %>		
     </div>
@@ -29,23 +28,23 @@
     </div>
     <div role="tabpanel" class="tab-pane fade" id="to-check"><br>
     	<% @challenges_to_check.each do |challenge_to_check| %>
-    	<% if Trick.where(challenge_id: challenge_to_check.id).first %>
-			<div class="panel panel-default inline-display-block" data-challenge-id="<%= challenge_to_check.id %>">
-				<div class="panel-title"><br>
-					<span class="label label-success default-font-size"><%= challenge_to_check.challenge %> of <%= Skater.find(challenge_to_check.skater_id).name %></span>
-				</div>
-				<div class="panel-body">
-					<iframe class="tricks" src="<%= Trick.where(challenge_id: challenge_to_check.id).first.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>					
-				</div>
-				<div class="panel-footer">
-					<div class="btn-group">
-						<button type="button" class="btn btn-default" data-action="check-attempt">Bad</button>
-						<button type="button" class="btn btn-default" data-action="check-attempt">Good</button>
-						<button type="button" class="btn btn-default" data-action="check-attempt">Awesome</button>
-			  		</div>
-				</div>
-			</div><br>
-		<% end %>
+	    	<% if Trick.where(challenge_id: challenge_to_check.id).first %>
+				<div class="trick panel panel-default" data-challenge-id="<%= challenge_to_check.id %>">
+					<div class="panel-title"><br>
+						<span class="label label-success default-font-size"><%= challenge_to_check.challenge %> of <%= Skater.find(challenge_to_check.skater_id).name %></span>
+					</div>
+					<div class="panel-body">
+						<iframe class="trick-video" src="<%= Trick.where(challenge_id: challenge_to_check.id).first.video %>/embed/simple"></iframe>
+					</div>
+					<div class="panel-footer">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" data-action="check-attempt">Bad</button>
+							<button type="button" class="btn btn-default" data-action="check-attempt">Good</button>
+							<button type="button" class="btn btn-default" data-action="check-attempt">Awesome</button>
+				  		</div>
+					</div>
+				</div><br>
+			<% end %>
 		<% end %>
     </div>
   </div>

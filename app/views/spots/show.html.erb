@@ -1,12 +1,22 @@
-<span class="spot-info glyphicon glyphicon-map-marker"><span class="default-font-family">&nbsp;<%= @spot.address %></span></span><br><br>
-<span class="spot-info glyphicon glyphicon-star "><span class="default-font-family">&nbsp;<%= @spot.level %></span></span><br><br><br>
-<img class="spot-photo display-inline-block" src="<%= @spot.photo %>"><br><br><br><br>
+<h2>Spot <%= @spot.id %></h2><br>
 
-<div id="tricks-container">
+<div class="row">
+	<span class="spot-info glyphicon glyphicon-map-marker col-xs-12"><span class="default-font-family">&nbsp;<%= @spot.address %></span></span>
+	<span class="spot-info glyphicon glyphicon-star col-xs-12"><span class="default-font-family">&nbsp;<%= @spot.level %></span></span>
+</div><br><br>
+<img class="spot-photo" src="<%= @spot.photo %>"><br><br><br>
+
+<div class="row">
 	<% @spot_tricks.each do |spot_trick| %>
-		<div class="trick panel panel-default display-inline-block">
+		<div class="trick-info">
+			<span class="label label-info default-font-size skater-trick glyphicon glyphicon-user"> <%= skater_name spot_trick.skater_id %></span>
+			<% if spot_trick.average_rating != nil %>
+				<span class="label label-danger default-font-size trick-rating glyphicon glyphicon-heart"> <%= spot_trick.average_rating %></span>
+			<% end %>	
+		</div><br>
+		<div class="trick panel panel-default">
 			<div class="panel-body">
-				<iframe src="<%= spot_trick.video %>/embed/simple" width="600" height="600" frameborder="0"></iframe>
+				<iframe class="trick-video" src="<%= spot_trick.video %>/embed/simple"></iframe>
 			</div>
 			<div class="panel-footer">
 				<% if current_skater %>
@@ -23,19 +33,12 @@
 					<span>You need to <a href="<%= login_path %>">login</a> in order to rate a video</span>
 				<% end %>
 			</div>
-		</div>
-		<div class="trick-info">
-			<span class="label label-info default-font-size skater-trick glyphicon glyphicon-user"> <%= skater_name spot_trick.skater_id %></span><br>
-			<% if spot_trick.average_rating != nil %>
-				<span class="label label-danger default-font-size trick-rating glyphicon glyphicon-heart"> <%= spot_trick.average_rating %></span>
-			<% end %>	
-		</div>
-		<div class="clear-floats"></div><br><br><br>
+		</div><br><br>
 	<% end %>
-</div><br>
+</div>
 
 <% if current_skater %>
 	<div data-toggle="modal" data-target="#myModal2" class="action-elements new-trick-button" data-spot-id="<%= @spot.id %>">ADD VIDEO</div>
 <% else %>
 	<span>You need to <a href="<%= login_path %>">login</a> in order to add a video</span>
-<% end %><br><br><br>
+<% end %><br><br>

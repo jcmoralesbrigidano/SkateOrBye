@@ -5,6 +5,7 @@
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	  <%= stylesheet_link_tag 'application', media: 'all' %>
 	  <%= csrf_meta_tags %>
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
 		<!-- Challenge a friend modal -->
@@ -74,9 +75,9 @@
 		      </div>
 		      <div class="modal-body">
 		      	<div class="btn-group challenge-skaters">
-		      		<button type="button" class="btn btn-default" data-role="Skater">Skater</button>
-		      		<button type="button" class="btn btn-default" data-role="Learner">Learner</button>
-		      		<button type="button" class="btn btn-default" data-role="Teacher">Teacher</button>
+		      		<button type="button" class="btn btn-default" data-role="Skater">Skater</button><br>
+		      		<button type="button" class="btn btn-default" data-role="Learner">Learner</button><br>
+		      		<button type="button" class="btn btn-default" data-role="Teacher">Teacher</button><br>
 		      		<button type="button" class="btn btn-default" data-role="Spectator">Spectator</button>
   			  	</div><br><br>		      	
 			  </div>
@@ -96,9 +97,9 @@
 		      </div>
 		      <div class="modal-body"><br>
 		      	<div class="btn-group">
-		      		<button type="button" class="btn btn-default" data-action="select-level">Beginner</button>
-		      		<button type="button" class="btn btn-default" data-action="select-level">Intermediate</button>
-		      		<button type="button" class="btn btn-default" data-action="select-level">Advanced</button>
+		      		<button type="button" class="btn btn-default" data-action="select-level">Low</button>
+		      		<button type="button" class="btn btn-default" data-action="select-level">Medium</button>
+		      		<button type="button" class="btn btn-default" data-action="select-level">High</button>
   			  	</div>
 		      	<br>
 		      	<!--<input type="text" class="form-control input-correction" id="spot-photo" placeholder="Spot's photo (URL)">--><br>
@@ -127,28 +128,33 @@
 		    </div>
 		  </div>
 		</div>
-		<header><br>			
-			<div class="account-nav">
-				<% if current_skater %> 
-					<div class="display-inline-block"><span class="label label-info default-font-size"><%= current_skater.email %></span></div> | 
-					<div class="display-inline-block"><%= link_to "Log out", logout_path, method: "delete" %></div>
-				<% else %> 
-					<div class="display-inline-block"><%= link_to "Log in", login_path %></div> | 
-					<div class="display-inline-block"><%= link_to "Sign up", signup_path %></div>
+		<div class="container-fluid">
+			<header class="primary-header">
+				<div class="row">
+					<br>
+					<a class="logo" href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a><br><br>
+					<div class="account-nav">
+						<% if current_skater %> 
+							<span class="label label-info default-font-size"><%= current_skater.email %></span> | 
+							<a href="<%= logout_path %>" data-method="delete" rel="nofollow">Log out</a>
+						<% else %> 
+							<a href="<%= login_path %>">Log in</a> | 
+							<a href="<%= signup_path %>">Sign up</a>
+						<% end %>
+					</div><br><br>
+				</div>
+			</header>
+			<nav class="primary-nav">
+				<a class="navigation-elements" href="/spots">SPOTS<br><span class="glyphicon-correction glyphicon glyphicon-globe"></span></a>
+				<a class="navigation-elements" href="/jams">MEETINGS<br><span class="glyphicon-correction glyphicon glyphicon-user"></span></a>
+				<a class="navigation-elements" href="/challenges">CHALLENGES<br><span class="glyphicon-correction glyphicon glyphicon-menu-hamburger"></span></a>
+				<% if current_skater %>
+					<a class="spots-action-elements" href="#" data-toggle="modal" data-target="#myModal">CHALLENGE A FRIEND!<br><span class="glyphicon-correction glyphicon glyphicon-send"></span></a>
 				<% end %>
-			</div><br>
-			<div class="logo"><a href="/">(&nbsp;&nbsp;&nbsp;SKATE&nbsp;&nbsp;OR&nbsp;&nbsp;BYE&nbsp;&nbsp;&nbsp;)</a></div>
-		</header><br><br>
-		<nav>
-			<a href="/spots"><div class="navigation-elements">SPOTS<br><span class="glyphicon-correction glyphicon glyphicon-globe"></span></div></a>
-			<a href="/jams"><div class="navigation-elements">MEETINGS<br><span class="glyphicon-correction glyphicon glyphicon-user"></span></div></a>
-			<a href="/challenges"><div class="navigation-elements">CHALLENGES<br><span class="glyphicon-correction glyphicon glyphicon-menu-hamburger"></span></div></a>
-			<% if current_skater %>
-				<a href="#"><div class="challenge-a-friend" data-toggle="modal" data-target="#myModal">CHALLENGE A FRIEND!<br><span class="glyphicon-correction glyphicon glyphicon-send"></span></div></a>
-			<% end %>
-		</nav><br><br><br>
-		<%= yield %><br><br>
-		<footer>&copy; 2015 Skate or Bye | Crafted by a padawan skater</footer><br>
+			</nav><br>
+			<%= yield %>
+			<footer class="primary-footer">&copy; 2015 Skate or Bye | Crafted by a padawan skater</footer>
+		</div>
 		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>

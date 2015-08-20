@@ -1,8 +1,8 @@
-Spot.create address: 'Skatepark Manzanares, 28045 Madrid', latitude: 40.395473, longitude: -3.703388, level: 'Advanced', photo: 'http://www.streetboardermag.com/wp-content/uploads/2013/08/arg.jpg'
-Spot.create address: 'Calle de Valdetorres de Jarama 1, 28043 Madrid', latitude: 40.472459, longitude: -3.6476884, level: 'Intermediate', photo: 'http://www.go-skateboarding.com/wp-content/uploads/2010/06/imagen-1.jpg'
-Spot.create address: 'Calle Fco. de Goya, S/N 28660 Boadilla del Monte', latitude: 40.4037715, longitude: -3.8897478, level: 'Intermediate', photo: 'http://www.skateboard.com.au/images/matarord1.jpg'
-#Spot.create address: 'Avenida Don Miguel Cervantes, S/N 28108 Alcobendas, Madrid', latitude: 40.5525222, longitude: -3.6477498, level: 'Advanced', photo: 'http://dailyskateboarding.com/wp-content/uploads/2013/09/IkerFsIndy.jpg'
-#Spot.create address: 'Calle Telémaco 11, 28850 Torrejón de Ardoz, Madrid', latitude: 40.45123, longitude: -3.4739, level: 'Advanced', photo: 'http://spd.fotolog.com/photo/29/39/33/skateparks/1225055163780_f.jpg'
+Spot.create address: 'Skatepark Manzanares, 28045 Madrid', latitude: 40.395473, longitude: -3.703388, level: 'High', photo: 'http://www.streetboardermag.com/wp-content/uploads/2013/08/arg.jpg'
+Spot.create address: 'Calle de Valdetorres de Jarama 1, 28043 Madrid', latitude: 40.472459, longitude: -3.6476884, level: 'Medium', photo: 'http://www.go-skateboarding.com/wp-content/uploads/2010/06/imagen-1.jpg'
+Spot.create address: 'Calle Fco. de Goya, S/N 28660 Boadilla del Monte', latitude: 40.4037715, longitude: -3.8897478, level: 'Medium', photo: 'http://www.skateboard.com.au/images/matarord1.jpg'
+#Spot.create address: 'Avenida Don Miguel Cervantes, S/N 28108 Alcobendas, Madrid', latitude: 40.5525222, longitude: -3.6477498, level: 'High', photo: 'http://dailyskateboarding.com/wp-content/uploads/2013/09/IkerFsIndy.jpg'
+#Spot.create address: 'Calle Telémaco 11, 28850 Torrejón de Ardoz, Madrid', latitude: 40.45123, longitude: -3.4739, level: 'High', photo: 'http://spd.fotolog.com/photo/29/39/33/skateparks/1225055163780_f.jpg'
 
 Skater.create name: 'JC', email: 'jc@gmail.com', password: 'jc'
 Skater.create name: 'Sam', email: 'sam@gmail.com', password: 'sam'

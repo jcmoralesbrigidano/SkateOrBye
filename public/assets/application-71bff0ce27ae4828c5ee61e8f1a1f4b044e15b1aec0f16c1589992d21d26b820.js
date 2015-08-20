@@ -10839,6 +10839,12 @@ var yourPositionMarkerLatitude;
 var yourPositionMarkerLongitude;
 var level;
 
+window.addEventListener('resize', centerMap, false);
+
+function centerMap() {
+	map.setCenter(yourPosition);
+}
+
 getSpots();
 
 function getSpots() {
@@ -10898,11 +10904,12 @@ function addClickEventForEachMarker(marker) {
 		var infoWindowSpotContent = '<a href=/spots/' + spotId + '><img class="marker-spot-photo" src=' + spots[spotId - 1].photo + '></a>';
 
     	var infoWindowSpot = new google.maps.InfoWindow({
-    		content: infoWindowSpotContent
+    		content: infoWindowSpotContent,
+    		maxWidth: 1000
     	});
 
     	infoWindowSpot.open(map, marker);
-    	setTimeout(function() { infoWindowSpot.close(); }, 5000);
+    	//setTimeout(function() { infoWindowSpot.close(); }, 5000);
 	});
 }
 
