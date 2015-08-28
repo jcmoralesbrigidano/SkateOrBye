@@ -1,17 +1,17 @@
-<h2><%= @jam.name %></h2><br>
+<br><h2 class="logo"><%= @jam.name %></h2><br><br>
 
 <span class="spot-info default-font-size glyphicon glyphicon-calendar"><span class="default-font-family">&nbsp;<%= @jam.date %></span></span><br><br>
 <span class="spot-info default-font-size glyphicon glyphicon-hourglass"><span class="default-font-family">&nbsp;<%= @jam.time %></span></span><br><br>
 <span class="spot-info default-font-size glyphicon glyphicon-comment"><span class="default-font-family">&nbsp;<%= @jam.info %></span></span><br><br><br>
 <a href="/spots/<%= @spot.id %>"><img class="spot-photo" src="<%= @spot.photo %>"></a><br><br>
 
-<h2>Assistants</h2><br>
+<h2 class="logo">Assistants</h2><br><br>
 
 <% @attendances.each do |attendance| %>
 	<span class="label label-info default-font-size">
 		<%= Skater.where(id: attendance.skater_id).first.name %> (<%= attendance.role %>)
 	</span><br><br>
-<% end %><br>
+<% end %><br><br>
 
 <% if current_skater %>
 	<% if meeting_joined? %>

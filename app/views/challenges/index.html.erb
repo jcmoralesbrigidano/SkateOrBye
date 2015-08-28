@@ -1,24 +1,22 @@
-<br><div class="display-inline-block">
+<br><h2 class="logo">Challenges</h2><br><br>
+<div class="display-inline-block">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">To do <span class="badge"><%= pending_challenges %></span></a></li>
     <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab">Done <span class="badge"><%= completed_challenges %></span></a></li>
     <li role="presentation"><a href="#to-check" aria-controls="to-check" role="tab" data-toggle="tab">To check</a></li>
-  </ul>
+  </ul><br>
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane fade in active" id="pending"><br>		
 		<% @pending_challenges.each do |pending_challenge| %>
 			<div class="challenges-completed">
 				<span class="label label-success default-font-size"><%= pending_challenge.challenge %></span>
-			</div>
-			<div class="challenges-completed challenger">
-				<i><%= Skater.find(pending_challenge.challenger_id).name %></i>
-			</div>
+			</div><br>
 			<div class="challenges-completed">
 				<div data-toggle="modal" data-target="#myModal3" class="action-elements" data-skater-id="<%= session[:id] %>" data-spot-id="<%= pending_challenge.challenge_spot %>" data-challenge-id="<%= pending_challenge.id %>" style="display:inline;">TRY</div>
 			</div>
-			<br><br>
+			<br><br><br><br>
 		<% end %>		
     </div>
     <div role="tabpanel" class="tab-pane fade" id="completed"><br>    	
@@ -38,9 +36,8 @@
 					</div>
 					<div class="panel-footer">
 						<div class="btn-group">
-							<button type="button" class="btn btn-default" data-action="check-attempt">Bad</button>
-							<button type="button" class="btn btn-default" data-action="check-attempt">Good</button>
-							<button type="button" class="btn btn-default" data-action="check-attempt">Awesome</button>
+							<button type="button" class="btn btn-default" data-action="check-attempt">Done</button>
+							<button type="button" class="btn btn-default" data-action="check-attempt">Failed</button>
 				  		</div>
 					</div>
 				</div><br>
