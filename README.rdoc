@@ -7,3 +7,5 @@ Skate or Bye! es una aplicación web para patinar:
 • Desafía a tus amigos: elige a tu amigo, el truco que quieres que haga y el spot en el que tendrá que hacerlo. A él le llegará tu desafío, si lo acepta tendrá que subir un vídeo intentándolo y tu decidirás si lo ha superado.
 
 Tecnologías: HTML5, CSS3, Bootstrap, JavaScript, jQuery, Ruby, Ruby on Rails, PostgreSQL, Heroku, Git, API Google Maps.
+
+Pruébala: https://skateorbye.herokuapp.com
