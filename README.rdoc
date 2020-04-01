@@ -1,11 +1,9 @@
-== SKATE OR BYE! (https://skateorbye.herokuapp.com)
+Skate or Bye! es una aplicación web para patinar:
 
-Skate or Bye! es una aplicación web para patinadores/futuros patinadores:
+• Encuentra los mejores spots: tienes un mapa con los sitios para patinar (spots) que la gente ha encontrado, en cada uno de ellos puedes ver fotos del mismo, el nivel de los patinadores y los vídeos con los trucos que estos han subido. Podrás puntuarlos y subir tus propios vídeos, además de poder añadir nuevos spots a través de tu ubicación.
 
-* Encuentra los mejores spots: tienes un mapa con los sitios para patinar (spots) que la gente ha encontrado, en cada uno de ellos puedes ver fotos del mismo, el nivel de los patinadores y los vídeos con los trucos que estos han subido a través de Vine o Instagram. Podrás puntuarlos y subir tus propios vídeos, además de poder añadir nuevos spots a través de tu ubicación.
+• Organiza quedadas: selecciona el spot, el día y la hora y cualquiera podrá unirse a la quedada como patinador, profesor, aprendiz o espectador.
 
-* Organiza quedadas: selecciona el spot, el día y la hora y cualquiera podrá unirse a la quedada como patinador, profesor, aprendiz o espectador. ¡No necesitas saber patinar para usar Skate or Bye!
+• Desafía a tus amigos: elige a tu amigo, el truco que quieres que haga y el spot en el que tendrá que hacerlo. A él le llegará tu desafío, si lo acepta tendrá que subir un vídeo intentándolo y tu decidirás si lo ha superado.
 
-* Y si eres un competidor nato... ¡desafía a tus amigos!: elige a tu amigo, el truco que quieres que haga y el lugar en el que tendrá que hacerlo. A él le llegará tu desafío, si lo acepta tendrá que subir un vídeo intentándolo y tu decidirás si lo ha superado.
-
-* Tecnologías utilizadas: HTML5, CSS3, JavaScript, jQuery, AJAX, Bootstrap, Ruby on Rails, Google Maps API, Heroku.
+Tecnologías: HTML5, CSS3, Bootstrap, JavaScript, jQuery, Ruby, Ruby on Rails, PostgreSQL, Heroku, Git, API Google Maps.
