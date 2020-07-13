@@ -1,4 +1,4 @@
-Skate or Bye! es una aplicación web para patinar:
+Aplicación web para patinar:
 
 • Encuentra los mejores spots: tienes un mapa con los sitios para patinar (spots) que la gente ha encontrado, en cada uno de ellos puedes ver fotos del mismo, el nivel de los patinadores y los vídeos con los trucos que estos han subido. Podrás puntuarlos y subir tus propios vídeos, además de poder añadir nuevos spots a través de tu ubicación.
 
